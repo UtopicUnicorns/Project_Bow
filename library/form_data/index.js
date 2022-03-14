@@ -1,6 +1,6 @@
 module.exports = (fields, boundary) => {
 	let body = '';
-	//console.log(fields);
+	let body2 = [];
 
 	if (!boundary) boundary = module.exports.generateBoundary();
 	else if (typeof boundary !== 'string') throw new TypeError('`boundary` parameter should be a string.');
@@ -17,23 +17,24 @@ module.exports = (fields, boundary) => {
 
 			fieldData.forEach(field => {
 				if (field && field.constructor === Object) {
-					body += `--${boundary}\r\n`;
-					body += `Content-Disposition: form-data; name="${fieldName}"; filename="${field.name}"\r\n`;
-					body += `Content-Type: ${field.type}\r\n\r\n`;
-					body += `IMAGEBUFFER\r\n`;
+					body2.push(`--${boundary}\r\n`);
+					body2.push(`Content-Disposition: form-data; name="${fieldName}"; filename="${field.name}"\r\n`);
+					body2.push(`Content-Type: ${field.type}\r\n\r\n`);
+					body2.push(field.data);
+					body2.push(`\r\n`);
 				} else if (typeof field === 'string') {
-					body += `--${boundary}\r\n`;
-					body += `Content-Disposition: form-data; name="${fieldName}"\r\n\r\n`;
-					body += `${field}\r\n`;
+					body2.push(`--${boundary}\r\n`);
+					body2.push(`Content-Disposition: form-data; name="${fieldName}"\r\n\r\n`);
+					body2.push(`${field}\r\n`);
 				} else throw new TypeError(`\`fields.${fieldName}\` is an unsupported type, should be an object, string, or an array that contains those two types.`);
 			});
 		}
 
-		if (body.length) body += `--${boundary}--\r\n`;
+		if (body2.length) body2.push(`--${boundary}--\r\n`);
 	} else throw new TypeError('`fields` parameter is required and should be an object.');
 
 
-	return body;
+	return body2;
 };
 
 module.exports.generateBoundary = () => {

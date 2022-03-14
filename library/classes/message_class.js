@@ -1,37 +1,7 @@
 class message_construct {
 	image(message) {
 		let constructed_message = {
-			content: "Hi all",
-			attachments: [{
-				id: 0,
-				description: "Image of a cute little cat",
-				filename: "pic.png",
-			}],
-			components: [
-				{
-					type: 1,
-					components: [
-						{
-							type: 2,
-							label: "Click me!",
-							style: 1,
-							custom_id: "click_one"
-                }
-            ]
-
-        }
-    ],
-			embeds: [
-				{
-					type: "rich",
-					title: `no`,
-					description: `yes`,
-					color: 0x00FFFF,
-					image: {
-						url: 'attachment://pic.png',
-					},
-    }
-  ]
+			content: "hello",
 		};
 
 		let convertJSON = JSON.stringify(constructed_message);
@@ -41,6 +11,7 @@ class message_construct {
 
 			imageArray.push(fs.readFileSync('pic.png'));
 			imageArray.push(fs.readFileSync('rick.gif'));
+			imageArray.push(fs.readFileSync('cat.gif'));
 
 			resolve(imageArray);
 		});
@@ -48,15 +19,18 @@ class message_construct {
 		return promise.then((x) => {
 			const fields = {
 				payload_json: convertJSON,
+			};
 
-				'files[0]': {
+			let forCount = 0;
+			for (let i of x) {
+				fields[`files[${forCount}]`] = {
 					name: 'pic.png',
 					type: 'image/png',
-					data: x[0],
-				},
-				
-	
-			};
+					data: x[forCount],
+				};
+
+				forCount++
+			}
 
 			const boundary = fd.generateBoundary();
 			const header = {
@@ -64,16 +38,12 @@ class message_construct {
 			};
 			const body = fd(fields, boundary);
 
-			let split = body.split("IMAGEBUFFER");
+			let fetcher = [];
+			for (let i of body) {
+				fetcher.push(Buffer.from(i));
+			}
 
-			console.log(split);
-			let split1 = Buffer.from(x[0]);
-			let split2 = Buffer.from(split[0]);
-			let split3 = Buffer.from(split[1]);
-			let finalArray = [split2, split1, split3];
-			console.log(finalArray);
-			let newBuffer = Buffer.concat(finalArray);
-
+			let newBuffer = Buffer.concat(fetcher);
 
 			return fly.send(newBuffer,
 				`/api/channels/${message.channel}/messages`,
