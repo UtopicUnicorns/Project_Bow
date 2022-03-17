@@ -12,7 +12,11 @@ class message_construct {
 			imageArray.push(fs.readFileSync('pic.png'));
 			imageArray.push(fs.readFileSync('rick.gif'));
 			imageArray.push(fs.readFileSync('cat.gif'));
+ var path = require('path');
 
+var ext = path.extname('cat.gif');
+
+  console.log(ext); 
 			resolve(imageArray);
 		});
 

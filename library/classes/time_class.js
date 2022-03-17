@@ -1,4 +1,20 @@
 class time_construct {
+	hms(seconds) {
+		const returnCount = [3600, 60]
+			.reduceRight(
+				(p, b) => r => [Math.floor(r / b)].concat(p(r % b)),
+				r => [r]
+			)(seconds)
+			.map(a => a.toString().padStart(2, '0'))
+			.join(':').split('.')[0].split(':');
+
+		return {
+			hour: returnCount[0],
+			minute: returnCount[1],
+			second: returnCount[2],
+		}
+	}
+
 	discord(time) {
 		if (!time) var time = ~~(Date.now() / 1000);
 
