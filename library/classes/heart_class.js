@@ -4,8 +4,6 @@ class heart_construct {
 
 		this.client_struct = {
 			client: null,
-			guilds: [],
-			users: [],
 			beat_interval: 5000,
 			beating_heart: null,
 			seq_num: null,
@@ -24,6 +22,9 @@ class heart_construct {
 				},
 			},
 		};
+
+		this.guilds = {};
+		this.users = {};
 
 		mail_man.on('socket_beat', async () => {
 			this.client_struct.beating_heart++;
@@ -66,8 +67,24 @@ class heart_construct {
 		mail_man.on('socket_identify', async () => this.puppet.send(JSON.stringify(this.identify_info)));
 		mail_man.on('socket_ping', async () => this.puppet.send(JSON.stringify({ op: 1 })));
 		mail_man.on('socket_error', async (error) => console.log(error));
-		mail_man.on('socket_gmu', async (member) => {});
-		mail_man.on('socket_gc', async (guild) => {});
+		mail_man.on('socket_gmu', async (member) => this.users[member.user.id] = member);
+		mail_man.on('socket_gc', async (guild) => this.guilds[guild.id] = guild);
+	}
+
+	guild(id) {
+		if (!id) return "Guild needs to have an ID or ALL tag.";
+		if (id.toLowerCase() == "all") return this.guilds;
+		if (this.guilds[id]) return this.guilds[id];
+		
+		return 'Something has gone wrong with getting guild information, did you provide a proper ID, or is the guild not cached/linked to the bot?';
+	}
+
+	user(id) {
+		if (!id) return "User needs to have an ID or ALL tag.";
+		if (id.toLowerCase() == "all") return this.users;
+		if (this.users[id]) return this.users[id];
+		
+		return 'Something has gone wrong with getting user information, did you provide a proper ID, or is the user not cached/linked to the bot?';
 	}
 
 	run() {
