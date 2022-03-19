@@ -1,95 +1,55 @@
 class message_construct {
-	image(message) {
-		let constructed_message = {
-			content: "hello",
-		};
+	send(message) {
+		if (!message) return 'No message object, please correct your mistake.';
 
-		let convertJSON = JSON.stringify(constructed_message);
+		let constructed_message = {};
+		let message_images_details = [];
+		const fields = {};
 
-		let promise = new Promise((resolve, reject) => {
-			let imageArray = [];
+		if (message.content) constructed_message['content'] = message.content;
+		if (message.components) constructed_message['components'] = [message.components];
+		if (message.embeds) constructed_message['embeds'] = [message.embeds];
+		if (message.tts) constructed_message['tts'] = message.tts;
+		if (message.reference) constructed_message['message_reference'] = message.reference;
+		if (message.sticker) constructed_message['sticker_ids'] = message.sticker;
+		if (message.flags) constructed_message['flags'] = message.flags;
+		if (message.attachments) {
+			for (let i of message.attachments) {
+				let ext = path.extname(i.file.toLowerCase());
+				let mime_type = mime.type(ext);
 
-			imageArray.push(fs.readFileSync('pic.png'));
-			imageArray.push(fs.readFileSync('rick.gif'));
-			imageArray.push(fs.readFileSync('cat.gif'));
- var path = require('path');
-
-var ext = path.extname('cat.gif');
-
-  console.log(ext); 
-			resolve(imageArray);
-		});
-
-		return promise.then((x) => {
-			const fields = {
-				payload_json: convertJSON,
-			};
-
-			let forCount = 0;
-			for (let i of x) {
-				fields[`files[${forCount}]`] = {
-					name: 'pic.png',
-					type: 'image/png',
-					data: x[forCount],
+				let attachment_construct = {
+					id: message_images_details.length,
+					description: i.description,
+					filename: i.filename,
 				};
 
-				forCount++
+				fields[`files[${message_images_details.length}]`] = {
+					name: i.file,
+					type: mime_type,
+					data: fs.readFileSync(i.file),
+				};
+
+				message_images_details.push(attachment_construct);
 			}
 
-			const boundary = fd.generateBoundary();
-			const header = {
-				'Content-Type': `multipart/form-data; boundary=${boundary}`
-			};
-			const body = fd(fields, boundary);
+			constructed_message['attachments'] = message_images_details;
+		}
 
-			let fetcher = [];
-			for (let i of body) {
-				fetcher.push(Buffer.from(i));
-			}
+		fields['payload_json'] = JSON.stringify(constructed_message);
 
-			let newBuffer = Buffer.concat(fetcher);
+		const boundary = fd.generateBoundary();
+		const header = { 'Content-Type': `multipart/form-data; boundary=${boundary}` };
+		const body = fd(fields, boundary);
+		let fetcher = [];
 
-			return fly.send(newBuffer,
-				`/api/channels/${message.channel}/messages`,
-				'POST',
-				'discord.com',
-				443, {
-					'Content-Type': `multipart/form-data; boundary=${boundary}`,
-					Authorization: `Bot ${token}`,
-				}
-			);
-		});
-	}
+		for (let i of body) {
+			fetcher.push(Buffer.from(i));
+		}
 
-	send(message) {
-		let constructed_message = {
-			content: message.content,
-			components: [message.components],
-			embeds: [message.embeds],
-			tts: message.tts,
-			message_reference: { message_id: message.reference, channel_id: message.channel, guild_id: message.guild_id, fail_if_not_exists: false },
-			sticker_ids: message.sticker,
-			files: message.files,
-			flags: message.flags,
-			attachments: message.attachments,
-			payload_json: message.payload,
-			allowed_mentions: {
-				parse: [],
-			},
-		};
+		let newBuffer = Buffer.concat(fetcher);
 
-		if (!message.embeds) delete constructed_message['embeds'];
-		if (!message.components) delete constructed_message['components'];
-		if (!message.content) delete constructed_message['content'];
-		if (!message.tts) delete constructed_message['tts'];
-		if (!message.reference) delete constructed_message['message_reference'];
-		if (!message.flags) delete constructed_message['flags'];
-		if (!message.sticker) delete constructed_message['sticker_ids'];
-		if (!message.files) delete constructed_message['files'];
-		if (!message.attachments) delete constructed_message['attachments'];
-		if (!message.payload) delete constructed_message['payload_json'];
-
-		return fly.send(JSON.stringify(constructed_message), `/api/channels/${message.channel}/messages`, 'POST', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
+		return fly.send(newBuffer, `/api/channels/${message.channel}/messages`, 'POST', 'discord.com', 443, { 'Content-Type': `multipart/form-data; boundary=${boundary}`, Authorization: `Bot ${token}`, });
 	}
 
 	edit(message) {
