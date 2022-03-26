@@ -9,7 +9,27 @@ class heart_construct {
 			seq_num: null,
 			ses_num: null,
 		};
+		
+		let intents_num = 0;
 
+		if (intent.GUILDS) intents_num = intents_num + (1 << 0);
+		if (intent.GUILD_MEMBERS) intents_num = intents_num + (1 << 1); 
+		if (intent.GUILD_BANS) intents_num = intents_num + (1 << 2);
+		if (intent.GUILD_EMOJIS_AND_STICKERS) intents_num = intents_num + (1 << 3); 
+		if (intent.GUILD_INTEGRATIONS) intents_num = intents_num + (1 << 4);
+		if (intent.GUILD_WEBHOOKS) intents_num = intents_num + (1 << 5);
+		if (intent.GUILD_INVITES) intents_num = intents_num + (1 << 6);
+		if (intent.GUILD_VOICE_STATES) intents_num = intents_num + (1 << 7);
+		if (intent.GUILD_PRESENCES) intents_num = intents_num + (1 << 8);
+		if (intent.GUILD_MESSAGES) intents_num = intents_num + (1 << 9);
+		if (intent.GUILD_MESSAGE_REACTIONS) intents_num = intents_num + (1 << 10); 
+		if (intent.GUILD_MESSAGE_TYPING) intents_num = intents_num + (1 << 11);
+		if (intent.DIRECT_MESSAGES) intents_num = intents_num +  (1 << 12);
+		if (intent.DIRECT_MESSAGE_REACTIONS) intents_num = intents_num + (1 << 13);
+		if (intent.DIRECT_MESSAGE_TYPING) intents_num = intents_num + (1 << 14);
+		if (intent.MESSAGES) intents_num = intents_num + (1 << 15);
+		if (intent.GUILD_SCHEDULED_EVENTS) intents_num = intents_num + (1 << 16); 
+		
 		this.identify_info = {
 			op: 2,
 			d: {

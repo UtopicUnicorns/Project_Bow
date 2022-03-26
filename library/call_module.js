@@ -9,7 +9,7 @@ exports.summon_modules = async function (config) {
 	configuration_data = await require(config);
 	token = await configuration_data.bot_token;
 	application_id = configuration_data.application_id;
-	intents_num = configuration_data.intents_num;
+	intent = configuration_data.intent;
 
 	https_construct = await require('./classes/https_class');
 	fly = new https_construct();
