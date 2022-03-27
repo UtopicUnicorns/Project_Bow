@@ -9,15 +9,24 @@ message
 		tts: boolean,
 		message_reference: reference_id,
 		sticker_ids: sticker,
-		files: files,
 		flags: flags,
 		attachments: attachments,
-		payload_json: payload,
 		guild: guild_id,
 	})
 	.then((val) => console.log(val))
 	.catch((err) => console.error(err));
 
+attachments = [{
+		file: 'cat.gif',
+		description: 'Oatly Kitty',
+		filename: 'cat.gif',
+	},
+	{
+		file: 'pic.png',
+		description: 'Linux Mint logo',
+		filename: 'pic.png',
+}];
+			
 message
 	.edit({
 		id: message_id,
@@ -28,10 +37,8 @@ message
 		tts: boolean,
 		message_reference: reference_id,
 		sticker_ids: sticker,
-		files: files,
 		flags: flags,
 		attachments: attachments,
-		payload_json: payload,
 		guild: guild_id,
 	})
 	.then((val) => console.log(val))
@@ -48,7 +55,19 @@ message
 	.catch((err) => console.error(err));
 
 message
-	.interaction({ type: int, content: message }, client)
+	.interaction({ 
+		type: int,
+		content: message,
+		channel: channel_id,
+		components: [components],
+		embeds: [embeds],
+		tts: boolean,
+		message_reference: reference_id,
+		sticker_ids: sticker,
+		flags: flags,
+		attachments: attachments,
+		guild: guild_id,
+	}, client)
 	.then((val) => console.log(val))
 	.catch((err) => console.log(err));
 
