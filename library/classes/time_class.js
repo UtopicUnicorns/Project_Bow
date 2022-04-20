@@ -7,7 +7,9 @@ class time_construct {
 			)(seconds)
 			.map(a => a.toString().padStart(2, '0'))
 			.join(':').split('.')[0].split(':');
-
+			
+		if (returnCount[2].length === 1) returnCount[2] = `0${returnCount[2]}`;
+		
 		return {
 			hour: returnCount[0],
 			minute: returnCount[1],
