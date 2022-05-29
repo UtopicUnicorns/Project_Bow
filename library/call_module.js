@@ -22,6 +22,8 @@ exports.summon_modules = async function (config) {
 	app = new app_construct();
 	embed = await require('./classes/embed_class');
 	component = await require('./classes/component_class');
+	thread_construct = await require('./classes/thread_class.js');
+	thread = new thread_construct();
 
 	bot_construct = await require('./classes/bot_class');
 	bot = new bot_construct();
