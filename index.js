@@ -1,6 +1,6 @@
 require('./library/index').lib('./configs.json').then(() => {
 	function log(incomingMessage) {
-		console.log(time.clock().eu, time.date().nice, incomingMessage)
+		console.log(time.clock().eu, time.date().nice, incomingMessage.message.t)
 	}
 
 	mailMan.on('INTERACTION_CREATE', async (incomingMessage) => log(incomingMessage) );

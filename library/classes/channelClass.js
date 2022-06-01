@@ -1,32 +1,32 @@
 class channelConstruct {
 	invites(message) {
-		return fly.send(JSON.stringify(constructed_message), `/api/channels/${message.channel}/invites`, 'GET', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
+		return fly.send(JSON.stringify(constructedMessage), `/api/channels/${message.channel}/invites`, 'GET', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
 	}
 
 	invite(message) {
-		return fly.send(JSON.stringify(constructed_message), `/api/channels/${message.channel}/invites`, 'POST', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
+		return fly.send(JSON.stringify(constructedMessage), `/api/channels/${message.channel}/invites`, 'POST', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
 	}
 
 	permissions(message) {
-		return fly.send(JSON.stringify(constructed_message), `/api/channels/${message.channel}/messages`, 'POST', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
+		return fly.send(JSON.stringify(constructedMessage), `/api/channels/${message.channel}/messages`, 'POST', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
 	}
 
 	create(message) {
-		return fly.send(JSON.stringify(constructed_message), `/api/channels/${message.channel}/messages`, 'POST', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
+		return fly.send(JSON.stringify(constructedMessage), `/api/channels/${message.channel}/messages`, 'POST', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
 	}
 
 	delete(message) {
-		return fly.send(JSON.stringify(constructed_message), `/api/channels/${message.channel}`, 'DELETE', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
+		return fly.send(JSON.stringify(constructedMessage), `/api/channels/${message.channel}`, 'DELETE', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
 	}
 
 	edit(message) {
-		return fly.send(JSON.stringify(constructed_message), `/api/channels/${message.channel}/permissions/${message.target_id}`, 'PUT', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
+		return fly.send(JSON.stringify(constructedMessage), `/api/channels/${message.channel}/permissions/${message.target_id}`, 'PUT', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
 
-		return fly.send(JSON.stringify(constructed_message), `/api/channels/${message.channel}/permissions/${message.target_id}`, 'DELETE', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
+		return fly.send(JSON.stringify(constructedMessage), `/api/channels/${message.channel}/permissions/${message.target_id}`, 'DELETE', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
 	}
 
 	modify(message) {
-		let constructed_message = {
+		let constructedMessage = {
 			name: message.name,
 			parent_id: message.parent_id,
 			topic: message.topic,
@@ -35,14 +35,14 @@ class channelConstruct {
 			position: message.position,
 		};
 
-		if (!message.name) delete constructed_message['name'];
-		if (!message.parent_id) delete constructed_message['parent_id'];
-		if (!message.topic) delete constructed_message['topic'];
-		if (!message.nsfw) delete constructed_message['nsfw'];
-		if (!message.rate_limit_per_user) delete constructed_message['rate_limit_per_user'];
-		if (!message.position) delete constructed_message['position'];
+		if (!message.name) delete constructedMessage['name'];
+		if (!message.parent_id) delete constructedMessage['parent_id'];
+		if (!message.topic) delete constructedMessage['topic'];
+		if (!message.nsfw) delete constructedMessage['nsfw'];
+		if (!message.rate_limit_per_user) delete constructedMessage['rate_limit_per_user'];
+		if (!message.position) delete constructedMessage['position'];
 
-		return fly.send(JSON.stringify(constructed_message), `/api/channels/${message.channel}`, 'PATCH', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
+		return fly.send(JSON.stringify(constructedMessage), `/api/channels/${message.channel}`, 'PATCH', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
 	}
 
 	get(message) {
@@ -50,19 +50,19 @@ class channelConstruct {
 	}
 
 	messages(message) {
-		let constructed_message = {
+		let constructedMessage = {
 			limit: message.limit,
 			before: message.before,
 			after: message.after,
 			around: message.around,
 		};
 
-		if (!message.limit) delete constructed_message['limit'];
-		if (!message.before) delete constructed_message['before'];
-		if (!message.after) delete constructed_message['after'];
-		if (!message.around) delete constructed_message['around'];
+		if (!message.limit) delete constructedMessage['limit'];
+		if (!message.before) delete constructedMessage['before'];
+		if (!message.after) delete constructedMessage['after'];
+		if (!message.around) delete constructedMessage['around'];
 
-		return fly.send(JSON.stringify(constructed_message), `/api/channels/${message.channel}/messages`, 'GET', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
+		return fly.send(JSON.stringify(constructedMessage), `/api/channels/${message.channel}/messages`, 'GET', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
 	}
 
 	message(message) {
@@ -70,7 +70,7 @@ class channelConstruct {
 	}
 
 	crosspost(message) {
-		return fly.send(JSON.stringify(constructed_message), `/api/channels/${message.channel}/messages/${message.id}/crosspost`, 'POST', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
+		return fly.send(JSON.stringify(constructedMessage), `/api/channels/${message.channel}/messages/${message.id}/crosspost`, 'POST', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
 	}
 }
 

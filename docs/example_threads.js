@@ -10,7 +10,7 @@ thread
     both user and channel are strings.
 */
 thread
-	.add_member(user, channel);
+	.addMember(user, channel);
 
 /*
     Make your bot leave the specified thread.
@@ -24,7 +24,7 @@ thread
     Both user and channel are strings.
 */
 thread
-	.remove_member(user, channel);
+	.removeMember(user, channel);
 
 /*
     Get guild member from thread.
@@ -33,7 +33,7 @@ thread
     Will return a member object.
 */
 thread
-	.get_member(user, channel)
+	.getMember(user, channel)
 	.then((val) => console.log(val));
 
 /*
@@ -43,5 +43,5 @@ thread
     Will return an array of member objects.
 */
 thread
-	.member_list(channel)
+	.memberList(channel)
 	.then((val) => console.log(val));

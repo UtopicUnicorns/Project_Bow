@@ -1,12 +1,12 @@
 class appConstruct {
 	delete(message) {
-		if (message && message.guild) return fly.send('', `/api/applications/${application_id}/guilds/${message.guild}/commands/${message.command}`, 'DELETE', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
+		if (message && message.guild) return fly.send('', `/api/applications/${appId}/guilds/${message.guild}/commands/${message.command}`, 'DELETE', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
 
-		return fly.send('', `/api/applications/${application_id}/commands/${message.command}`, 'DELETE', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
+		return fly.send('', `/api/applications/${appId}/commands/${message.command}`, 'DELETE', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
 	}
 
 	create(message) {
-		let constructed_message = {
+		let constructedMessage = {
 			name: message.name,
 			type: 1,
 			description: 'Send a random adorable animal photo',
@@ -40,21 +40,21 @@ class appConstruct {
 			],
 		};
 
-		return fly.send(JSON.stringify(constructed_message), `/api/applications/${application_id}/commands`, 'POST', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
+		return fly.send(JSON.stringify(constructedMessage), `/api/applications/${appId}/commands`, 'POST', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
 	}
 
 	view(message) {
-		if (message && message.guild && message.command) return fly.send('', `/api/applications/${application_id}/guilds/${message.guild}/commands/${message.command}`, 'GET', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
+		if (message && message.guild && message.command) return fly.send('', `/api/applications/${appId}/guilds/${message.guild}/commands/${message.command}`, 'GET', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
 
-		if (message && message.guild) return fly.send('', `/api/applications/${application_id}/guilds/${message.guild}/commands`, 'GET', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
+		if (message && message.guild) return fly.send('', `/api/applications/${appId}/guilds/${message.guild}/commands`, 'GET', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
 
-		if (message && message.command) return fly.send('', `/api/applications/${application_id}/commands/${message.command}`, 'GET', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
+		if (message && message.command) return fly.send('', `/api/applications/${appId}/commands/${message.command}`, 'GET', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
 
-		return fly.send('', `/api/applications/${application_id}/commands`, 'GET', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
+		return fly.send('', `/api/applications/${appId}/commands`, 'GET', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
 	}
 
 	permissions(message) {
-		return fly.send(JSON.stringify(constructed_message), `/api/applications/${application_id}/commands`, 'POST', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
+		return fly.send(JSON.stringify(constructedMessage), `/api/applications/${appId}/commands`, 'POST', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
 	}
 }
 

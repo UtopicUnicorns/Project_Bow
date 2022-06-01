@@ -19,7 +19,7 @@ class componentConstruct {
 		if (this.buttonBOOL) return this;
 		this.menuBOOL = true;
 
-		let menu_info = {
+		let menuInfo = {
 			custom_id: menudata.custom_id,
 			placeholder: menudata.place_holder,
 			min_values: menudata.min_val,
@@ -28,7 +28,7 @@ class componentConstruct {
 			type: 3,
 		};
 
-		this.data.components.push(menu_info);
+		this.data.components.push(menuInfo);
 
 		return this;
 	}
@@ -37,7 +37,7 @@ class componentConstruct {
 		if (!entrydata) return 'No information.';
 
 		if (entrydata.emoji) {
-			var entry_info = {
+			var entryInfo = {
 				label: entrydata.label,
 				value: entrydata.value,
 				description: entrydata.description,
@@ -45,7 +45,7 @@ class componentConstruct {
 				emoji: { name: entrydata.emoji.name, id: entrydata.emoji.id, animated: entrydata.emoji.boolean },
 			};
 		} else {
-			var entry_info = {
+			var entryInfo = {
 				label: entrydata.label,
 				value: entrydata.value,
 				description: entrydata.description,
@@ -53,17 +53,17 @@ class componentConstruct {
 			};
 		}
 
-		if (!entrydata.emoji) delete entry_info['emoji'];
+		if (!entrydata.emoji) delete entryInfo['emoji'];
 		if (entrydata.emoji) {
-			if (!entrydata.emoji.name) delete entry_info.emoji['name'];
-			if (!entrydata.emoji.id) delete entry_info.emoji['id'];
-			if (!entrydata.emoji.animated) delete entry_info.emoji['animated'];
+			if (!entrydata.emoji.name) delete entryInfo.emoji['name'];
+			if (!entrydata.emoji.id) delete entryInfo.emoji['id'];
+			if (!entrydata.emoji.animated) delete entryInfo.emoji['animated'];
 		}
-		if (!entrydata.default) delete entry_info['default'];
-		if (!entrydata.description) delete entry_info['description'];
-		if (!entrydata.value) delete entry_info['value'];
-		if (!entrydata.label) delete entry_info['label'];
-		if (this.data.components[0] && this.data.components[0].options) this.data.components[0].options.push(entry_info);
+		if (!entrydata.default) delete entryInfo['default'];
+		if (!entrydata.description) delete entryInfo['description'];
+		if (!entrydata.value) delete entryInfo['value'];
+		if (!entrydata.label) delete entryInfo['label'];
+		if (this.data.components[0] && this.data.components[0].options) this.data.components[0].options.push(entryInfo);
 
 		return this;
 	}
@@ -73,7 +73,7 @@ class componentConstruct {
 		this.buttonBOOL = true;
 
 		if (buttondata.emoji) {
-			var button_info = {
+			var buttonInfo = {
 				label: buttondata.label,
 				custom_id: buttondata.custom_id,
 				style: buttondata.style,
@@ -83,11 +83,11 @@ class componentConstruct {
 				type: 2,
 			};
 
-			if (!buttondata.emoji.id) delete button_info.emoji['id'];
-			if (!buttondata.emoji.name) delete button_info.emoji['name'];
-			if (!buttondata.emoji.animated) delete button_info.emoji['animated'];
+			if (!buttondata.emoji.id) delete buttonInfo.emoji['id'];
+			if (!buttondata.emoji.name) delete buttonInfo.emoji['name'];
+			if (!buttondata.emoji.animated) delete buttonInfo.emoji['animated'];
 		} else {
-			var button_info = {
+			var buttonInfo = {
 				label: buttondata.label,
 				custom_id: buttondata.custom_id,
 				style: buttondata.style,
@@ -97,13 +97,13 @@ class componentConstruct {
 			};
 		}
 
-		if (!buttondata.label) delete button_info['label'];
-		if (!buttondata.custom_id) delete button_info['custom_id'];
-		if (!buttondata.style) delete button_info['style'];
-		if (!buttondata.disabled) delete button_info['disabled'];
-		if (!buttondata.url) delete button_info['url'];
+		if (!buttondata.label) delete buttonInfo['label'];
+		if (!buttondata.custom_id) delete buttonInfo['custom_id'];
+		if (!buttondata.style) delete buttonInfo['style'];
+		if (!buttondata.disabled) delete buttonInfo['disabled'];
+		if (!buttondata.url) delete buttonInfo['url'];
 
-		this.data.components.push(button_info);
+		this.data.components.push(buttonInfo);
 
 		return this;
 	}

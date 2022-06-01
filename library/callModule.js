@@ -1,15 +1,15 @@
-exports.summon_modules = async function (config) {
+exports.summonModules = async function (config) {
 	https = await require('https');
 	fs = await require('fs');
-	ws = await require('./web_socket');
-	fd = await require('./form_data');
+	ws = await require('./webSocket');
+	fd = await require('./formData');
 	path = await require('path');
 	os = await require('os');
 
-	configuration_data = await require(config);
-	token = await configuration_data.bot_token;
-	application_id = configuration_data.application_id;
-	intent = configuration_data.intent;
+	configData = await require(config);
+	token = await configData.botToken;
+	appId = configData.appId;
+	intent = configData.intent;
 
 	httpsConstruct = await require('./classes/httpsClass');
 	fly = new httpsConstruct();
@@ -38,8 +38,8 @@ exports.summon_modules = async function (config) {
 	rel = new relConstruct();
 	rel.rel();
 
-	post_man = await require('events');
-	class Emitter extends post_man {}
+	postMan = await require('events');
+	class Emitter extends postMan {}
 	mailMan = new Emitter();
 
 	heartConstruct = await require('./classes/heartClass');

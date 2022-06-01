@@ -1,12 +1,12 @@
 class cacheConstruct {
-	user(u_id, client) {
-		let user = client.client.users.find(({ id }) => id === u_id);
+	user(uId, client) {
+		let user = client.client.users.find(({ id }) => id === uId);
 
 		return user;
 	}
 
-	guild(g_id, client) {
-		let guild = client.client.guilds.find(({ id }) => id === g_id);
+	guild(gId, client) {
+		let guild = client.client.guilds.find(({ id }) => id === gId);
 
 		return guild;
 	}

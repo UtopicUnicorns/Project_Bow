@@ -12,12 +12,12 @@ class botConstruct {
 			afk: false,
 		};
 
-		this.presence_update = {
+		this.presenceUpdate = {
 			op: 3,
 			d: this.input,
 		};
 
-		client.socket.send(JSON.stringify(this.presence_update));
+		client.socket.send(JSON.stringify(this.presenceUpdate));
 	}
 }
 
