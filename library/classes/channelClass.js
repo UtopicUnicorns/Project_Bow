@@ -1,4 +1,4 @@
-class channel_construct {
+class channelConstruct {
 	invites(message) {
 		return fly.send(JSON.stringify(constructed_message), `/api/channels/${message.channel}/invites`, 'GET', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
 	}
@@ -74,4 +74,4 @@ class channel_construct {
 	}
 }
 
-module.exports = channel_construct;
+module.exports = channelConstruct;

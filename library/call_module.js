@@ -11,38 +11,38 @@ exports.summon_modules = async function (config) {
 	application_id = configuration_data.application_id;
 	intent = configuration_data.intent;
 
-	https_construct = await require('./classes/https_class');
-	fly = new https_construct();
+	httpsConstruct = await require('./classes/httpsClass');
+	fly = new httpsConstruct();
 
-	message_construct = await require('./classes/message_class');
-	message = new message_construct();
-	channel_construct = await require('./classes/channel_class');
-	channel = new channel_construct();
-	app_construct = await require('./classes/app_class');
-	app = new app_construct();
-	embed = await require('./classes/embed_class');
-	component = await require('./classes/component_class');
-	thread_construct = await require('./classes/thread_class.js');
-	thread = new thread_construct();
+	messageConstruct = await require('./classes/messageClass');
+	message = new messageConstruct();
+	channelConstruct = await require('./classes/channelClass');
+	channel = new channelConstruct();
+	appConstruct = await require('./classes/appClass');
+	app = new appConstruct();
+	embed = await require('./classes/embedClass');
+	component = await require('./classes/componentClass');
+	threadConstruct = await require('./classes/threadClass.js');
+	thread = new threadConstruct();
 
-	bot_construct = await require('./classes/bot_class');
-	bot = new bot_construct();
-	cache_construct = await require('./classes/cache_class');
-	cache = new cache_construct();
-	time_construct = await require('./classes/time_class');
-	time = new time_construct();
-	mime_construct = await require('./classes/mime_class');
-	mime = new mime_construct();
+	botConstruct = await require('./classes/botClass');
+	bot = new botConstruct();
+	cacheConstruct = await require('./classes/cacheClass');
+	cache = new cacheConstruct();
+	timeConstruct = await require('./classes/timeClass');
+	time = new timeConstruct();
+	mimeConstruct = await require('./classes/mimeClass');
+	mime = new mimeConstruct();
 
-	rel_construct = await require('./classes/release_class');
-	rel = new rel_construct();
+	relConstruct = await require('./classes/releaseClass');
+	rel = new relConstruct();
 	rel.rel();
 
 	post_man = await require('events');
 	class Emitter extends post_man {}
-	mail_man = new Emitter();
+	mailMan = new Emitter();
 
-	heart_construct = await require('./classes/heart_class');
-	heart = new heart_construct();
+	heartConstruct = await require('./classes/heartClass');
+	heart = new heartConstruct();
 	heart.run(this);
 };

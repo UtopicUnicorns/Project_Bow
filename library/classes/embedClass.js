@@ -1,4 +1,4 @@
-class embed_construct {
+class embedConstruct {
 	constructor() {
 		this.data = {
 			title: '',
@@ -123,4 +123,4 @@ class embed_construct {
 	}
 }
 
-module.exports = embed_construct;
+module.exports = embedConstruct;

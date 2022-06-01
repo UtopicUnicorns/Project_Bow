@@ -1,4 +1,4 @@
-class cache_construct {
+class cacheConstruct {
 	user(u_id, client) {
 		let user = client.client.users.find(({ id }) => id === u_id);
 
@@ -12,4 +12,4 @@ class cache_construct {
 	}
 }
 
-module.exports = cache_construct;
+module.exports = cacheConstruct;

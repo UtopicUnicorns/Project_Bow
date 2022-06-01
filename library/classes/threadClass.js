@@ -1,4 +1,4 @@
-class thread_construct {
+class threadConstruct {
 	join(channel) {
 		return fly.send('', `/api/channels/${channel}/thread-members/@me`, 'PUT', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
 	}
@@ -36,4 +36,4 @@ class thread_construct {
 	}
 }
 
-module.exports = thread_construct;
+module.exports = threadConstruct;

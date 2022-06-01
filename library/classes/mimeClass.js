@@ -1,4 +1,4 @@
-class mime_construct {
+class mimeConstruct {
 	constructor() {
 		this.mimes = {
 			'.aac': 'audio/aac',
@@ -83,4 +83,4 @@ class mime_construct {
 	}
 }
 
-module.exports = mime_construct;
+module.exports = mimeConstruct;

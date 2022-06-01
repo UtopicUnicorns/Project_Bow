@@ -1,4 +1,4 @@
-class time_construct {
+class timeConstruct {
 	hms(seconds) {
 		const returnCount = [3600, 60]
 			.reduceRight(
@@ -85,4 +85,4 @@ class time_construct {
 	}
 }
 
-module.exports = time_construct;
+module.exports = timeConstruct;

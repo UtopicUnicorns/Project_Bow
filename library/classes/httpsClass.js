@@ -1,4 +1,4 @@
-class https_construct {
+class httpsConstruct {
 	send(data, path, method, host, port, headers) {
 		let promise = new Promise((resolve, reject) => {
 			const options = {
@@ -48,4 +48,4 @@ class https_construct {
 	}
 }
 
-module.exports = https_construct;
+module.exports = httpsConstruct;

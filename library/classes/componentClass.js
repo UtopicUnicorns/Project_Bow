@@ -1,4 +1,4 @@
-class component_construct {
+class componentConstruct {
 	constructor() {
 		this.menuBOOL = false;
 		this.buttonBOOL = false;
@@ -109,4 +109,4 @@ class component_construct {
 	}
 }
 
-module.exports = component_construct;
+module.exports = componentConstruct;

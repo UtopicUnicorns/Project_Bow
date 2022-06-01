@@ -1,4 +1,4 @@
-class rel_construct {
+class relConstruct {
 	rel() {
 		const options = {
 			hostname: 'api.github.com',
@@ -44,4 +44,4 @@ class rel_construct {
 	}
 }
 
-module.exports = rel_construct;
+module.exports = relConstruct;

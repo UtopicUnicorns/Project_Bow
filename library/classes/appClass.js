@@ -1,4 +1,4 @@
-class app_construct {
+class appConstruct {
 	delete(message) {
 		if (message && message.guild) return fly.send('', `/api/applications/${application_id}/guilds/${message.guild}/commands/${message.command}`, 'DELETE', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
 
@@ -58,4 +58,4 @@ class app_construct {
 	}
 }
 
-module.exports = app_construct;
+module.exports = appConstruct;

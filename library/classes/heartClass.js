@@ -1,4 +1,4 @@
-class heart_construct {
+class heartConstruct {
 	constructor() {
 		this.puppet;
 
@@ -27,7 +27,7 @@ class heart_construct {
 		if (intent.DIRECT_MESSAGES) intents_num = intents_num +  (1 << 12);
 		if (intent.DIRECT_MESSAGE_REACTIONS) intents_num = intents_num + (1 << 13);
 		if (intent.DIRECT_MESSAGE_TYPING) intents_num = intents_num + (1 << 14);
-		if (intent.MESSAGES) intents_num = intents_num + (1 << 15);
+		if (intent.MESSAGE_CONTENT) intents_num = intents_num + (1 << 15);
 		if (intent.GUILD_SCHEDULED_EVENTS) intents_num = intents_num + (1 << 16); 
 		
 		this.identify_info = {
@@ -46,23 +46,23 @@ class heart_construct {
 		this.guilds = {};
 		this.users = {};
 
-		mail_man.on('socket_beat', async () => {
+		mailMan.on('socket_beat', async () => {
 			this.client_struct.beating_heart++;
 			this.puppet.send(JSON.stringify({ op: 1, d: this.client_struct.seq_num }));
 		});
 
-		mail_man.on('socket_ready', async (info) => {
+		mailMan.on('socket_ready', async (info) => {
 			this.client_struct.ses_num = info.d.session_id;
 			this.client_struct.client = info.d;
-			mail_man.emit('socket_pulse', true);
+			mailMan.emit('socket_pulse', true);
 		});
 
-		mail_man.on('socket_message', async (message) => {
+		mailMan.on('socket_message', async (message) => {
 			this.client_struct.seq_num = message.s;
-			mail_man.emit(message.t, { message: message, client: this.client_struct, socket: this.puppet });
+			mailMan.emit(message.t, { message: message, client: this.client_struct, socket: this.puppet });
 		});
 
-		mail_man.on('socket_10', async (info) => {
+		mailMan.on('socket_10', async (info) => {
 			if (this.client_struct.ses_num && this.client_struct.seq_num) {
 				this.client_resume = {
 					op: 6,
@@ -75,20 +75,20 @@ class heart_construct {
 
 				this.puppet.send(JSON.stringify(this.client_resume));
 			} else {
-				mail_man.emit('socket_identify');
-				mail_man.emit('socket_interval', info.heartbeat_interval);
+				mailMan.emit('socket_identify');
+				mailMan.emit('socket_interval', info.heartbeat_interval);
 			}
 		});
 
-		mail_man.on('socket_resume', async (info) => mail_man.emit('socket_pulse', true));
-		mail_man.on('socket_interval', async (info) => (this.client_struct.beat_interval = info));
-		mail_man.on('socket_close', async (code) => this.restart());
-		mail_man.on('socket_pulse', async (order) => this.pulse(order));
-		mail_man.on('socket_identify', async () => this.puppet.send(JSON.stringify(this.identify_info)));
-		mail_man.on('socket_ping', async () => this.puppet.send(JSON.stringify({ op: 1 })));
-		mail_man.on('socket_error', async (error) => console.log(error));
-		mail_man.on('socket_gmu', async (member) => this.users[member.user.id] = member);
-		mail_man.on('socket_gc', async (guild) => this.guilds[guild.id] = guild);
+		mailMan.on('socket_resume', async (info) => mailMan.emit('socket_pulse', true));
+		mailMan.on('socket_interval', async (info) => (this.client_struct.beat_interval = info));
+		mailMan.on('socket_close', async (code) => this.restart());
+		mailMan.on('socket_pulse', async (order) => this.pulse(order));
+		mailMan.on('socket_identify', async () => this.puppet.send(JSON.stringify(this.identify_info)));
+		mailMan.on('socket_ping', async () => this.puppet.send(JSON.stringify({ op: 1 })));
+		mailMan.on('socket_error', async (error) => console.log(error));
+		mailMan.on('socket_gmu', async (member) => this.users[member.user.id] = member);
+		mailMan.on('socket_gc', async (guild) => this.guilds[guild.id] = guild);
 	}
 
 	guild(id) {
@@ -124,7 +124,7 @@ class heart_construct {
 	pulse(order) {
 		if (order) {
 			this.beat = setInterval(function () {
-				mail_man.emit('socket_beat');
+				mailMan.emit('socket_beat');
 			}, this.client_struct.beat_interval);
 		} else clearInterval(this.beat);
 
@@ -136,27 +136,27 @@ class heart_construct {
 			try {
 				const msg = JSON.parse(message);
 
-				if (msg.op == 10 && msg.d) mail_man.emit('socket_10', msg.d);
-				if (msg.op == 1) mail_man.emit('socket_ping');
-				if (msg.t == 'GUILD_CREATE') mail_man.emit('socket_gc', msg.d);
-				if (msg.t == 'GUILD_MEMBER_UPDATE') mail_man.emit('socket_gmu', msg.d);
-				if (msg.t == 'READY') mail_man.emit('socket_ready', msg);
-				if (msg.t == 'RESUMED') mail_man.emit('socket_resume', msg);
+				if (msg.op == 10 && msg.d) mailMan.emit('socket_10', msg.d);
+				if (msg.op == 1) mailMan.emit('socket_ping');
+				if (msg.t == 'GUILD_CREATE') mailMan.emit('socket_gc', msg.d);
+				if (msg.t == 'GUILD_MEMBER_UPDATE') mailMan.emit('socket_gmu', msg.d);
+				if (msg.t == 'READY') mailMan.emit('socket_ready', msg);
+				if (msg.t == 'RESUMED') mailMan.emit('socket_resume', msg);
 
-				mail_man.emit('socket_message', msg);
+				mailMan.emit('socket_message', msg);
 			} catch (err) {
-				mail_man.emit('socket_error', error);
+				mailMan.emit('socket_error', error);
 			}
 		});
 
-		this.puppet.on('error', (error) => mail_man.emit('socket_error', error));
+		this.puppet.on('error', (error) => mailMan.emit('socket_error', error));
 		this.puppet.on('close', (code) => {
-			mail_man.emit('socket_close', code);
-			mail_man.emit('socket_pulse', false);
+			mailMan.emit('socket_close', code);
+			mailMan.emit('socket_pulse', false);
 		});
 
 		return this;
 	}
 }
 
-module.exports = heart_construct;
+module.exports = heartConstruct;

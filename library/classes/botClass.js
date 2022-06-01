@@ -1,4 +1,4 @@
-class bot_construct {
+class botConstruct {
 	presence(info, client) {
 		this.input = {
 			since: info.start,
@@ -21,4 +21,4 @@ class bot_construct {
 	}
 }
 
-module.exports = bot_construct;
+module.exports = botConstruct;

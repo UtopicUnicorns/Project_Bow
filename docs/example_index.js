@@ -13,7 +13,7 @@ require('./library/index').lib('./configs.json').then(() => {
   /*
     This is where all your code goes.
     You generally want to fetch the events here.
-    The fetcher is called mail_man.
+    The fetcher is called mailMan.
     The name *client* can be renamed whatever you want, this variable holds the message, client and socket.
     Message is the raw responses you get from the DISCORD API.
     Client is this session, you can receive all information from it, including members, guilds etc if you want.
@@ -22,7 +22,7 @@ require('./library/index').lib('./configs.json').then(() => {
     The event names ALWAYS are the same as the ones you would normally receive within the raw DISCORD API events
   */
   
-  mail_man.on('MESSAGE_CREATE', async (client) => {
+  mailMan.on('MESSAGE_CREATE', async (client) => {
     /*
       client.message
       client.client
@@ -32,7 +32,7 @@ require('./library/index').lib('./configs.json').then(() => {
     */
   });
   
-  mail_man.on('INTERACTION_CREATE', async (client) => {
+  mailMan.on('INTERACTION_CREATE', async (client) => {
     /*
       Example interaction handle.
       I am refering to the interaction doc/example for more info.

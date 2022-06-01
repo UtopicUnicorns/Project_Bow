@@ -1,4 +1,4 @@
-class message_construct {
+class messageConstruct {
 	send(message) {
 		if (!message) return 'No message object, please correct your mistake.';
 
@@ -208,4 +208,4 @@ class message_construct {
 	}
 }
 
-module.exports = message_construct;
+module.exports = messageConstruct;
