@@ -67,3 +67,4 @@ require('./library/index').lib('./configs.json').then(() => {
 	mailMan.on('USER_UPDATE', async (incomingMessage) => log(incomingMessage) );
 	mailMan.on('TYPING_START', async (incomingMessage) => log(incomingMessage) );
 });
+
