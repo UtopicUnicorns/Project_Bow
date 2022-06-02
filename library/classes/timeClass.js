@@ -21,13 +21,13 @@ class timeConstruct {
 		if (!time) var time = ~~(Date.now() / 1000);
 
 		return {
-			d: `<t:${time}:d>`,
-			df: `<t:${time}:D>`,
-			t: `<t:${time}:t>`,
-			tf: `<t:${time}:T>`,
-			dt: `<t:${time}:f>`,
-			dtf: `<t:${time}:F>`,
-			s: `<t:${time}:R>`,
+			shortDate: `<t:${time}:d>`,
+			longDate: `<t:${time}:D>`,
+			shortTime: `<t:${time}:t>`,
+			longTime: `<t:${time}:T>`,
+			longDateShortTime: `<t:${time}:f>`,
+			completeDateShortTime: `<t:${time}:F>`,
+			relativeTime: `<t:${time}:R>`,
 		};
 	}
 
