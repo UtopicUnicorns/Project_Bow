@@ -4,6 +4,7 @@ class voiceConstruct {
     this.avoidShouting;
     this.voidWhispering;
     this.avoidWhispering;
+    this.doneShouting;
     
     this.beatPing = { op: 3, d: Math.floor(Math.random() * Math.pow(10, 20)) };
     
@@ -12,10 +13,40 @@ class voiceConstruct {
     });
     mailMan.on('voiceBeat', async () => {
       this.voidShouting.send(JSON.stringify(this.beatPing));
-      console.log(this.avoidWhispering);
     });
     
-    mailMan.on('voiceMessage2', async (info) => this.avoidWhispering = info);
+    mailMan.on('voiceMessage4', async (info) => {
+      this.doneShouting = info;
+      
+      let establishConnection = {
+        op: 5,
+        d: {
+          speaking: 5,
+          delay: 0,
+          ssrc: 1
+        }
+      };
+      
+      this.voidShouting.send(JSON.stringify(establishConnection));
+    });
+    
+    mailMan.on('voiceMessage2', async (info) => {
+      this.avoidWhispering = info;
+      
+      let finalVoice = {
+          op: 1,
+          d: {
+              protocol: "udp",
+              data: {
+                  address: info.ip,
+                  port: info.port,
+                  mode: "xsalsa20_poly1305_lite"
+              }
+          }
+      };
+      
+      this.voidShouting.send(JSON.stringify(finalVoice));
+    });
     
     mailMan.on('voiceMessage8', async (info) => {
       let op8 = {
@@ -48,7 +79,8 @@ class voiceConstruct {
   silence() {
     this.voidShouting.on('message', async function incoming(message) {
 			const incMsg = JSON.parse(message);
-      
+console.log(incMsg);
+      if (incMsg.op == 4) mailMan.emit('voiceMessage4', incMsg.d);
       if (incMsg.op == 2) mailMan.emit('voiceMessage2', incMsg.d);
 			if (incMsg.op == 8) mailMan.emit('voiceMessage8', incMsg.d.heartbeat_interval);
 		});
