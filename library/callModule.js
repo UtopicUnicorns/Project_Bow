@@ -44,4 +44,6 @@ exports.summonModules = async function (config) {
 	heartConstruct = await require('./classes/heartClass');
 	heart = new heartConstruct();
 	heart.run(this);
+	
+	voice = await require('./classes/voiceClass');
 };

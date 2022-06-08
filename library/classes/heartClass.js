@@ -60,6 +60,7 @@ class heartConstruct {
 		mailMan.on('socketMessage', async (message) => {
 			this.clientStruct.seqNum = message.s;
 			mailMan.emit(message.t, { message: message, client: this.clientStruct, socket: this.puppet });
+			mailMan.emit("rawSocket", { message: message, client: this.clientStruct, socket: this.puppet });
 		});
 
 		mailMan.on('socket10', async (info) => {
