@@ -14,6 +14,9 @@ class voiceConstruct {
     mailMan.on('voiceBeat', async () => {
       this.voidShouting.send(JSON.stringify(this.beatPing));
     });
+    mailMan.on('voiceData', async (data) => {
+      this.voidShouting.send(data);
+    });
     
     mailMan.on('voiceMessage4', async (info) => {
       this.doneShouting = info;
@@ -28,6 +31,26 @@ class voiceConstruct {
       };
       
       this.voidShouting.send(JSON.stringify(establishConnection));
+      const pcmSource = await fs.readFileSync('output.pcm');
+      
+      let samplingRate = 48000;
+      let frameDuration = 20;
+      let channels = 2;
+      // Optimize encoding for audio. Available applications are VOIP, AUDIO, and RESTRICTED_LOWDELAY
+      let encoder = new OpusScript(samplingRate, channels, OpusScript.Application.AUDIO);
+      
+      let frameSize = samplingRate * frameDuration / 1000;
+      
+      console.log(pcmSource.byteLength);
+    
+      let encodedPacket = encoder.encode(pcmSource, frameSize);
+      
+      //let decodedPacket = encoder.decode(encodedPacket);
+
+      //// Delete the encoder when finished with it (Emscripten does not automatically call C++ object destructors)
+      //encoder.delete();
+      mailMan.emit('voiceData', encodedPacket);
+
     });
     
     mailMan.on('voiceMessage2', async (info) => {
@@ -79,7 +102,8 @@ class voiceConstruct {
   silence() {
     this.voidShouting.on('message', async function incoming(message) {
 			const incMsg = JSON.parse(message);
-console.log(incMsg);
+			mailMan.emit('raw', incMsg);
+      console.log(incMsg);
       if (incMsg.op == 4) mailMan.emit('voiceMessage4', incMsg.d);
       if (incMsg.op == 2) mailMan.emit('voiceMessage2', incMsg.d);
 			if (incMsg.op == 8) mailMan.emit('voiceMessage8', incMsg.d.heartbeat_interval);
