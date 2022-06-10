@@ -45,5 +45,7 @@ exports.summonModules = async function (config) {
 	heart = new heartConstruct();
 	heart.run(this);
 
+	//music = await require('./harmonyVoice/');
+
 	voice = await require('./classes/voiceClass');
 };
