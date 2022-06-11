@@ -44,7 +44,6 @@ class VoiceWebSocket extends EventEmitter {
     let packet;
     try {
       packet = JSON.parse(event.data);
-      console.log(packet);
     } catch (error) {
       this.emit("error", error);
       return;

@@ -195,7 +195,6 @@ class Networking extends EventEmitter {
     const oldState = this.#state;
     this.#state = newState;
     if (oldState.code !== newState.code) this.emit(newState.code);
-    console.log(oldState.code, "==>", newState.code);
     this.emit("stateChange", oldState, newState);
   }
   #getBoundHandlers() {
@@ -316,7 +315,6 @@ class Networking extends EventEmitter {
     const { connectionOptions } = this;
     const { code, ws } = this.#state;
     if (code === NetworkingStatusCode.OpeningWs) {
-    console.log(connectionOptions);
       ws.sendPacket({
         op: VoiceOpcode.Identify,
         d: {
