@@ -44,8 +44,10 @@ exports.summonModules = async function (config) {
 	heartConstruct = await require('./classes/heartClass');
 	heart = new heartConstruct();
 	heart.run(this);
-
-	//music = await require('./harmonyVoice/');
+		
+	codecMaker = await require('./prismMedia');
+	
+	music = await require('./iHaveNoMouthAndIMustScream/');
 
 	voice = await require('./classes/voiceClass');
 };
