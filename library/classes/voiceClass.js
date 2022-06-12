@@ -19,7 +19,8 @@ class voiceConstruct {
     this.infoPromise = defer();
   }
   
-  join(joinInfo, incomingMessage) {
+  async join(joinInfo, incomingMessage) {
+    //await this.infoPromise2;
     const joinNow = { op: 4, 
 				d: { 
 					guild_id: joinInfo.guildId, 
@@ -32,25 +33,26 @@ class voiceConstruct {
 		incomingMessage.socket.send(JSON.stringify(joinNow));
 		
 		mailMan.on('VOICE_STATE_UPDATE', async (incomingMessage) => {
-      this.voiceChannelData['guildId'] = incomingMessage.message.d.guild_id;
-      this.voiceChannelData['serverId'] = incomingMessage.message.d.guild_id;
-      this.voiceChannelData['channelId'] = incomingMessage.message.d.channel_id;
-      this.voiceChannelData['sessionId'] = incomingMessage.message.d.session_id;
-      this.voiceChannelData['userId'] = incomingMessage.message.d.user_id;
+      this.voiceChannelData[incomingMessage.message.d.guild_id] = {};
+      this.voiceChannelData[incomingMessage.message.d.guild_id]['guildId'] = incomingMessage.message.d.guild_id;
+      this.voiceChannelData[incomingMessage.message.d.guild_id]['serverId'] = incomingMessage.message.d.guild_id;
+      this.voiceChannelData[incomingMessage.message.d.guild_id]['channelId'] = incomingMessage.message.d.channel_id;
+      this.voiceChannelData[incomingMessage.message.d.guild_id]['sessionId'] = incomingMessage.message.d.session_id;
+      this.voiceChannelData[incomingMessage.message.d.guild_id]['userId'] = incomingMessage.message.d.user_id;
       
       mailMan.on('VOICE_SERVER_UPDATE', async (incomingMessage) => {
-        this.voiceChannelData['token'] = incomingMessage.message.d.token;
-        this.voiceChannelData['endpoint'] = incomingMessage.message.d.endpoint;
-   
+        this.voiceChannelData[incomingMessage.message.d.guild_id]['token'] = incomingMessage.message.d.token;
+        this.voiceChannelData[incomingMessage.message.d.guild_id]['endpoint'] = incomingMessage.message.d.endpoint;
+
         this.infoPromise.resolve();
       });
     });
   }
   
-  async play(song) {
+  async play(song, guildId) {
     await this.infoPromise;
 
-    const audioStream = fs.createReadStream("./deleteLater/music.mp3")
+    const audioStream = fs.createReadStream(`./deleteLater/${song}.mp3`)
       .pipe(new codecMaker.FFmpeg({ args: ["-analyzeduration", "0", "-loglevel", "0", "-f", "s16le", "-ar", "48000", "-ac", "2"] }))
       .pipe(new codecMaker.opus.Encoder({ rate: 48000, channels: 2, frameSize: 960 }));
             
@@ -60,7 +62,7 @@ class voiceConstruct {
       audioStream.on("end", function () { return resolve(packets); });
     });
     
-    const netWorking = new music.Networking(this.voiceChannelData);
+    const netWorking = new music.Networking(this.voiceChannelData[guildId]);
 			if (netWorking.state.code !== music.NetworkingStatusCode.Ready) {
 				await new Promise(r => netWorking.once(music.NetworkingStatusCode.Ready, r));
 			}
