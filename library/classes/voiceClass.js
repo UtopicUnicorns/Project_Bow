@@ -1,98 +1,85 @@
 class voiceConstruct {
   constructor() {
-    this.voidShouting;
-    this.avoidShouting;
-    this.voidWhispering;
-    this.avoidWhispering;
-    this.doneShouting;
+    this.voiceChannelData = {};
+    this.resolve;
+    this.reject;
+    function defer() {
+      var res, rej;
     
-    this.beatPing = { op: 3, d: Math.floor(Math.random() * Math.pow(10, 20)) };
+      var promise = new Promise((resolve, reject) => {
+        res = resolve;
+        rej = reject;
+      });
     
-    mailMan.on('voiceMessage', async (info) => {
-      console.log(this.avoidShouting);
-    });
-    mailMan.on('voiceBeat', async () => {
-      this.voidShouting.send(JSON.stringify(this.beatPing));
-    });
-    mailMan.on('voiceData', async (data) => {
-      this.voidShouting.send(data);
-    });
+      promise.resolve = res;
+      promise.reject = rej;
     
-    mailMan.on('voiceMessage4', async (info) => {
-      this.doneShouting = info;
-      
-      let establishConnection = {
-        op: 5,
-        d: {
-          speaking: 5,
-          delay: 0,
-          ssrc: 1
-        }
-      };
-      
-      this.voidShouting.send(JSON.stringify(establishConnection));
-
-      //mailMan.emit('voiceData', resource);
-
-    });
-    
-    mailMan.on('voiceMessage2', async (info) => {
-      this.avoidWhispering = info;
-      
-      let finalVoice = {
-          op: 1,
-          d: {
-              protocol: "udp",
-              data: {
-                  address: info.ip,
-                  port: info.port,
-                  mode: "xsalsa20_poly1305_lite"
-              }
-          }
-      };
-      
-      this.voidShouting.send(JSON.stringify(finalVoice));
-    });
-    
-    mailMan.on('voiceMessage8', async (info) => {
-      let op8 = {
-        op: 0,
-        d: {
-          server_id: this.avoidShouting.guild_id,
-          user_id: "654361253413781537",
-          session_id: this.voidWhispering.session_id,
-          token: this.avoidShouting.token
-        }
-      };
-
-      this.voidShouting.send(JSON.stringify(op8));
-      
-      setInterval(function () {
-        mailMan.emit('voiceBeat');
-			}, info);
-    });
+      return promise;
+    }
+    this.infoPromise = defer();
   }
   
-  shout(voiceInfo, voiceClient) {
-    this.voidShouting = new ws.WebSocket(`wss://${voiceInfo.endpoint}?v=4`);
-    this.avoidShouting = voiceInfo;
-    this.voidWhispering = voiceClient;
-    this.silence();
-    
-    return this;
-  }
-  
-  silence() {
-    this.voidShouting.on('message', async function incoming(message) {
-			const incMsg = JSON.parse(message);
-			mailMan.emit('raw', incMsg);
-
-      if (incMsg.op == 4) mailMan.emit('voiceMessage4', incMsg.d);
-      if (incMsg.op == 2) mailMan.emit('voiceMessage2', incMsg.d);
-			if (incMsg.op == 8) mailMan.emit('voiceMessage8', incMsg.d.heartbeat_interval);
-		});
+  join(joinInfo, incomingMessage) {
+    const joinNow = { op: 4, 
+				d: { 
+					guild_id: joinInfo.guildId, 
+					channel_id: joinInfo.channelId, 
+					self_mute: false, 
+					self_deaf: false 
+				}
+			};
 		
-    return this;
+		incomingMessage.socket.send(JSON.stringify(joinNow));
+		
+		mailMan.on('VOICE_STATE_UPDATE', async (incomingMessage) => {
+      this.voiceChannelData['guildId'] = incomingMessage.message.d.guild_id;
+      this.voiceChannelData['serverId'] = incomingMessage.message.d.guild_id;
+      this.voiceChannelData['channelId'] = incomingMessage.message.d.channel_id;
+      this.voiceChannelData['sessionId'] = incomingMessage.message.d.session_id;
+      this.voiceChannelData['userId'] = incomingMessage.message.d.user_id;
+      
+      mailMan.on('VOICE_SERVER_UPDATE', async (incomingMessage) => {
+        this.voiceChannelData['token'] = incomingMessage.message.d.token;
+        this.voiceChannelData['endpoint'] = incomingMessage.message.d.endpoint;
+   
+        this.infoPromise.resolve();
+      });
+    });
+  }
+  
+  async play(song) {
+    await this.infoPromise;
+
+    const audioStream = fs.createReadStream("./deleteLater/music.mp3")
+      .pipe(new codecMaker.FFmpeg({ args: ["-analyzeduration", "0", "-loglevel", "0", "-f", "s16le", "-ar", "48000", "-ac", "2"] }))
+      .pipe(new codecMaker.opus.Encoder({ rate: 48000, channels: 2, frameSize: 960 }));
+            
+    const opusPacketsPromise = new Promise(function (resolve) {
+      let packets = [];
+      audioStream.on("data", function (d) { return packets.push(d); });
+      audioStream.on("end", function () { return resolve(packets); });
+    });
+    
+    const netWorking = new music.Networking(this.voiceChannelData);
+			if (netWorking.state.code !== music.NetworkingStatusCode.Ready) {
+				await new Promise(r => netWorking.once(music.NetworkingStatusCode.Ready, r));
+			}
+
+			const opusPackets = await opusPacketsPromise;
+			
+			let next = Date.now();
+			let preparedPacket;
+			
+			function audioCycleStep() {
+					next += 20;
+					if (preparedPacket)
+							netWorking.sendEncryptedPacket(preparedPacket);
+					const packet = opusPackets.shift();
+					opusPackets.push(packet);
+					preparedPacket = netWorking.encryptAudioPacket(packet);
+					setTimeout(audioCycleStep, next - Date.now());
+			}
+			setImmediate(audioCycleStep);
   }
 }
 

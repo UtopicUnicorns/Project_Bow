@@ -49,5 +49,6 @@ exports.summonModules = async function (config) {
 	
 	music = await require('./iHaveNoMouthAndIMustScream/');
 
-	voice = await require('./classes/voiceClass');
+	voiceConstruct = await require('./classes/voiceClass');
+	voice = new voiceConstruct();
 };
