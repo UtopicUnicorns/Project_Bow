@@ -19,8 +19,25 @@ class voiceConstruct {
     this.infoPromise = defer();
   }
   
+  async leave(guild, incomingMessage) {
+    const leaveNow = { op: 4, 
+				d: { 
+					guild_id: guild, 
+					channel_id: null, 
+					self_mute: false, 
+					self_deaf: false 
+				}
+			};
+		
+		incomingMessage.socket.send(JSON.stringify(leaveNow));
+		delete this.voiceChannelData[guild];
+  }
+  
+  async info() {
+    console.log(this.voiceChannelData);
+  }
+  
   async join(joinInfo, incomingMessage) {
-    //await this.infoPromise2;
     const joinNow = { op: 4, 
 				d: { 
 					guild_id: joinInfo.guildId, 
@@ -31,8 +48,10 @@ class voiceConstruct {
 			};
 		
 		incomingMessage.socket.send(JSON.stringify(joinNow));
-		
+
 		mailMan.on('VOICE_STATE_UPDATE', async (incomingMessage) => {
+      if (incomingMessage.message.d.user_id !== botId) return; 
+      if (incomingMessage.message.d.channel_id == null) return;
       this.voiceChannelData[incomingMessage.message.d.guild_id] = {};
       this.voiceChannelData[incomingMessage.message.d.guild_id]['guildId'] = incomingMessage.message.d.guild_id;
       this.voiceChannelData[incomingMessage.message.d.guild_id]['serverId'] = incomingMessage.message.d.guild_id;
@@ -61,7 +80,7 @@ class voiceConstruct {
       audioStream.on("data", function (d) { return packets.push(d); });
       audioStream.on("end", function () { return resolve(packets); });
     });
-    
+    console.log(this.voiceChannelData[guildId]);
     const netWorking = new music.Networking(this.voiceChannelData[guildId]);
 			if (netWorking.state.code !== music.NetworkingStatusCode.Ready) {
 				await new Promise(r => netWorking.once(music.NetworkingStatusCode.Ready, r));

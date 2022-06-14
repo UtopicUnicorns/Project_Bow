@@ -10,6 +10,7 @@ exports.summonModules = async function (config) {
 	token = await configData.botToken;
 	appId = configData.appId;
 	intent = configData.intent;
+	botId = configData.botId;
 
 	httpsConstruct = await require('./classes/httpsClass');
 	fly = new httpsConstruct();
