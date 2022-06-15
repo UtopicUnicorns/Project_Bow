@@ -31,10 +31,11 @@ class timeConstruct {
 		};
 	}
 
-	date() {
+	date(date) {
 		const dName = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 		const mName = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-		const d = new Date();
+		let d = new Date();
+		if (date) d = new Date(date);
 		const dayNum = d.getDay();
 		const day = d.getDate();
 		let postfix = '';
@@ -65,12 +66,13 @@ class timeConstruct {
 			iso: `${year}/${month + 1}/${day}`,
 			eur: `${day}/${month + 1}/${year}`,
 			us: `${month + 1}/${day}/${year}`,
-			ugly: `${new Date().toString()}`,
+			ugly: `${new Date(date).toString() || new Date().toString()}`,
 		};
 	}
 
-	clock() {
-		const dTime = new Date();
+	clock(time) {
+		let dTime = new Date();
+		if (time) dTime = new Date(time);
 		const eu = dTime.toLocaleString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 		const us = dTime.toLocaleString([], { hour: 'numeric', minute: 'numeric', second: '2-digit', hour12: true });
 
