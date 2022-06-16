@@ -7,12 +7,12 @@
     eu: Military time *13:37:00*
     us: AM/PM time *01:37:00 PM*
 */
-time.clock();
+time.clock(time);
 
 /*
   .stamp() returns the current time in miliseconds.
 */
-time.stamp();
+time.stamp(time);
 
 /*
   .discord() returns a JSON with several pre-processed timestamps for Discord to display:
@@ -26,12 +26,12 @@ time.stamp();
 	You can also use .stamp() in combination with .discord():
     time.discord(time.stamp()).
 */
-time.discord();
+time.discord(time);
 
 /*
   .hms(value) converts seconds to hours:minutes:seconds
 */
-time.hms();
+time.hms(seconds);
 
 /*
   .date() returns a JSON with the current date formatted in different ways:
@@ -41,4 +41,4 @@ time.hms();
 		us,
 		ugly.
 */
-time.date();
+time.date(date);

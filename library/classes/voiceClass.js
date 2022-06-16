@@ -33,8 +33,10 @@ class voiceConstruct {
 		delete this.voiceChannelData[guild];
   }
   
-  async info() {
-    console.log(this.voiceChannelData);
+  async info(guildId) {
+    if (!guildId) return this.voiceChannelData;
+    if (this.voiceChannelData[guildId]) return this.voiceChannelData[guildId];
+    if (!this.voiceChannelData[guildId]) return false;
   }
   
   async join(joinInfo, incomingMessage) {
@@ -78,9 +80,10 @@ class voiceConstruct {
     const opusPacketsPromise = new Promise(function (resolve) {
       let packets = [];
       audioStream.on("data", function (d) { return packets.push(d); });
-      audioStream.on("end", function () { return resolve(packets); });
+      audioStream.on("end", function () { 
+      return resolve(packets); });
     });
-    console.log(this.voiceChannelData[guildId]);
+
     const netWorking = new music.Networking(this.voiceChannelData[guildId]);
 			if (netWorking.state.code !== music.NetworkingStatusCode.Ready) {
 				await new Promise(r => netWorking.once(music.NetworkingStatusCode.Ready, r));

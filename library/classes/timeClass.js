@@ -17,8 +17,9 @@ class timeConstruct {
 		}
 	}
 
-	discord(time) {
-		if (!time) var time = ~~(Date.now() / 1000);
+	discord(timeInfo) {
+		let time = ~~(Date.now() / 1000);
+		if (timeInfo) time = ~~(Date.now(timeInfo) / 1000);
 
 		return {
 			shortDate: `<t:${time}:d>`,
@@ -82,7 +83,8 @@ class timeConstruct {
 		};
 	}
 
-	stamp() {
+	stamp(stampNow) {
+		if (stampNow) return ~~(Date.now(stampNow) / 1000);
 		return ~~(Date.now() / 1000);
 	}
 }
