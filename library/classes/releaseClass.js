@@ -6,16 +6,20 @@ class relConstruct {
 				
 				let releaseInfo = {};
 				if (callBack[0].tag_name == releaseLocal) {
+					releaseInfo['discordLibraryName'] = 'Project Bow';
 					releaseInfo['libraryVersion'] = releaseLocal;
+					releaseInfo['Message'] = 'Your local version is up-to-date!';
 					return console.log(releaseInfo);
 				}
 				
 				if (callBack[0].tag_name <= releaseLocal) {
+					releaseInfo['discordLibraryName'] = 'Project Bow';
 					releaseInfo['libraryVersion'] = releaseLocal;
 					releaseInfo['Message'] = 'Your local version is NEWER than the current release!';
 					return console.log(releaseInfo);
 				}
 				
+				releaseInfo['discordLibraryName'] = 'Project Bow';
 				releaseInfo['Name'] = callBack[0].name;
 				releaseInfo['Version'] = callBack[0].tag_name;
 				releaseInfo['Date'] = {
