@@ -1,9 +1,4 @@
-class voiceConstruct {
-  constructor() {
-    this.voiceChannelData = {};
-    this.resolve;
-    this.reject;
-    function defer() {
+function defer() {
       var res, rej;
     
       var promise = new Promise((resolve, reject) => {
@@ -16,18 +11,26 @@ class voiceConstruct {
     
       return promise;
     }
+    
+class voiceConstruct {
+  constructor() {
+    this.voiceChannelData = {};
+    this.resolve;
+    this.reject;
+    
     this.infoPromise = defer();
   }
   
   async leave(guild, incomingMessage) {
-    const leaveNow = { op: 4, 
-				d: { 
-					guild_id: guild, 
-					channel_id: null, 
-					self_mute: false, 
-					self_deaf: false 
-				}
-			};
+    const leaveNow = { 
+      op: 4, 
+			d: { 
+				guild_id: guild, 
+				channel_id: null, 
+				self_mute: false, 
+				self_deaf: false 
+			}
+		};
 		
 		incomingMessage.socket.send(JSON.stringify(leaveNow));
 		delete this.voiceChannelData[guild];
@@ -40,14 +43,15 @@ class voiceConstruct {
   }
   
   async join(joinInfo, incomingMessage) {
-    const joinNow = { op: 4, 
-				d: { 
-					guild_id: joinInfo.guildId, 
-					channel_id: joinInfo.channelId, 
-					self_mute: false, 
-					self_deaf: false 
-				}
-			};
+    const joinNow = { 
+      op: 4, 
+			d: { 
+				guild_id: joinInfo.guildId, 
+				channel_id: joinInfo.channelId, 
+				self_mute: false, 
+				self_deaf: false 
+			}
+		};
 		
 		incomingMessage.socket.send(JSON.stringify(joinNow));
 
@@ -72,24 +76,39 @@ class voiceConstruct {
   
   async play(song, guildId) {
     await this.infoPromise;
-
-    const audioStream = fs.createReadStream(`./deleteLater/${song}.mp3`)
-      .pipe(new codecMaker.FFmpeg({ args: ["-analyzeduration", "0", "-loglevel", "0", "-f", "s16le", "-ar", "48000", "-ac", "2"] }))
-      .pipe(new codecMaker.opus.Encoder({ rate: 48000, channels: 2, frameSize: 960 }));
-            
-    const opusPacketsPromise = new Promise(function (resolve) {
-      let packets = [];
-      audioStream.on("data", function (d) { return packets.push(d); });
-      audioStream.on("end", function () { 
-      return resolve(packets); });
+    let checkStream = defer();
+    const audioStream = ytdl('http://www.youtube.com/watch?v=aqz-KE-bpKQ', {
+      filter: 'audioonly',
+      type: 'opus'
     });
+     checkStream.resolve();
+    //const audioStream = fs.createReadStream(`./deleteLater/${song}.mp3`)
+   // const audioStream = ytdl.getInfo('http://www.youtube.com/watch?v=aqz-KE-bpKQ')
+   // .on('error', (err) => {
+   //   console.log(err);
+   // })
+    
+   // .on('finish', () => {
+    //  console.log('Read stream Finished');
+    //});
+
+    //audioStream.on('progress', (_, totalDownloaded, total) => {  });
+    //.on('info', (info) => { console.log(info); });
+    //console.log(audioStream);
+    await checkStream;
+    audioStream.pipe(new codecMaker.FFmpeg({ args: ["-analyzeduration", "0", "-loglevel", "0", "-f", "s16le", "-ar", "48000", "-ac", "2"] }))
+    audioStream.pipe(new codecMaker.opus.Encoder({ rate: 48000, channels: 2, frameSize: 960 }));
+            
+    let packets = [];
+    audioStream.on("data", function (d) { return packets.push(d); });
+    audioStream.on("end", function () { return console.log('Done'); });
 
     const netWorking = new music.Networking(this.voiceChannelData[guildId]);
 			if (netWorking.state.code !== music.NetworkingStatusCode.Ready) {
 				await new Promise(r => netWorking.once(music.NetworkingStatusCode.Ready, r));
 			}
-
-			const opusPackets = await opusPacketsPromise;
+      console.log(netWorking.state.code);
+			const opusPackets = packets;
 			
 			let next = Date.now();
 			let preparedPacket;
