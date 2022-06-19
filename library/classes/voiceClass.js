@@ -74,18 +74,36 @@ class voiceConstruct {
     });
   }
   
+  async vol(volume, guildId) {
+    
+  }
+  
+      /*pause() {
+        this.paused = true;
+        this.setSpeaking(0);
+        if(this.current) {
+            if(!this.current.pausedTimestamp) {
+                this.current.pausedTimestamp = Date.now();
+            }
+            if(this.current.timeout) {
+                clearTimeout(this.current.timeout);
+                this.current.timeout = null;
+            }
+        }
+    }*/
+  
   async play(song, guildId) {
     await this.infoPromise;
     let checkStream = defer();
     let audioStream;
-    
+    let ffmpegAudio = new codecMaker.FFmpeg({ args: ["-analyzeduration", "0", "-loglevel", "0", "-f", "s16le", "-ar", "48000", "-ac", "2"] });
     if (song.toLowerCase().startsWith('http')) {
       audioStream = ytdl(`${song}`)
         .once('error', (e) => checkStream.reject(e))
         .once('progress', () =>{
           checkStream.resolve();
         })
-        .pipe(new codecMaker.FFmpeg({ args: ["-analyzeduration", "0", "-loglevel", "0", "-f", "s16le", "-ar", "48000", "-ac", "2"] }))
+        .pipe(ffmpegAudio)
         .pipe(new codecMaker.opus.Encoder({ rate: 48000, channels: 2, frameSize: 960 }));
     } else {
       audioStream = fs.createReadStream(`./deleteLater/${song}.mp3`)
@@ -95,7 +113,7 @@ class voiceConstruct {
     }
       
     await checkStream;
-     
+
     let packets = [];
     audioStream.on("data", function (d) { return packets.push(d); });
     audioStream.on("end", function () {  });
@@ -116,6 +134,7 @@ class voiceConstruct {
 							netWorking.sendEncryptedPacket(preparedPacket);
 					const packet = opusPackets.shift();
 					opusPackets.push(packet);
+					console.log(ffmpegAudio);
 					preparedPacket = netWorking.encryptAudioPacket(packet);
 					setTimeout(audioCycleStep, next - Date.now());
 			}

@@ -50,7 +50,7 @@ class VolumeTransformer extends Transform {
     this.volume = typeof options.volume === 'undefined' ? 1 : options.volume;
     this._chunk = Buffer.alloc(0);
   }
-
+  
   _readInt(buffer, index) { return index; }
   _writeInt(buffer, int, index) { return index; }
 
