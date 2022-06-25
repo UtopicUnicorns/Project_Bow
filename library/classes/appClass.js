@@ -10,10 +10,7 @@ class appConstruct {
 	}
 	
 	get appCreate() {
-		if(this.command[0]) {
-			if(this.subCommand[0]) this.command[0]['options'].push(this.subCommand[0]);
-			this.data['options'].push(this.command[0]);
-		}
+		if(this.command[0]) this.data['options'].push(this.command[0]);
 		const util = require('util')
 		return console.log(util.inspect(this.data, false, null, true /* enable colors */)); //console.log(this.data);
 		//return fly.send(JSON.stringify(this.data), `/api/applications/${appId}/${this.target}`, 'POST', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
@@ -49,8 +46,7 @@ class appConstruct {
 			this.data['options'].push(this.command[0]);
 			this.command.length = 0;
 		}
-		let newCommand = {name: string};
-		if(!this.command[0]) this.command.push(newCommand);
+		if(!this.command[0]) this.command.push({name: string});
 		return this;
 	}
 	
@@ -89,13 +85,9 @@ class appConstruct {
 		if(!string) return this;
 		if(!this.command[0]) return this;
 		if(this.command[0]['choices']) return this;
-		this.command[0]['options'] = [];
-		if (this.subCommand[0]) {
-			this.command[0]['options'].push(this.subCommand[0]);
-			this.subCommand.length = 0;
-		}
-		let newCommand = {name: string};
-		if(!this.subCommand[0]) this.subCommand.push(newCommand);
+		if(this.command[0]['options'] && this.command[0]['options'][0]) this.command[0]['options'].push({name: string});
+		if(!this.command[0]['options']) this.command[0]['options'] = [{name: string}];
+
 		return this;
 	}
 	
@@ -103,34 +95,34 @@ class appConstruct {
 		if(!string) return this;
 		if(!this.command[0]) return this;
 		if(this.command[0]['choices']) return this;
-		this.subCommand[0]['description'] = string;
+		if(this.command[0]['options'] && this.command[0]['options'][0]) this.command[0]['options'][this.command[0]['options'].length-1]['description'] = string;
 		return this;
 	}
 	
 	subCommandType(integer) {
-		if(!this.command[0]) return this;
 		if(!integer) return this;
+		if(!this.command[0]) return this;
 		if(this.command[0]['choices']) return this;
-		this.subCommand[0]['type'] = integer;
+		if(this.command[0]['options'] && this.command[0]['options'][0]) this.command[0]['options'][this.command[0]['options'].length-1]['type'] = integer;
 		return this;
 	}
 	
 	subCommandRequired(boolean) {
+		if(!boolean) return this;
 		if(!this.command[0]) return this;
 		if(this.command[0]['choices']) return this;
-		if(!boolean) this.subCommand[0]['required'] = false;
-		if(boolean) this.subCommand[0]['required'] = true;
+		if(this.command[0]['options'] && this.command[0]['options'][0]) this.command[0]['options'][this.command[0]['options'].length-1]['required'] = boolean;
 		return this;
 	}
 	
 	subCommandChoices(name, value) {
-		if(!this.command[0]) return this;
 		if(!name) return this;
 		if(!value) return this;
+		if(!this.command[0]) return this;
 		if(this.command[0]['choices']) return this;
-		if(this.subCommand[0]['options']) return this;
-		if(!this.subCommand[0]['choices']) this.subCommand[0]['choices'] = [];
-		this.subCommand[0]['choices'].push({name: name, value: value});
+		if(this.command[0]['options'][this.command[0]['options'].length-1]['options']) return this;
+		if(this.command[0]['options'][this.command[0]['options'].length-1]['choices']) this.command[0]['options'][this.command[0]['options'].length-1]['choices'].push({name: name, value: value});
+		if(!this.command[0]['options'][this.command[0]['options'].length-1]['choices']) this.command[0]['options'][this.command[0]['options'].length-1]['choices'] = [{name: name, value: value}];
 		return this;
 	}
 	
