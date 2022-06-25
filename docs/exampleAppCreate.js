@@ -20,17 +20,25 @@
 */
 new app()
 			.appGuild("660988248788697100")
-			.appName("command")
-			.appDescription("Description of example Command")
+			.appName("appName")
+			.appDescription("appDescription")
 			.appType(1)
-			.appCreate;
-
-/*Each time you use .commandName() the library will assume you are creating a new sub command.*/
-new app()
-			.appGuild("660988248788697100")
-			.appName("command")
-			.appDescription("Description of example Command")
-			.appType(1)
+				.commandName("commandName1")
+				.commandDescription("commandDescription1")
+				.commandType(3)
+				.commandRequired(false)
+					.subCommandName('subCommandName1')
+					.subCommandDescription('subCommandDescription1')
+					.subCommandType(1)
+					.subCommandRequired(false)
+						.deepCommandName('deepCommandName1')
+						.deepCommandDescription('deepCommandDescription1')
+						.deepCommandType(1)
+						.deepCommandRequired(true)
+						.deepCommandChoices('deepCommandChoices1', 'deepCommandChoices1')
+						.deepCommandChoices('deepCommandChoices1', 'deepCommandChoices1')
+						.deepCommandChoices('deepCommandChoices1', 'deepCommandChoices1')
+						.deepCommandChoices('deepCommandChoices1', 'deepCommandChoices1')
 			.appCreate;
 			
 /*
