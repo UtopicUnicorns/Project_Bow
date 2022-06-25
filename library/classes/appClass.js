@@ -10,9 +10,9 @@ class appConstruct {
 	
 	get appCreate() {
 		if(this.command[0]) this.data['options'].push(this.command[0]);
-		const util = require('util')
-		return console.log(util.inspect(this.data, false, null, true /* enable colors */)); //console.log(this.data);
-		//return fly.send(JSON.stringify(this.data), `/api/applications/${appId}/${this.target}`, 'POST', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
+		this.command.length = 0;
+		console.log(this.data);
+		return fly.send(JSON.stringify(this.data), `/api/applications/${appId}/${this.target}`, 'POST', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
 	}
 	
 	appGuild(string) {
