@@ -62,7 +62,22 @@ new app()
 		commandDescription() is a string.
 		commandType() is an integer:
 			If commandType is 1 then you can only use subCommands afterwards within the same space.
-			If commandType is 2 then you have to use first subCommands with subCommandType 1 and then deepCommands.	*/
+			If commandType is 2 then you have to use first subCommands with subCommandType 1 and then deepCommands.	
+		subCommandName() is an unique lowercase string
+		subCommandDescription() is a string
+		subCommandType() is an integer:
+			if commandType is 2, then subCommandType needs to be 1 for deepCommands.
+			If commandType is 1, then subCommandType can be any of the options with exception of 1 and 2.
+		subCommandRequired() is a boolean.
+		subCommandChoices() is a dual value and can only be used if commandType is 1:
+			('name', 'value') within the same choice set the names needs to be unique.
+		deepCommandName() is an unique lowercase string:
+			deepCommands can only be used if commandType is 2 AND subCommandType is 1
+		deepCommandDescription() is a string.
+		deepCommandType() is an integer and can be any of the options with the exception of type 1 and 2.
+		deepCommandRequired() is a boolean.
+		deepCommandChoices() is a dual value:
+			('name', 'value') within the same choice set the names needs to be unique.	*/
 new app()
 	.appGuild("guildId")
 	.appName("appname")
@@ -84,7 +99,7 @@ new app()
 		.commandName("commandname2")
 		.commandDescription("commandDescription2")
 		.commandType(1)
-		.subCommandName('subcommandname2')
+			.subCommandName('subcommandname2')
 			.subCommandDescription('subCommandDescription2')
 			.subCommandType(3)
 			.subCommandChoices('name', 'value')
@@ -92,19 +107,17 @@ new app()
 			.subCommandChoices('name', 'value')
 	.appCreate;
 
-/*
-	The following example is to create a command for rick clicking on a user.
-	The type therefor is also 2
-*/
+/*	The following example is a type 2 command. 
+		This means that when you rightclick a user this shows up.
+		appName() is an unique lowercase string.	*/
 new app()
 			.appName("command")
 			.appType(2)
 			.appCreate;
 
-/*
-	This final example is a type 3 command.
-	This means that when you rightclick a message this shows up.
-*/
+/*	This final example is a type 3 command.
+		This means that when you rightclick a message this shows up.
+		appName() is an unique lowercase string.	*/
 new app()
 			.appName("translate")
 			.appType(3)
