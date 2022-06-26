@@ -111,15 +111,15 @@ new app()
 		This means that when you rightclick a user this shows up.
 		appName() is an unique lowercase string.	*/
 new app()
-			.appName("command")
-			.appType(2)
-			.appCreate;
+	.appName("command")
+	.appType(2)
+	.appCreate;
 
 /*	This final example is a type 3 command.
 		This means that when you rightclick a message this shows up.
 		appName() is an unique lowercase string.	*/
 new app()
-			.appName("translate")
-			.appType(3)
-			.appCreate;
+	.appName("translate")
+	.appType(3)
+	.appCreate;
 
