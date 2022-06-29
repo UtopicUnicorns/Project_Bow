@@ -1,13 +1,11 @@
-/*
-  The below examples show the event handler receiving different gateway events.
-  The events are automatically shot out by the library, but do not require the handler to catch them.
-  Basically this means that you could only have the READY event and nothing else without issue.
-  The below examples show the current possibilities of gateway events, 
-    Discord can add more when they want, and remove the ones they want.
-  The event handler will automatically adjust to additions and deletions in events, 
-    which will only have to be reflected in the gateway event names.
-  All events are able to be fetched just a single time by using mailMan.once
-*/
+/*  The below examples show the event handler receiving different gateway events.
+    The events are automatically shot out by the library, but do not require the handler to catch them.
+    Basically this means that you could only have the READY event and nothing else without issue.
+    The below examples show the current possibilities of gateway events, 
+      Discord can add more when they want, and remove the ones they want.
+    The event handler will automatically adjust to additions and deletions in events, 
+      which will only have to be reflected in the gateway event names.
+    All events are able to be fetched just a single time by using mailMan.once  */
 mailMan.on('INTERACTION_CREATE', async (incomingMessage) => console.log(incomingMessage));
 
 mailMan.on('GUILD_CREATE', async (incomingMessage) => console.log(incomingMessage));

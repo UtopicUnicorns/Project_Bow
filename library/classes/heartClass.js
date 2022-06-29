@@ -43,9 +43,6 @@ class heartConstruct {
 			},
 		};
 
-		this.guilds = {};
-		this.users = {};
-
 		mailMan.on('socketBeat', async () => {
 			this.clientStruct.beatingHeart++;
 			this.puppet.send(JSON.stringify({ op: 1, d: this.clientStruct.seqNum }));
@@ -88,24 +85,6 @@ class heartConstruct {
 		mailMan.on('socketIdentify', async () => this.puppet.send(JSON.stringify(this.identifyInfo)));
 		mailMan.on('socketPing', async () => this.puppet.send(JSON.stringify({ op: 1 })));
 		mailMan.on('socketError', async (error) => console.log(error));
-		mailMan.on('socketGmu', async (member) => this.users[member.user.id] = member);
-		mailMan.on('socketGc', async (guild) => this.guilds[guild.id] = guild);
-	}
-
-	guild(id) {
-		if (!id) return "Guild needs to have an ID or ALL tag.";
-		if (id.toLowerCase() == "all") return this.guilds;
-		if (this.guilds[id]) return this.guilds[id];
-		
-		return 'Something has gone wrong with getting guild information, did you provide a proper ID, or is the guild not cached/linked to the bot?';
-	}
-
-	user(id) {
-		if (!id) return "User needs to have an ID or ALL tag.";
-		if (id.toLowerCase() == "all") return this.users;
-		if (this.users[id]) return this.users[id];
-		
-		return 'Something has gone wrong with getting user information, did you provide a proper ID, or is the user not cached/linked to the bot?';
 	}
 
 	run() {
@@ -139,8 +118,8 @@ class heartConstruct {
 
 				if (msg.op == 10 && msg.d) mailMan.emit('socket10', msg.d);
 				if (msg.op == 1) mailMan.emit('socketPing');
-				if (msg.t == 'GUILD_CREATE') mailMan.emit('socketGc', msg.d);
-				if (msg.t == 'GUILD_MEMBER_UPDATE') mailMan.emit('socketGmu', msg.d);
+				if (msg.t == 'GUILD_CREATE') mailMan.emit('cacheUpdate', { guild: msg.d });
+				if (msg.t == 'GUILD_MEMBER_UPDATE') mailMan.emit('cacheUpdate', { member: msg.d} );
 				if (msg.t == 'READY') mailMan.emit('socketReady', msg);
 				if (msg.t == 'RESUMED') mailMan.emit('socketResume', msg);
 

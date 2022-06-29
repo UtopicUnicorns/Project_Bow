@@ -34,6 +34,10 @@ class threadConstruct {
 	joinedPrivateArchive(channel) {
 		return fly.send('', `/api/channels/${channel}/users/@me/threads/archived/private`, 'GET', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
 	}
+	
+	allThreads(guildId) {
+		return fly.send('', `/api/guilds/${guildId}/threads/active`, 'GET', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
+	}
 }
 
 module.exports = threadConstruct;

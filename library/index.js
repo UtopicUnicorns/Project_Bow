@@ -27,8 +27,6 @@ exports.lib = async function (config) {
 
 	botConstruct = await require('./classes/botClass');
 	bot = new botConstruct();
-	cacheConstruct = await require('./classes/cacheClass');
-	cache = new cacheConstruct();
 	timeConstruct = await require('./classes/timeClass');
 	time = new timeConstruct();
 	mimeConstruct = await require('./classes/mimeClass');
@@ -45,6 +43,9 @@ exports.lib = async function (config) {
 	heartConstruct = await require('./classes/heartClass');
 	heart = new heartConstruct();
 	heart.run(this);
+	
+	cacheConstruct = await require('./classes/cacheClass');
+	cache = new cacheConstruct();
 	
 	ytdl = await require('./youPoop');
 	codecMaker = await require('./prismMedia');

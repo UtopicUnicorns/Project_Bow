@@ -1,6 +1,4 @@
-/*
-  Highly experimental voice support.
-*/
+/*	Highly experimental voice support.	*/
 
 let player = new voice();
 		player.join({ guildId: 'guildId', channelId: 'channelId' }, incomingMessage);
