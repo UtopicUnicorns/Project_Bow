@@ -10,7 +10,7 @@ class cacheConstruct {
 			presence: {},			
 		};
 		
-		mailMan.on('cacheUpdate', async (info) => {
+		if (botCaching) mailMan.on('cacheUpdate', async (info) => {
 			//if (info['member']) console.log('check member');
 			if (info['guild']) {
 				info['guild'].stickers.forEach((stick) => this.cache['sticker'][stick.id] = stick);

@@ -11,6 +11,7 @@ exports.lib = async function (config) {
 	appId = await configData.appId;
 	intent = await configData.intent;
 	botId = await configData.botId;
+	botCaching = await configData.caching;
 
 	httpsConstruct = await require('./classes/httpsClass');
 	fly = new httpsConstruct();

@@ -17,6 +17,7 @@ class voiceConstruct {
     this.voiceChannelData = {};
     this.resolve;
     this.reject;
+    this.volumeLevel = 0.9;
     
     this.infoPromise = defer();
   }
@@ -68,47 +69,38 @@ class voiceConstruct {
       mailMan.on('VOICE_SERVER_UPDATE', async (incomingMessage) => {
         this.voiceChannelData[incomingMessage.message.d.guild_id]['token'] = incomingMessage.message.d.token;
         this.voiceChannelData[incomingMessage.message.d.guild_id]['endpoint'] = incomingMessage.message.d.endpoint;
-
+        this.voiceChannelData[incomingMessage.message.d.guild_id]['volume'] = 0.9;
+        
         this.infoPromise.resolve();
       });
     });
   }
   
   async vol(volume, guildId) {
-    
+    this.voiceChannelData[guildId]['volume'] = volume;
+    mailMan.emit('volChange');
   }
-  
-      /*pause() {
-        this.paused = true;
-        this.setSpeaking(0);
-        if(this.current) {
-            if(!this.current.pausedTimestamp) {
-                this.current.pausedTimestamp = Date.now();
-            }
-            if(this.current.timeout) {
-                clearTimeout(this.current.timeout);
-                this.current.timeout = null;
-            }
-        }
-    }*/
   
   async play(song, guildId) {
     await this.infoPromise;
     let checkStream = defer();
     let audioStream;
     let ffmpegAudio = new codecMaker.FFmpeg({ args: ["-analyzeduration", "0", "-loglevel", "0", "-f", "s16le", "-ar", "48000", "-ac", "2"] });
+    let encodeStream = new codecMaker.opus.Encoder({ rate: 48000, channels: 2, frameSize: 960 });
+    let streamVolume = new codecMaker.VolumeTransformer({ type: 's16le', volume: this.voiceChannelData[guildId]['volume'] });
+    
     if (song.toLowerCase().startsWith('http')) {
       audioStream = ytdl(`${song}`)
         .once('error', (e) => checkStream.reject(e))
-        .once('progress', () =>{
-          checkStream.resolve();
-        })
+        .once('progress', () => checkStream.resolve())
         .pipe(ffmpegAudio)
-        .pipe(new codecMaker.opus.Encoder({ rate: 48000, channels: 2, frameSize: 960 }));
+        .pipe(streamVolume)
+        .pipe(encodeStream);
     } else {
       audioStream = fs.createReadStream(`./deleteLater/${song}.mp3`)
-        .pipe(new codecMaker.FFmpeg({ args: ["-analyzeduration", "0", "-loglevel", "0", "-f", "s16le", "-ar", "48000", "-ac", "2"] }))
-        .pipe(new codecMaker.opus.Encoder({ rate: 48000, channels: 2, frameSize: 960 }));
+        .pipe(ffmpegAudio)
+        .pipe(streamVolume)
+        .pipe(encodeStream);
       checkStream.resolve();
     }
       
@@ -119,26 +111,22 @@ class voiceConstruct {
     audioStream.on("end", function () {  });
 
     const netWorking = new music.Networking(this.voiceChannelData[guildId]);
-			if (netWorking.state.code !== music.NetworkingStatusCode.Ready) {
-				await new Promise(r => netWorking.once(music.NetworkingStatusCode.Ready, r));
-			}
-
-			const opusPackets = packets;
-			
-			let next = Date.now();
-			let preparedPacket;
-			
-			function audioCycleStep() {
-					next += 20;
-					if (preparedPacket)
-							netWorking.sendEncryptedPacket(preparedPacket);
-					const packet = opusPackets.shift();
-					opusPackets.push(packet);
-					console.log(ffmpegAudio);
-					preparedPacket = netWorking.encryptAudioPacket(packet);
-					setTimeout(audioCycleStep, next - Date.now());
-			}
-			setImmediate(audioCycleStep);
+		if (netWorking.state.code !== music.NetworkingStatusCode.Ready) await new Promise(r => netWorking.once(music.NetworkingStatusCode.Ready, r));
+		const opusPackets = packets;
+		let next = Date.now();
+		let preparedPacket;
+		let audioLevelGet = this.voiceChannelData[guildId]['volume'];
+		mailMan.on('volChange', async() => audioLevelGet = this.voiceChannelData[guildId]['volume'] );
+		
+		function audioCycleStep() {
+			next += 20;
+			if (preparedPacket) netWorking.sendEncryptedPacket(preparedPacket);
+			const packet = opusPackets.shift();
+			opusPackets.push(packet);
+			preparedPacket = netWorking.encryptAudioPacket(packet);
+			setTimeout(audioCycleStep, next - Date.now());
+		}
+		setImmediate(audioCycleStep);
   }
 }
 
