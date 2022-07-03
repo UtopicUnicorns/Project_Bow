@@ -108,7 +108,6 @@ class Networking extends EventEmitter {
       preparedPacket = Buffer.concat([packetBuffer, secretboxMethods.close(opusPacket, nonce, secretKey)]);
     }
     this.#encryptedBuffers.add(preparedPacket);
-
     return preparedPacket;
   }
   sendEncryptedPacket(buffer) {

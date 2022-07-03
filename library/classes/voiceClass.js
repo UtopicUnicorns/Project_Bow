@@ -17,7 +17,6 @@ class voiceConstruct {
     this.voiceChannelData = {};
     this.resolve;
     this.reject;
-    this.volumeLevel = 0.9;
     
     this.infoPromise = defer();
   }
@@ -86,16 +85,16 @@ class voiceConstruct {
     let checkStream = defer();
     let audioStream;
     let ffmpegAudio = new codecMaker.FFmpeg({ args: ["-analyzeduration", "0", "-loglevel", "0", "-f", "s16le", "-ar", "48000", "-ac", "2"] });
-    let encodeStream = new codecMaker.opus.Encoder({ rate: 48000, channels: 2, frameSize: 960 });
     let streamVolume = new codecMaker.VolumeTransformer({ type: 's16le', volume: this.voiceChannelData[guildId]['volume'] });
-    
+    let encodeStream = new codecMaker.opus.Encoder({ rate: 48000, channels: 2, frameSize: 960 });
+   
     if (song.toLowerCase().startsWith('http')) {
       audioStream = ytdl(`${song}`)
         .once('error', (e) => checkStream.reject(e))
         .once('progress', () => checkStream.resolve())
-        .pipe(ffmpegAudio)
-        .pipe(streamVolume)
-        .pipe(encodeStream);
+        .pipe(ffmpegAudio) //toPCM
+        .pipe(streamVolume) //volChange
+        .pipe(encodeStream); //encodeOpus
     } else {
       audioStream = fs.createReadStream(`./deleteLater/${song}.mp3`)
         .pipe(ffmpegAudio)
@@ -108,23 +107,23 @@ class voiceConstruct {
 
     let packets = [];
     audioStream.on("data", function (d) { return packets.push(d); });
-    audioStream.on("end", function () {  });
 
     const netWorking = new music.Networking(this.voiceChannelData[guildId]);
 		if (netWorking.state.code !== music.NetworkingStatusCode.Ready) await new Promise(r => netWorking.once(music.NetworkingStatusCode.Ready, r));
 		const opusPackets = packets;
 		let next = Date.now();
 		let preparedPacket;
+		
 		let audioLevelGet = this.voiceChannelData[guildId]['volume'];
 		mailMan.on('volChange', async() => audioLevelGet = this.voiceChannelData[guildId]['volume'] );
-		
+
 		function audioCycleStep() {
 			next += 20;
 			if (preparedPacket) netWorking.sendEncryptedPacket(preparedPacket);
 			const packet = opusPackets.shift();
-			opusPackets.push(packet);
-			preparedPacket = netWorking.encryptAudioPacket(packet);
-			setTimeout(audioCycleStep, next - Date.now());
+      opusPackets.push(packet);
+      preparedPacket = netWorking.encryptAudioPacket(packet);
+      setTimeout(audioCycleStep, next - Date.now());	
 		}
 		setImmediate(audioCycleStep);
   }

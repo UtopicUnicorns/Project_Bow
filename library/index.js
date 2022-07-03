@@ -48,6 +48,9 @@ exports.lib = async function (config) {
 	cacheConstruct = await require('./classes/cacheClass');
 	cache = new cacheConstruct();
 	
+	watchConstruct = await require('./classes/watchClass');
+	watch = new watchConstruct();
+	
 	ytdl = await require('./youPoop');
 	codecMaker = await require('./prismMedia');
 	music = await require('./iHaveNoMouthAndIMustScream/');
