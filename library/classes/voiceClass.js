@@ -32,7 +32,7 @@ class voiceConstruct {
 			}
 		};
 		
-		incomingMessage.socket.send(JSON.stringify(leaveNow));
+		incomingMessage.client.socket.send(JSON.stringify(leaveNow));
 		delete this.voiceChannelData[guild];
   }
   
@@ -53,22 +53,22 @@ class voiceConstruct {
 			}
 		};
 		
-		incomingMessage.socket.send(JSON.stringify(joinNow));
+		incomingMessage.client.socket.send(JSON.stringify(joinNow));
 
 		mailMan.on('VOICE_STATE_UPDATE', async (incomingMessage) => {
-      if (incomingMessage.message.d.user_id !== botId) return; 
-      if (incomingMessage.message.d.channel_id == null) return;
-      this.voiceChannelData[incomingMessage.message.d.guild_id] = {};
-      this.voiceChannelData[incomingMessage.message.d.guild_id]['guildId'] = incomingMessage.message.d.guild_id;
-      this.voiceChannelData[incomingMessage.message.d.guild_id]['serverId'] = incomingMessage.message.d.guild_id;
-      this.voiceChannelData[incomingMessage.message.d.guild_id]['channelId'] = incomingMessage.message.d.channel_id;
-      this.voiceChannelData[incomingMessage.message.d.guild_id]['sessionId'] = incomingMessage.message.d.session_id;
-      this.voiceChannelData[incomingMessage.message.d.guild_id]['userId'] = incomingMessage.message.d.user_id;
+      if (incomingMessage.user_id !== botId) return; 
+      if (incomingMessage.channel_id == null) return;
+      this.voiceChannelData[incomingMessage.guild_id] = {};
+      this.voiceChannelData[incomingMessage.guild_id]['guildId'] = incomingMessage.guild_id;
+      this.voiceChannelData[incomingMessage.guild_id]['serverId'] = incomingMessage.guild_id;
+      this.voiceChannelData[incomingMessage.guild_id]['channelId'] = incomingMessage.channel_id;
+      this.voiceChannelData[incomingMessage.guild_id]['sessionId'] = incomingMessage.session_id;
+      this.voiceChannelData[incomingMessage.guild_id]['userId'] = incomingMessage.user_id;
       
       mailMan.on('VOICE_SERVER_UPDATE', async (incomingMessage) => {
-        this.voiceChannelData[incomingMessage.message.d.guild_id]['token'] = incomingMessage.message.d.token;
-        this.voiceChannelData[incomingMessage.message.d.guild_id]['endpoint'] = incomingMessage.message.d.endpoint;
-        this.voiceChannelData[incomingMessage.message.d.guild_id]['volume'] = 0.9;
+        this.voiceChannelData[incomingMessage.guild_id]['token'] = incomingMessage.token;
+        this.voiceChannelData[incomingMessage.guild_id]['endpoint'] = incomingMessage.endpoint;
+        this.voiceChannelData[incomingMessage.guild_id]['volume'] = 0.9;
         
         this.infoPromise.resolve();
       });

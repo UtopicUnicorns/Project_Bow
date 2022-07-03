@@ -3,7 +3,7 @@ class messageConstruct {
 		if (!message) return 'No message object, please correct your mistake.';
 
 		let constructed_message = {};
-		let message_images_details = [];
+		let messageImage = [];
 		const fields = {};
 
 		if (message.content) constructed_message['content'] = message.content;
@@ -18,22 +18,22 @@ class messageConstruct {
 				let ext = path.extname(i.file.toLowerCase());
 				let mime_type = mime.type(ext);
 
-				let attachment_construct = {
-					id: message_images_details.length,
+				let attachmentConstruct = {
+					id: messageImage.length,
 					description: i.description,
 					filename: i.filename,
 				};
 
-				fields[`files[${message_images_details.length}]`] = {
+				fields[`files[${messageImage.length}]`] = {
 					name: i.file,
 					type: mime_type,
 					data: fs.readFileSync(i.file),
 				};
 
-				message_images_details.push(attachment_construct);
+				messageImage.push(attachmentConstruct);
 			}
 
-			constructed_message['attachments'] = message_images_details;
+			constructed_message['attachments'] = messageImage;
 		}
 
 		fields['payload_json'] = JSON.stringify(constructed_message);
@@ -56,7 +56,7 @@ class messageConstruct {
 		if (!message) return 'No message object, please correct your mistake.';
 
 		let constructed_message = {};
-		let message_images_details = [];
+		let messageImage = [];
 		const fields = {};
 
 		if (message.content) constructed_message['content'] = message.content;
@@ -71,22 +71,22 @@ class messageConstruct {
 				let ext = path.extname(i.file.toLowerCase());
 				let mime_type = mime.type(ext);
 
-				let attachment_construct = {
-					id: message_images_details.length,
+				let attachmentConstruct = {
+					id: messageImage.length,
 					description: i.description,
 					filename: i.filename,
 				};
 
-				fields[`files[${message_images_details.length}]`] = {
+				fields[`files[${messageImage.length}]`] = {
 					name: i.file,
 					type: mime_type,
 					data: fs.readFileSync(i.file),
 				};
 
-				message_images_details.push(attachment_construct);
+				messageImage.push(attachmentConstruct);
 			}
 
-			constructed_message['attachments'] = message_images_details;
+			constructed_message['attachments'] = messageImage;
 		}
 
 		fields['payload_json'] = JSON.stringify(constructed_message);
@@ -158,7 +158,7 @@ class messageConstruct {
 			type: reply.type,
 			data: {},
 		};
-		let message_images_details = [];
+		let messageImage = [];
 		const fields = {};
 
 		if (reply.content) constructed_message.data['content'] = reply.content;
@@ -173,22 +173,22 @@ class messageConstruct {
 				let ext = path.extname(i.file.toLowerCase());
 				let mime_type = mime.type(ext);
 
-				let attachment_construct = {
-					id: message_images_details.length,
+				let attachmentConstruct = {
+					id: messageImage.length,
 					description: i.description,
 					filename: i.filename,
 				};
 
-				fields[`files[${message_images_details.length}]`] = {
+				fields[`files[${messageImage.length}]`] = {
 					name: i.file,
 					type: mime_type,
 					data: fs.readFileSync(i.file),
 				};
 
-				message_images_details.push(attachment_construct);
+				messageImage.push(attachmentConstruct);
 			}
 
-			constructed_message.data['attachments'] = message_images_details;
+			constructed_message.data['attachments'] = messageImage;
 		}
 
 		fields['payload_json'] = JSON.stringify(constructed_message);
@@ -204,7 +204,7 @@ class messageConstruct {
 
 		let newBuffer = Buffer.concat(fetcher);
 
-		return fly.send(newBuffer, `/api/interactions/${message.message.d.id}/${message.message.d.token}/callback`, 'POST', 'discord.com', 443, { 'Content-Type': `multipart/form-data; boundary=${boundary}`, Authorization: `Bot ${token}` });
+		return fly.send(newBuffer, `/api/interactions/${message.id}/${message.token}/callback`, 'POST', 'discord.com', 443, { 'Content-Type': `multipart/form-data; boundary=${boundary}`, Authorization: `Bot ${token}` });
 	}
 }
 

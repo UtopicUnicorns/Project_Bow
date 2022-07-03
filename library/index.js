@@ -54,6 +54,7 @@ exports.lib = async function (config) {
 	ytdl = await require('./youPoop');
 	codecMaker = await require('./prismMedia');
 	music = await require('./iHaveNoMouthAndIMustScream/');
-	voice = await require('./classes/voiceClass');
+	voiceConstruct = await require('./classes/voiceClass');
+	voice = new voiceConstruct();
 };
 

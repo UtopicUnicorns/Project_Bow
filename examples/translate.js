@@ -1,6 +1,6 @@
 module.exports = {
-  name: 'music',
-  description: 'play music',
+  name: 'translate',
+  description: 'translate message',
   async execute(data) {
     console.log(data);
     return this;

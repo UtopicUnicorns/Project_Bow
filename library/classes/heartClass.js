@@ -1,9 +1,7 @@
 class heartConstruct {
 	constructor() {
-		this.puppet;
-
+		this.puppet;			
 		this.clientStruct = {
-			client: null,
 			beatInterval: 5000,
 			beatingHeart: null,
 			seqNum: null,
@@ -11,23 +9,22 @@ class heartConstruct {
 		};
 		
 		let intentsNum = 0;
-
 		if (intent.GUILDS) intentsNum = intentsNum + (1 << 0);
-		if (intent.GUILD_MEMBERS) intentsNum = intentsNum + (1 << 1); 
+			if (intent.GUILD_MEMBERS) intentsNum = intentsNum + (1 << 1); 
 		if (intent.GUILD_BANS) intentsNum = intentsNum + (1 << 2);
-		if (intent.GUILD_EMOJIS_AND_STICKERS) intentsNum = intentsNum + (1 << 3); 
+			if (intent.GUILD_EMOJIS_AND_STICKERS) intentsNum = intentsNum + (1 << 3); 
 		if (intent.GUILD_INTEGRATIONS) intentsNum = intentsNum + (1 << 4);
-		if (intent.GUILD_WEBHOOKS) intentsNum = intentsNum + (1 << 5);
+			if (intent.GUILD_WEBHOOKS) intentsNum = intentsNum + (1 << 5);
 		if (intent.GUILD_INVITES) intentsNum = intentsNum + (1 << 6);
-		if (intent.GUILD_VOICE_STATES) intentsNum = intentsNum + (1 << 7);
+			if (intent.GUILD_VOICE_STATES) intentsNum = intentsNum + (1 << 7);
 		if (intent.GUILD_PRESENCES) intentsNum = intentsNum + (1 << 8);
-		if (intent.GUILD_MESSAGES) intentsNum = intentsNum + (1 << 9);
+			if (intent.GUILD_MESSAGES) intentsNum = intentsNum + (1 << 9);
 		if (intent.GUILD_MESSAGE_REACTIONS) intentsNum = intentsNum + (1 << 10); 
-		if (intent.GUILD_MESSAGE_TYPING) intentsNum = intentsNum + (1 << 11);
+			if (intent.GUILD_MESSAGE_TYPING) intentsNum = intentsNum + (1 << 11);
 		if (intent.DIRECT_MESSAGES) intentsNum = intentsNum +  (1 << 12);
-		if (intent.DIRECT_MESSAGE_REACTIONS) intentsNum = intentsNum + (1 << 13);
+			if (intent.DIRECT_MESSAGE_REACTIONS) intentsNum = intentsNum + (1 << 13);
 		if (intent.DIRECT_MESSAGE_TYPING) intentsNum = intentsNum + (1 << 14);
-		if (intent.MESSAGE_CONTENT) intentsNum = intentsNum + (1 << 15);
+			if (intent.MESSAGE_CONTENT) intentsNum = intentsNum + (1 << 15);
 		if (intent.GUILD_SCHEDULED_EVENTS) intentsNum = intentsNum + (1 << 16); 
 		
 		this.identifyInfo = {
@@ -56,8 +53,17 @@ class heartConstruct {
 
 		mailMan.on('socketMessage', async (message) => {
 			this.clientStruct.seqNum = message.s;
-			mailMan.emit(message.t, { message: message, client: this.clientStruct, socket: this.puppet });
-			mailMan.emit("rawSocket", { message: message, client: this.clientStruct, socket: this.puppet });
+			let messageBuild = {};
+			if(message.op == 0) {
+				messageBuild = message.d;
+					messageBuild['client'] = {};
+				messageBuild['client']['event'] = message.t;
+					messageBuild['client']['sequence'] = message.s;
+				messageBuild['client']['op'] = message.op;
+					messageBuild['client']['socket'] = this.puppet;
+			}
+			mailMan.emit(message.t, messageBuild);
+			mailMan.emit("rawSocket", { message: message, socket: this.puppet });
 		});
 
 		mailMan.on('socket10', async (info) => {
@@ -77,7 +83,7 @@ class heartConstruct {
 				mailMan.emit('socketInterval', info.heartbeat_interval);
 			}
 		});
-
+		
 		mailMan.on('socketResume', async (info) => mailMan.emit('socketPulse', true));
 		mailMan.on('socketInterval', async (info) => (this.clientStruct.beatInterval = info));
 		mailMan.on('socketClose', async (code) => this.restart());

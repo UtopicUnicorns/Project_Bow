@@ -17,7 +17,7 @@ class botConstruct {
 			d: this.input,
 		};
 
-		client.socket.send(JSON.stringify(this.presenceUpdate));
+		client.client.socket.send(JSON.stringify(this.presenceUpdate));
 	}
 }
 
