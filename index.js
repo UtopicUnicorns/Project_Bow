@@ -1,5 +1,5 @@
 const projectBow = await import('./library/index.js');
-await projectBow.lib('./configs.json');
+  await projectBow.lib('./configs.json');
 
 mailMan.on('INTERACTION_CREATE', async (incomingMessage) => { /**/ } );
 mailMan.on('GUILD_CREATE', async (incomingMessage) => { /**/ } );

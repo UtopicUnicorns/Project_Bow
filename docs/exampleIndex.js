@@ -8,7 +8,7 @@
     Current directory ./
     Previous directory ../  */
 const projectBow = await import('./library/index.js');
-await projectBow.lib('./configs.json');
+  await projectBow.lib('./configs.json');
 
 /*  This is where all your code goes.
     You generally want to fetch the events here.
@@ -30,5 +30,5 @@ mailMan.on('INTERACTION_CREATE', async (client) => {
       I am refering to the interaction doc/example for more info.  */
 	message
 		.interaction({ type: 6, flags: 64 }, client)
-		.catch((err) => console.log(err));
+      .catch((err) => console.log(err));
 });

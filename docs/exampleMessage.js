@@ -17,18 +17,18 @@
 message
 	.send({
 		content: 'Message Content',
-		channel: 'Channel ID',
-		components: [],
-		embeds: [],
-		tts: true,
-		message_reference: 'ReferenceID',
-		sticker_ids: sticker,
-		flags: 64,
-		attachments: [],
-		guild: "Guild ID",
+			channel: 'Channel ID',
+				components: [],
+					embeds: [],
+						tts: true,
+							message_reference: 'ReferenceID',
+								sticker_ids: sticker,
+									flags: 64,
+										attachments: [],
+											guild: "Guild ID",
 	})
-	.then((val) => console.log(val))
-	.catch((err) => console.error(err));
+		.then((val) => console.log(val))
+			.catch((err) => console.error(err));
 
 /*	Attachments can be build in the message JSON itself, but calling it later is easier.
 		The file entry wants you to point to the file you want to send, this may be a full path.
@@ -38,13 +38,13 @@ message
 		The attachments entry itself is an array, within the array you can loop JSON entries as seen below.	*/
 attachments = [{
 		file: 'cat.gif',
-		description: 'Picture of an animated cat',
-		filename: 'cat.gif',
+			description: 'Picture of an animated cat',
+				filename: 'cat.gif',
 	},
 	{
 		file: 'pic.png',
-		description: 'Not a di*k pic',
-		filename: 'pic.png',
+			description: 'Not a di*k pic',
+				filename: 'pic.png',
 }];
 
 /*	Components are called in a chain

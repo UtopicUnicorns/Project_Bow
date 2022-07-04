@@ -1,60 +1,67 @@
 exports.lib = async function (config) {
 	https = await require('https');
-	fs = await require('fs');
-	ws = await require('./webSocket');
-	fd = await require('./formData');
-	path = await require('path');
-	os = await require('os');
+		fs = await require('fs');
+			ws = await require('./webSocket');
+				fd = await require('./formData');
+					path = await require('path');
+						os = await require('os');
 
 	configData = await require(config);
-	token = await configData.botToken;
-	appId = await configData.appId;
-	intent = await configData.intent;
-	botId = await configData.botId;
-	botCaching = await configData.caching;
+		token = await configData.botToken;
+			appId = await configData.appId;
+				intent = await configData.intent;
+					botId = await configData.botId;
+						botCaching = await configData.caching;
 
 	httpsConstruct = await require('./classes/httpsClass');
-	fly = new httpsConstruct();
+		fly = new httpsConstruct();
 
 	messageConstruct = await require('./classes/messageClass');
-	message = new messageConstruct();
+		message = new messageConstruct();
+	
 	channelConstruct = await require('./classes/channelClass');
-	channel = new channelConstruct();
+		channel = new channelConstruct();
+	
 	app = await require('./classes/appClass');
+	
 	embed = await require('./classes/embedClass');
+	
 	component = await require('./classes/componentClass');
+	
 	threadConstruct = await require('./classes/threadClass.js');
-	thread = new threadConstruct();
+		thread = new threadConstruct();
 
 	botConstruct = await require('./classes/botClass');
-	bot = new botConstruct();
+		bot = new botConstruct();
+	
 	timeConstruct = await require('./classes/timeClass');
-	time = new timeConstruct();
+		time = new timeConstruct();
+	
 	mimeConstruct = await require('./classes/mimeClass');
-	mime = new mimeConstruct();
+		mime = new mimeConstruct();
 
 	relConstruct = await require('./classes/releaseClass');
-	rel = new relConstruct();
-	rel.rel();
+		rel = new relConstruct();
+			rel.rel();
 
 	postMan = await require('events');
-	class Emitter extends postMan {}
-	mailMan = new Emitter();
+		class Emitter extends postMan {}
+			mailMan = new Emitter();
 
 	heartConstruct = await require('./classes/heartClass');
-	heart = new heartConstruct();
-	heart.run(this);
+		heart = new heartConstruct();
+			heart.run(this);
 	
 	cacheConstruct = await require('./classes/cacheClass');
-	cache = new cacheConstruct();
+		cache = new cacheConstruct();
 	
 	watchConstruct = await require('./classes/watchClass');
-	watch = new watchConstruct();
+		watch = new watchConstruct();
 	
 	ytdl = await require('./youPoop');
-	codecMaker = await require('./prismMedia');
-	music = await require('./iHaveNoMouthAndIMustScream/');
-	voiceConstruct = await require('./classes/voiceClass');
-	voice = new voiceConstruct();
+		codecMaker = await require('./prismMedia');
+			music = await require('./iHaveNoMouthAndIMustScream/');
+				voiceConstruct = await require('./classes/voiceClass');
+					voice = new voiceConstruct();
 };
 

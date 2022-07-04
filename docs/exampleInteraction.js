@@ -16,22 +16,22 @@
 message
   .interaction({
     type: 4, 
-    content: 'Message Content',
-    attachments: [],
-    embeds: [], 
-    components: [], 
-    flags: 64 
+      content: 'Message Content',
+        attachments: [],
+          embeds: [], 
+            components: [], 
+              flags: 64 
 	}, incomingMessage)
-	.then((response) => console.log(response))
-	.catch((error) => console.log(error));
+    .then((response) => console.log(response))
+      .catch((error) => console.log(error));
 
 /*  The below example shows off the simplicity of the type 6 interaction.
     Nothing is displayed to the user while the client does receive everything needed.  */
 message
   .interaction({
     type: 6, 
-    flags: 64 
+      flags: 64 
 	}, incomingMessage)
-	.then((response) => console.log(response))
-	.catch((error) => console.log(error));
+    .then((response) => console.log(response))
+      .catch((error) => console.log(error));
 

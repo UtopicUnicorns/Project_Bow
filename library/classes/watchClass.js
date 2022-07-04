@@ -6,7 +6,7 @@ class watchConstruct {
   me(info) {
     this.eyes[info.name] = {
       name: info.name,
-      file: info.file,
+        file: info.file,
     };
   }
   

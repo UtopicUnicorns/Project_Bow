@@ -30,24 +30,24 @@ thread
     Will return an array of member objects.	*/
 thread
 	.memberList(channel)
-	.then((val) => console.log(val));
+		.then((val) => console.log(val));
 	
 /*	Get public archive.	*/
 thread
 	.publicArchive(channel)
-	.then((val) => console.log(val));
+		.then((val) => console.log(val));
 	
 /*	Get private archive.	*/
 thread
 	.privateArchive(channel)
-	.then((val) => console.log(val));
+		.then((val) => console.log(val));
 	
 /*	Get joined private archives	*/
 thread
 	.joinedPrivateArchive(channel)
-	.then((val) => console.log(val));
+		.then((val) => console.log(val));
 
 /*	Get a list of all active threads in specified guild.	*/
 thread
 	.allThreads(guildId)
-	.then((val) => console.log(val));
+		.then((val) => console.log(val));
