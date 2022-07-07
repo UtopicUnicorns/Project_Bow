@@ -58,10 +58,22 @@ exports.lib = async function (config) {
 	watchConstruct = await require('./classes/watchClass');
 		watch = new watchConstruct();
 	
-	ytdl = await require('./youPoop');
-		codecMaker = await require('./prismMedia');
-			music = await require('./iHaveNoMouthAndIMustScream/');
-				voiceConstruct = await require('./classes/voiceClass');
-					voice = new voiceConstruct();
+	linkLava = await require('./linkLava');
+		voiceConstruct = await require('./classes/voiceClass');
+			voice = new voiceConstruct();
+				lamp = new linkLava.Node({
+					password: 'youshallnotpass',
+						userID: '654361253413781537',
+							host: 'localhost:2333',
+								send(guildID, packet) {
+									return heart.getSocket().send(JSON.stringify(packet));
+								},
+				});
+					voiceStatePass = function(pass) {  
+						if (pass.t === 'VOICE_STATE_UPDATE') lamp.voiceStateUpdate(pass.d);
+							if (pass.t === 'VOICE_SERVER_UPDATE') lamp.voiceServerUpdate(pass.d);
+					};
+						mailMan.on('voiceStateUpdateSend', voiceStatePass);
+							mailMan.on('voiceServerUpdateSend', voiceStatePass);
 };
 

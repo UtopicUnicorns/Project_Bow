@@ -96,6 +96,10 @@ class heartConstruct {
 			setTimeout(() => this.run(), 5000);
 				return this;
 	}
+	
+	getSocket() {
+		return this.puppet;
+	}
 
 	pulse(order) {
 		if (order) {
@@ -116,10 +120,10 @@ class heartConstruct {
 								if (msg.t == 'GUILD_MEMBER_UPDATE') mailMan.emit('cacheUpdate', { member: msg.d} );
 									if (msg.t == 'READY') mailMan.emit('socketReady', msg);
 										if (msg.t == 'RESUMED') mailMan.emit('socketResume', msg);
+											if (msg.t == 'VOICE_STATE_UPDATE') mailMan.emit('voiceStateUpdateSend', msg);
+												if (msg.t == 'VOICE_SERVER_UPDATE') mailMan.emit('voiceServerUpdateSend', msg);
 											mailMan.emit('socketMessage', msg);
-			} catch (err) {
-				mailMan.emit('socketError', error);
-			}
+			} catch (err) { mailMan.emit('socketError', error); }
 		});
 			this.puppet.on('error', (error) => mailMan.emit('socketError', error));
 				this.puppet.on('close', (code) => {
