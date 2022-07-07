@@ -69,6 +69,7 @@ exports.lib = async function (config) {
 									return heart.getSocket().send(JSON.stringify(packet));
 								},
 				});
+					lamp.on('error', (e) => {/**/});
 					voiceStatePass = function(pass) {  
 						if (pass.t === 'VOICE_STATE_UPDATE') lamp.voiceStateUpdate(pass.d);
 							if (pass.t === 'VOICE_SERVER_UPDATE') lamp.voiceServerUpdate(pass.d);
