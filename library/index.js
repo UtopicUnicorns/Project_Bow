@@ -68,13 +68,13 @@ exports.lib = async function (config) {
 					promise.reject = rej;  
 						return promise;
 	}	
-		const lavaSpawned = defer();
+		//const lavaSpawned = defer();
 			const { spawn } = require('node:child_process');
 				const lavaSpawn = await spawn('java', ['-jar', './lavalink/Lavalink.jar', '--help']);
-						lavaSpawn.stdout.on('data', (data) => { if (data.includes('Lavalink is ready to accept connections')) lavaSpawned.resolve(); });
+						//lavaSpawn.stdout.on('data', (data) => { if (data.includes('Lavalink is ready to accept connections')) lavaSpawned.resolve(); });
 							lavaSpawn.stderr.on('data', (data) => { console.error(data.toString()); });
 								lavaSpawn.on('exit', (code) => { console.log(`Child exited with code ${code}`); });
-									await lavaSpawned;
+									//await lavaSpawned;
 	linkLava = await require('./linkLava');
 		voiceConstruct = await require('./classes/voiceClass');
 			voice = new voiceConstruct();

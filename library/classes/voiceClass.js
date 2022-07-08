@@ -26,8 +26,16 @@ class voiceConstruct {
   async volume(info) {
     if (!this.player[info.guild]) return console.log('make a connection first');
       if (info.command >= 100) info.command = 100;
-      if (info.command <= 1) info.command = 5;
-        await this.player[info.guild].setVolume(info.command);
+        if (info.command <= 1) info.command = 5;
+          let volumeParse = parseFloat(info.command / 100).toFixed(1);
+            await this.player[info.guild].setFilters({volume: volumeParse});
+  }
+  
+  async pitch(info) {
+    if (!this.player[info.guild]) return console.log('make a connection first');
+      if(info.command === 'off') await this.player[info.guild].setFilters({timescale: {pitch: 1.0}});
+        if(info.command === 'up') await this.player[info.guild].setFilters({timescale: {pitch: 2.0}});
+          if(info.command === 'down') await this.player[info.guild].setFilters({timescale: {pitch: 0.5}});
   }
   
   async stop(info) {

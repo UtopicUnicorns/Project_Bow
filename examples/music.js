@@ -27,6 +27,10 @@ module.exports = {
                       voice.connect(info);
                         respond(`Trying to connect to <#${info.command}>`);
                     break;
+                      case 'pitch':
+                        voice.pitch(info);
+                          respond(`Setting pitch to **${info.command}**!`);
+                            break;
             }
           }
             const dataParse = data.data.options[0];
@@ -52,6 +56,16 @@ module.exports = {
                                   guild: data.guild_id,
                                     user: data.member
                           });
+                    }
+                    if (dataParse.options[0].name === 'pitch') {
+                      let pitchName = dataParse.options[0].options[0].value;
+                        voiceManipulator({
+                          action: 'pitch', 
+                            command: pitchName, 
+                              channel: data.channel_id, 
+                                guild: data.guild_id,
+                                  user: data.member
+                        });
                     }
                   break;
                     case 'connect':
