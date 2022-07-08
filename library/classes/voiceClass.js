@@ -13,33 +13,48 @@ class voiceConstruct {
   constructor() {
     this.player = {};
       this.pReady = {};
-  } // https://github.com/lavalibs/lavalink.js
+  }
   
   async play(info) {
     if (!this.player[info.guild]) return console.log('make a connection first');
-    const player = lamp.players.get(info.guild);
-    await this.pReady[info.guild].promise;
-      const res = await lamp.load(`ytsearch:${info.q}`);
-        await player.play(res.tracks[0]);
+      const player = lamp.players.get(info.guild);
+        await this.pReady[info.guild].promise;
+          const res = await lamp.load(`ytsearch:${info.command.query}`);
+            await this.player[info.guild].play(res.tracks[0]);
+  }
+  
+  async volume(info) {
+    if (!this.player[info.guild]) return console.log('make a connection first');
+      if (info.command >= 100) info.command = 100;
+      if (info.command <= 1) info.command = 5;
+        await this.player[info.guild].setVolume(info.command);
   }
   
   async stop(info) {
     if (!this.player[info.guild]) return console.log('make a connection first');
-      const player = lamp.players.get(info.guild);
-        await player.stop();
+        await this.player[info.guild].stop();
+  }
+  
+  async pause(info) {
+    if (!this.player[info.guild]) return console.log('make a connection first');
+        await this.player[info.guild].pause();
+  }
+  
+  async resume(info) {
+    if (!this.player[info.guild]) return console.log('make a connection first');
+        await this.player[info.guild].pause(false);
   }
   
   async destroy(info) {
     if (!this.player[info.guild]) return console.log('make a connection first');
-      const player = lamp.players.get(info.guild);
-        await player.destroy();
+        await this.player[info.guild].destroy();
           delete this.player[info.guild];
   }
   
-  async connect(info) {    
+  async connect(info) {   
     if (!this.player[info.guild]) this.player[info.guild] = lamp.players.get(info.guild);
       this.pReady[info.guild] = {status: 'waiting', promise: defer()};
-        await this.player[info.guild].join(info.id);
+        await this.player[info.guild].join(info.command);
           this.player[info.guild].once('playerUpdate', (d) => this.pReady[info.guild].promise.resolve());
     }
 
