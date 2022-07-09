@@ -58,38 +58,26 @@ exports.lib = async function (config) {
 	watchConstruct = await require('./classes/watchClass');
 		watch = new watchConstruct();
 	
-	function defer() {
-		var res, rej;
-			var promise = new Promise((resolve, reject) => {
-				res = resolve;
-					rej = reject;
-			});
-				promise.resolve = res;
-					promise.reject = rej;  
-						return promise;
-	}	
-		//const lavaSpawned = defer();
-			const { spawn } = require('node:child_process');
-				const lavaSpawn = await spawn('java', ['-jar', './lavalink/Lavalink.jar', '--help']);
-						//lavaSpawn.stdout.on('data', (data) => { if (data.includes('Lavalink is ready to accept connections')) lavaSpawned.resolve(); });
-							lavaSpawn.stderr.on('data', (data) => { console.error(data.toString()); });
-								lavaSpawn.on('exit', (code) => { console.log(`Child exited with code ${code}`); });
-									//await lavaSpawned;
-	linkLava = await require('./linkLava');
-		voiceConstruct = await require('./classes/voiceClass');
-			voice = new voiceConstruct();
-				lamp = new linkLava.Node({
-					password: 'youshallnotpass',
-						userID: '654361253413781537',
-							host: 'localhost:2333',
-								send(guildID, packet) { return heart.getSocket().send(JSON.stringify(packet)); },
-				});
-					lamp.on('error', (e) => {/**/});
-						voiceStatePass = function(pass) {  
-							if (pass.t === 'VOICE_STATE_UPDATE') lamp.voiceStateUpdate(pass.d);
-								if (pass.t === 'VOICE_SERVER_UPDATE') lamp.voiceServerUpdate(pass.d);
-						};
-							mailMan.on('voiceStateUpdateSend', voiceStatePass);
-								mailMan.on('voiceServerUpdateSend', voiceStatePass);
+	const { spawn } = require('node:child_process');
+		const lavaSpawn = await spawn('java', ['-jar', './lavalink/Lavalink.jar', '--help']);
+			lavaSpawn.stderr.on('data', (data) => { console.error(data.toString()); });
+				lavaSpawn.on('exit', (code) => { console.log(`Child exited with code ${code}`); });
+					linkLava = await require('./linkLava');
+						voiceConstruct = await require('./classes/voiceClass');
+							voice = new voiceConstruct();
+								lamp = new linkLava.Node({
+									password: 'youshallnotpass',
+										userID: '654361253413781537',
+											host: 'localhost:2333',
+												send(guildID, packet) { return heart.getSocket().send(JSON.stringify(packet)); },
+								});
+									lamp.on('error', (e) => {/**/});
+	voiceStatePass = function(pass) {  
+		if (pass.t === 'VOICE_STATE_UPDATE') lamp.voiceStateUpdate(pass.d);
+			if (pass.t === 'VOICE_SERVER_UPDATE') lamp.voiceServerUpdate(pass.d);
+	};
+		lamp.on('event', (event) => mailMan.emit('playerEvent', event));
+			mailMan.on('voiceStateUpdateSend', voiceStatePass);
+				mailMan.on('voiceServerUpdateSend', voiceStatePass);
 };
 

@@ -13,15 +13,21 @@ module.exports = {
                 if (info.command === 'resume') voice.resume(info);
                   if (info.command === 'pause') voice.pause(info);
                     if (info.command === 'stop') voice.stop(info);
-                      respond(`${info.command}ing the music player!`);
-                        break;
+                      if (info.command === 'skip') voice.skip(info);
+                        if (info.command === 'queue') voice.queue(info)
+                          .then((q) => {
+                            //message.send({content: 'queue', channel: '808352303102033942'});
+                              console.log(q);
+                          });
+                            respond(`Music player action: **${info.command}**`);
+                              break;
                 case 'volume':
                   voice.volume(info);
                     respond(`Setting volume level to **${info.command}**`);
                 break;
                   case 'play':
                     voice.play(info);
-                      respond(`Trying to search and play **${info.command.query}** from the platform **${info.command.platform}**`);
+                      respond(`Trying to search and play **${info.command.query}**`);
                   break;
                     case 'connect':
                       voice.connect(info);
@@ -79,11 +85,10 @@ module.exports = {
                             });
                     break;
                       case 'play':
-                        let playPlatform = dataParse.options[0].value;
-                          let playName = dataParse.options[1].value;
+                          let playName = dataParse.options[0].value;
                             voiceManipulator({
                                 action: 'play', 
-                                  command: {platform: playPlatform, query: playName}, 
+                                  command: { query: playName }, 
                                     channel: data.channel_id, 
                                       guild: data.guild_id,
                                         user: data.member
