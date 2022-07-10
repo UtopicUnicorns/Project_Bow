@@ -18,14 +18,14 @@ const projectBow = await import('./library/index.js');
     Client is this session, you can receive all information from it, including members, guilds etc if you want.
     Socket is just the web socket and allows for direct interaction with it.
     The event names ALWAYS are the same as the ones you would normally receive within the raw DISCORD API events  */
-mailMan.on('MESSAGE_CREATE', async (client) => {
+mailMan.on('messageCreate', async (client) => {
 	/*  client.message
       client.client
       client.socket
       Each of these is a readable JSON.  */
 });
 
-mailMan.on('INTERACTION_CREATE', async (client) => {
+mailMan.on('interactionCreate', async (client) => {
 	/*  Example interaction handle.
       I am refering to the interaction doc/example for more info.  */
 	message

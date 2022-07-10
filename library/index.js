@@ -12,6 +12,7 @@ exports.lib = async function (config) {
 				intent = await configData.intent;
 					botId = await configData.botId;
 						botCaching = await configData.caching;
+							camelCase = function (str) { return str.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase()); }
 
 	httpsConstruct = await require('./classes/httpsClass');
 		fly = new httpsConstruct();

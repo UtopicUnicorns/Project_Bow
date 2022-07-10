@@ -57,7 +57,7 @@ class heartConstruct {
 															messageBuild['client']['op'] = message.op;
 																messageBuild['client']['socket'] = this.puppet;
 										}
-											mailMan.emit(message.t, messageBuild);
+											if (message.t) mailMan.emit(camelCase(message.t), messageBuild);
 												mailMan.emit("rawSocket", { message: message, socket: this.puppet });
 							});
 								mailMan.on('socket10', async (info) => {
