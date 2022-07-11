@@ -45,14 +45,16 @@ class voiceConstruct {
     if (!this.player[info.guild]) return 'make a connection first';
       const player = lamp.players.get(info.guild);
         await this.pReady[info.guild].promise;
-          const res = await lamp.load(`ytsearch:${info.command.query}`);
-            if(!await res.tracks[0]) return;
-              this.playerDeploy[info.guild].songs.push({ song: res.tracks[0], requested: info.user.user });
-                if(this.playerDeploy[info.guild].songs.length === 1 && this.playerDeploy[info.guild].playing === null) {
-                  let songNow = this.playerDeploy[info.guild].songs.shift();
-                    this.playerDeploy[info.guild].playing = songNow;
-                      await this.player[info.guild].play(songNow.song);
-                }
+          let searchNeed = 'ytsearch:';
+            if(info.command.query.toLowerCase().startsWith('http')) searchNeed = '';
+              const res = await lamp.load(`${searchNeed}${info.command.query}`);
+                if(!await res.tracks[0]) return;
+                  this.playerDeploy[info.guild].songs.push({ song: res.tracks[0], requested: info.user.user });
+                    if(this.playerDeploy[info.guild].songs.length === 1 && this.playerDeploy[info.guild].playing === null) {
+                      let songNow = this.playerDeploy[info.guild].songs.shift();
+                        this.playerDeploy[info.guild].playing = songNow;
+                          await this.player[info.guild].play(songNow.song);
+                    }
   }
   
   async volume(info) {
