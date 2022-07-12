@@ -16,7 +16,10 @@ exports.lib = async function (config) {
 
 	httpsConstruct = await require('./classes/httpsClass');
 		fly = new httpsConstruct();
-
+	
+	apiConstruct = await require('./classes/apiClass');
+		api = new apiConstruct();
+	
 	messageConstruct = await require('./classes/messageClass');
 		message = new messageConstruct();
 	
