@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const WebSocket = require("../../../../webSocket");
-const backoff = require("../../../../backOff");
+const WebSocket = require("../../webSocket");
+const backoff = require("../backOff");
 const package_json_1 = require("../../package.json");
 class Connection {
     constructor(node, url, options = {}) {

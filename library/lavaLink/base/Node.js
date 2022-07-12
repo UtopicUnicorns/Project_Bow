@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const WebSocket = require("../../../../webSocket");
+const WebSocket = require("../../webSocket");
 const events_1 = require("events");
 const Connection_1 = require("../core/Connection");
 const Http_1 = require("../core/Http");
