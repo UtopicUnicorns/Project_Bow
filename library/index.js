@@ -63,7 +63,7 @@ exports.lib = async function (config) {
 		watch = new watchConstruct();
 	
 	const { spawn } = require('node:child_process');
-		const lavaSpawn = await spawn('java', ['-jar', './lavalink/Lavalink.jar', '--help']);
+		const lavaSpawn = await spawn('java', ['-jar', './library/lavaLink/Lavalink.jar', '--help']);
 			lavaSpawn.stderr.on('data', (data) => { console.error(data.toString()); });
 				lavaSpawn.on('exit', (code) => { console.log(`Child exited with code ${code}`); });
 					linkLava = await require('./lavaLink');
