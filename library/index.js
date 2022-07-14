@@ -13,12 +13,15 @@ exports.lib = async function (config) {
 					botId = await configData.botId;
 						botCaching = await configData.caching;
 							camelCase = function (str) { return str.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase()); }
-
+	
+	errorConstruct = await require('./classes/errorClass');
+		newError = new errorConstruct();
+		
 	httpsConstruct = await require('./classes/httpsClass');
 		fly = new httpsConstruct();
 	
-	apiConstruct = await require('./classes/apiClass');
-		api = new apiConstruct();
+	endPointConstruct = await require('./classes/endPointClass');
+		exit = new endPointConstruct();
 	
 	messageConstruct = await require('./classes/messageClass');
 		message = new messageConstruct();
