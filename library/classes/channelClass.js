@@ -239,6 +239,48 @@ class channelConstruct {
 				}
 					return exit.call('editChannelPermissions', {channelId: msg.channel, overwriteId: msg.target, data: JSON.stringify(formMessage), type: `application/json`});
 	}
+	
+	getChanInvites(msg) {
+		return exit.call('getChannelInvites', {channelId: msg.channel, data: '', type: `application/json`});
+	}
+	
+	createChanInvite(msg) {
+			let formMessage = {};
+				if(msg.maxAge) formMessage['max_age'] = msg.maxAge;
+					if(msg.maxUses) formMessage['max_uses'] = msg.maxUses;
+						if(msg.temp)formMessage['temporary'] = msg.temp;
+							if(msg.unique)formMessage['unique'] = msg.unique;
+								if(msg.targetType)formMessage['target_type'] = msg.targetType;
+			if(msg.targetUserId)formMessage['target_user_id'] = msg.targetUserId;
+				if(msg.targetAppId)formMessage['target_application_id'] = msg.targetAppId;
+					return exit.call('createChannelInvite', {channelId: msg.channel, data: JSON.stringify(formMessage), type: `application/json`});
+	}
+	
+	deleteChannelPerm(msg) {
+		return exit.call('deleteChannelPermission', {channelId: msg.channel, overwriteId: msg.user, data: '', type: `application/json`});
+	}
+	
+	followNewsChannel(msg) {
+		let formMessage = {};
+			if(msg.followId) formMessage['webhook_channel_id'] = msg.followId;
+				return exit.call('followNewsChannel', {channelId: msg.channel, data: JSON.stringify(formMessage), type: `application/json`});
+	}
+	
+	triggerTyping(msg) {
+		return exit.call('triggerTypingIndicator', {channelId: msg.channel, data: '', type: `application/json`});
+	}
+	
+	getPinnedMessages(msg) {
+		return exit.call('getPinnedMessages', {channelId: msg.channel, data: '', type: `application/json`});
+	}
+	
+	pinMessage(msg) {
+		return exit.call('pinMessage', {channelId: msg.channel, messageId: msg.message, data: '', type: `application/json`});
+	}
+	
+	unpinMessage(msg) {
+		return exit.call('unpinMessage', {channelId: msg.channel, messageId: msg.message, data: '', type: `application/json`});
+	}
 }
 
 module.exports = channelConstruct;

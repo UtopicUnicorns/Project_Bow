@@ -51,7 +51,6 @@ class endPointConstruct {
 							deleteMessage: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/messages/${info.messageId}`, method: 'DELETE', type: info.type }, data: info.data }),
 			bulkDeleteMessages: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/messages/bulk-delete`, method: 'POST', type: info.type }, data: info.data }),
 				editChannelPermissions: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/permissions/${info.overwriteId}`, method: 'PUT', type: info.type }, data: info.data }),
-// =====> YOU ARE HERE IDIOT!
 					getChannelInvites: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/invites`, method: 'GET', type: info.type }, data: info.data }),
 						createChannelInvite: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/invites`, method: 'POST', type: info.type }, data: info.data }),
 							deleteChannelPermission: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/permissions/${info.overwriteId}`, method: 'DELETE', type: info.type }, data: info.data }),
@@ -60,6 +59,7 @@ class endPointConstruct {
 					getPinnedMessages: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/pins`, method: 'GET', type: info.type }, data: info.data }),
 						pinMessage: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/pins/${info.messageId}`, method: 'PUT', type: info.type }, data: info.data }),
 							unpinMessage: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/pins/${info.messageId}`, method: 'DELETE', type: info.type }, data: info.data }),
+			// ====> YOU ARE HERE
 			groupDMAddRecipient: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/recipients/${info.userId}`, method: 'PUT', type: info.type }, data: info.data }),
 				groupDMRemoveRecipient: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/recipients/${info.userId}`, method: 'DELETE', type: info.type }, data: info.data }),
 					startThreadfromMessage: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/messages/${info.messageId}/threads`, method: 'POST', type: info.type }, data: info.data }),

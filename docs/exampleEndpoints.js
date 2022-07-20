@@ -199,6 +199,73 @@ channel.
 		})
 			.then((val) => console.log(val))
 				.catch((err) => console.error(err));
+
+channel.
+	getChanInvites({
+		channel: 'channelId',
+		})
+			.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+				
+channel.
+	createChanInvite({
+		channel: 'channelId',
+			maxAge: INTEGER,
+				maxUses: INTEGER,
+					temp: BOOLEAN,
+						unique: BOOLEAN,
+			targetType: INTEGER,
+				targetUserId: 'userId',
+					targetAppId: 'applicationId',
+		})
+			.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+				
+channel.
+	deleteChannelPerm({
+		channel: 'channelId',
+			user: 'userId',
+		})
+			.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+				
+channel.
+	followNewsChannel({
+		channel: 'channelId',
+			followId: 'idOfChannelToFollow',
+		})
+			.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+				
+channel.
+	triggerTyping({
+		channel: 'channelId',
+		})
+			.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+channel.
+	getPinnedMessages({
+		channel: 'channelId',
+		})
+			.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+channel.
+	pinMessage({
+		channel: 'channelId',
+			message: 'messageId',
+		})
+			.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+channel.
+	unpinMessage({
+		channel: 'channelId',
+			message: 'messageId',
+		})
+			.then((val) => console.log(val))
+				.catch((err) => console.error(err));
 			
 /*	CHEATSHEET	*/
 channelUserPermissionFlags = {
