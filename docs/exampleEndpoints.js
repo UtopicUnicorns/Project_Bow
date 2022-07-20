@@ -1,3 +1,206 @@
+channel
+	.chanGet({channel: 'channelId'})
+		.then((val) => console.log(val))
+			.catch((err) => console.error(err));
+			
+channel
+	.chanEdit({
+		channel: 'channelId',
+			name: 'channelName',
+				type: INTEGER,
+					position: INTEGER,
+						topic: 'Channel Topic Text',
+		nsfw: BOOLEAN,
+			rate_limit_per_user: INTEGER,
+				permission_overwrites: permissionObject,
+					parent_id: 'categoryId',
+						default_auto_archive_duration: INTEGER,
+	})
+		.then((val) => console.log(val))
+			.catch((err) => console.error(err));
+			
+channel
+	.voiceChanEdit({
+		channel: 'channelId',
+			name: 'channelName',
+				position: INTEGER,
+					nsfw: BOOLEAN,
+						bitrate: INTEGER,
+		user_limit: INTEGER,
+			permission_overwrites: permissionObject,
+				parent_id: 'categoryId',
+					rtc_region: 'RegionName',
+						video_quality_mode: INTEGER,
+	})
+		.then((val) => console.log(val))
+			.catch((err) => console.error(err));
+
+channel
+	.groupDMEdit({
+		channel: 'channelId',
+			name: 'channelName',
+				icon: Base64ImageObject,
+	})
+		.then((val) => console.log(val))
+			.catch((err) => console.error(err));
+			
+channel
+	.threadEdit({
+		channel: 'channelId',
+			name: 'threadName',
+				archived: BOOLEAN,
+					auto_archive_duration: INTEGER,
+						locked: BOOLEAN,
+		invitable: BOOLEAN,
+			rate_limit_per_user: INTEGER,
+				flags: INTEGER,
+		})
+		.then((val) => console.log(val))
+			.catch((err) => console.error(err));
+
+channel
+	.chanDelete({
+		channel: 'channelId',
+	})
+		.then((val) => console.log(val))
+			.catch((err) => console.error(err));
+
+channel
+	.chanGetMessages({
+		channel: 'channelId',
+			around: 'messageId',
+				before: 'messageId',
+					after: 'messageId',
+						limit: INTEGER,
+	})
+		.then((val) => console.log(val))
+			.catch((err) => console.error(err));
+
+channel
+	.chanGetMessage({
+		channel: 'channelId',
+			message: 'messageId',
+	})
+		.then((val) => console.log(val))
+			.catch((err) => console.error(err));
+
+channel
+	.msgSend({
+		content: 'Message Content',
+			channel: 'channelId',
+				components: componentObject,
+					embeds: embedObject,
+						tts: true,
+			reference: {message_id: 'messageId', guild_id: 'guildId'},
+				sticker: ['stickerId'],
+					attachments: attachmentObject,
+	})
+		.then((val) => console.log(val))
+			.catch((err) => console.error(err));
+			
+channel
+	.crossPostMsg({
+		channel: 'channelId',
+			message: 'messageId',
+	})
+		.then((val) => console.log(val))
+			.catch((err) => console.error(err));
+
+channel
+	.createReaction({
+		channel: 'channelId',
+			message: 'messageId',
+				emoji: 'emoji', //E.G: monkas:629319635950370829 OR unicode emoji
+	})
+		.then((val) => console.log(val))
+			.catch((err) => console.error(err));
+
+channel
+	.deleteSelfReaction({
+		channel: 'channelId',
+			message: 'messageId',
+				emoji: 'emoji', //E.G: monkas:629319635950370829 OR unicode emoji
+	})
+		.then((val) => console.log(val))
+			.catch((err) => console.error(err));
+
+channel
+	.deleteReaction({
+		channel: 'channelId',
+			message: 'messageId',
+				emoji: 'emoji', //E.G: monkas:629319635950370829 OR unicode emoji
+					userL 'userId',
+	})
+		.then((val) => console.log(val))
+			.catch((err) => console.error(err));
+
+channel
+	.getReactions({
+		channel: 'channelId',
+			message: 'messageId',
+				emoji: 'emoji', //E.G: monkas:629319635950370829 OR unicode emoji
+					after: 'userId',
+						limit: INTEGER,
+	})
+		.then((val) => console.log(val))
+			.catch((err) => console.error(err));
+			
+channel
+	.deleteAllReactions({
+		channel: 'channelId',
+			message: 'messageId',
+	})
+		.then((val) => console.log(val))
+			.catch((err) => console.error(err));
+
+channel
+	.deleteAllReactionsEmoji({
+		channel: 'channelId',
+			message: 'messageId',
+				emoji: 'emoji', //E.G: monkas:629319635950370829 OR unicode emoji
+	})
+		.then((val) => console.log(val))
+			.catch((err) => console.error(err));
+			
+channel
+	.msgEdit({
+		content: 'Message Content',
+			id: 'messageId',
+				channel: 'channelId',
+					components: componentObject,
+						embeds: embedObject,
+							attachments: attachments,
+	})
+		.then((val) => console.log(val))
+			.catch((err) => console.error(err));
+
+channel
+	.msgDelete({
+		channel: 'channelId',
+			message: 'messageId',
+	})
+		.then((val) => console.log(val))
+			.catch((err) => console.error(err));
+
+channel
+	.msgBulkDelete({
+		channel: 'channelId',
+			messages: [], //Message ID's in array
+	})
+		.then((val) => console.log(val))
+			.catch((err) => console.error(err));
+
+channel.
+	channelPermOverwrite({
+		channel: 'channelId',
+			target: 'userId or roleId',
+				permission_overwrites: permissionObject,
+					type: INTEGER, //0 for role, 1 for member
+		})
+			.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+			
+/*	CHEATSHEET	*/
 channelUserPermissionFlags = {
 	createInstantInvite: 1 << 0,
 	kickMembers: 1 << 1,
@@ -112,127 +315,16 @@ messageFlags = {
 	failedToMentionSomeRolesInThread: 1 << 8,
 };
 
-channel
-	.chanGet({channel: 'channelId'})
-		.then((val) => console.log(val))
-			.catch((err) => console.error(err));
-			
-channel
-	.chanEdit({
-		channel: 'channelId',
-			name: 'channelName',
-				type: INTEGER,
-					position: INTEGER,
-						topic: 'Channel Topic Text',
-		nsfw: BOOLEAN,
-			rate_limit_per_user: INTEGER,
-				permission_overwrites: permissionObject,
-					parent_id: 'categoryId',
-						default_auto_archive_duration: INTEGER,
-	})
-		.then((val) => console.log(val))
-			.catch((err) => console.error(err));
-			
-channel
-	.voiceChanEdit({
-		channel: 'channelId',
-			name: 'channelName',
-				position: INTEGER,
-					nsfw: BOOLEAN,
-						bitrate: INTEGER,
-		user_limit: INTEGER,
-			permission_overwrites: permissionObject,
-				parent_id: 'categoryId',
-					rtc_region: 'RegionName',
-						video_quality_mode: INTEGER,
-	})
-		.then((val) => console.log(val))
-			.catch((err) => console.error(err));
-
-channel
-	.groupDMEdit({
-		channel: 'channelId',
-			name: 'channelName',
-				icon: Base64ImageObject,
-	})
-		.then((val) => console.log(val))
-			.catch((err) => console.error(err));
-			
-channel
-	.threadEdit({
-		channel: 'channelId',
-			name: 'threadName',
-				archived: BOOLEAN,
-					auto_archive_duration: INTEGER,
-						locked: BOOLEAN,
-		invitable: BOOLEAN,
-			rate_limit_per_user: INTEGER,
-				flags: INTEGER,
-		})
-		.then((val) => console.log(val))
-			.catch((err) => console.error(err));
-
-channel
-	.chanDelete({
-		channel: 'channelId',
-	})
-		.then((val) => console.log(val))
-			.catch((err) => console.error(err));
-
-channel
-	.chanGetMessages({
-		channel: 'channelId',
-			around: 'messageId',
-				before: 'messageId',
-					after: 'messageId',
-						limit: INTEGER,
-	})
-		.then((val) => console.log(val))
-			.catch((err) => console.error(err));
-
-channel
-	.chanGetMessage({
-		channel: 'channelId',
-			message: 'messageId',
-	})
-		.then((val) => console.log(val))
-			.catch((err) => console.error(err));
-
-channel
-	.msgSend({
-		content: 'Message Content',
-			channel: 'channelId',
-				components: componentObject,
-					embeds: embedObject,
-						tts: true,
-			reference: {message_id: 'messageId', guild_id: 'guildId'},
-				sticker: ['stickerId'],
-					attachments: attachmentObject,
-	})
-		.then((val) => console.log(val))
-			.catch((err) => console.error(err));
-			
-	channel
-		.msgEdit({
-			content: 'Message Content',
-				id: 'messageId',
-					channel: 'channelId',
-						components: componentObject,
-							embeds: embedObject,
-								attachments: attachments,
-		})
-			.then((val) => console.log(val))
-				.catch((err) => console.error(err));
 
 permHere = [{
-		id: '127708549118689280',
+		id: 'roleId',
 		type: 0, //0 = role, 1 = member
 		allow: [],
 		deny: [],
 	},
 	{
-		id: '660988248788697100',
-		type: 0,
+		id: 'memberId',
+		type: 0, //0 = role, 1 = member
 		allow: [],
 		deny: [],
 	}];

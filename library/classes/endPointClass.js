@@ -25,12 +25,15 @@ class endPointConstruct {
 				getApplicationCommandPermissions: (info) => this.awaitError({ endpoint: { url: `/applications/${info.applicationId}/guilds/${info.guildId}/commands/${info.commandId}/permissions`, method: 'GET', type: info.type }, data: info.data }),
 					editApplicationCommandPermissions: (info) => this.awaitError({ endpoint: { url: `/applications/${info.applicationId}/guilds/${info.guildId}/commands/${info.commandId}/permissions`, method: 'PUT', type: info.type }, data: info.data }),
 						batchEditApplicationCommandPermissions: (info) => this.awaitError({ endpoint: { url: `/applications/${info.applicationId}/guilds/${info.guildId}/commands/permissions`, method: 'PUT', type: info.type }, data: info.data }), //DEPRECATED
+							
 							getGuildAuditLog: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/audit-logs`, method: 'GET', type: info.type }, data: info.data }),
+			
 			listAutoModerationRulesforGuild: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/auto-moderation/rules`, method: 'GET', type: info.type }, data: info.data }),
 				getAutoModerationRule: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/auto-moderation/rules/${info.autoModerationRuleId}`, method: 'GET', type: info.type }, data: info.data }),
 					createAutoModerationRule: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/auto-moderation/rules`, method: 'POST', type: info.type }, data: info.data }),
 						modifyAutoModerationRule: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/auto-moderation/rules/${info.autoModerationRuleId}`, method: 'PATCH', type: info.type }, data: info.data }),
 							deleteAutoModerationRule: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/auto-moderation/rules/${info.autoModerationRuleId}`, method: 'DELETE', type: info.type }, data: info.data }),
+			
 			getChannel: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}`, method: 'GET', type: info.type }, data: info.data }),
 				modifyChannel: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}`, method: 'PATCH', type: info.type }, data: info.data }),
 					deleteCloseChannel: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}`, method: 'DELETE', type: info.type }, data: info.data }),
@@ -48,6 +51,7 @@ class endPointConstruct {
 							deleteMessage: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/messages/${info.messageId}`, method: 'DELETE', type: info.type }, data: info.data }),
 			bulkDeleteMessages: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/messages/bulk-delete`, method: 'POST', type: info.type }, data: info.data }),
 				editChannelPermissions: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/permissions/${info.overwriteId}`, method: 'PUT', type: info.type }, data: info.data }),
+// =====> YOU ARE HERE IDIOT!
 					getChannelInvites: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/invites`, method: 'GET', type: info.type }, data: info.data }),
 						createChannelInvite: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/invites`, method: 'POST', type: info.type }, data: info.data }),
 							deleteChannelPermission: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/permissions/${info.overwriteId}`, method: 'DELETE', type: info.type }, data: info.data }),
@@ -171,7 +175,6 @@ class endPointConstruct {
 					editWebhookMessage: (info) => this.awaitError({ endpoint: { url: `/webhooks/${info.webhookId}/${info.webhookToken}/messages/${info.messageId}`, method: 'PATCH', type: info.type }, data: info.data }),
 						deleteWebhookMessage: (info) => this.awaitError({ endpoint: { url: `/webhooks/${info.webhookId}/${info.webhookToken}/messages/${info.messageId}`, method: 'DELETE', type: info.type }, data: info.data }),
 		};
-			//Object.keys(this.endPoints).forEach(function(k){ console.log(k); });
 	}
 		async awaitError(info) { try { return fly.send(info.data, `/api/v10/${info.endpoint.url}`, info.endpoint.method, 'discord.com', 443, { 'Content-Type': info.endpoint.type, Authorization: `Bot ${token}` }); } catch (error) { throw new Error(error); } }
 			async call(endName, data) { try { return this.endPoints[endName](data); } catch (error) { throw newError.error(error); } }

@@ -176,6 +176,37 @@ class channelConstruct {
 					let uploadData = this.readyMessageUpload(msg, formMessage);
 						return exit.call('createMessage', {channelId: msg.channel ,data: uploadData[0], type: `multipart/form-data; boundary=${uploadData[1]}`});
 	}
+	
+	crossPostMsg(msg) {
+		return exit.call('crosspostMessage', {channelId: msg.channel, messageId: msg.message ,data: '', type: `application/json`});
+	}
+	
+	createReaction(msg) {
+		return exit.call('createReaction', {channelId: msg.channel, messageId: msg.message, emoji: encodeURIComponent(msg.emoji), data: '', type: `application/json`});
+	}
+
+	deleteSelfReaction(msg) {
+		return exit.call('deleteOwnReaction', {channelId: msg.channel, messageId: msg.message, emoji: encodeURIComponent(msg.emoji), data: '', type: `application/json`});
+	}
+	
+	deleteReaction(msg) {
+		return exit.call('deleteUserReaction', {channelId: msg.channel, messageId: msg.message, emoji: encodeURIComponent(msg.emoji), userId: msg.user ,data: '', type: `application/json`});
+	}
+
+	getReactions(msg) {
+		let formMessage = {};
+			if(msg.after) formMessage['after'] = msg.after;
+				if(msg.limit) formMessage['limit'] = msg.limit;
+					return exit.call('getReactions', {channelId: msg.channel, messageId: msg.message, emoji: encodeURIComponent(msg.emoji), data: JSON.stringify(formMessage), type: `application/json`});
+	}
+	
+	deleteAllReactions(msg) {
+		return exit.call('deleteAllReactions', {channelId: msg.channel, messageId: msg.message, data: '', type: `application/json`});
+	}
+	
+	deleteAllReactionsEmoji(msg) {
+		return exit.call('deleteAllReactionsforEmoji', {channelId: msg.channel, messageId: msg.message, emoji: encodeURIComponent(msg.emoji), data: '', type: `application/json`});
+	}
 
 	msgEdit(msg) {
 		if (!msg) return 'No message object, please correct your mistake.';
@@ -185,6 +216,28 @@ class channelConstruct {
 						if (msg.embeds) formMessage['embeds'] = [msg.embeds];
 		let uploadData = this.readyMessageUpload(msg, formMessage);
 			return exit.call('editMessage', {channelId: msg.channel, messageId: msg.id ,data: uploadData[0], type: `multipart/form-data; boundary=${uploadData[1]}`});
+	}
+	
+	msgDelete(msg) {
+		return exit.call('deleteMessage', {channelId: msg.channel, messageId: msg.message, data: '', type: `application/json`});
+	}
+	
+	msgBulkDelete(msg) {
+		if (!msg) return 'No ID array, please correct your mistake.';
+			let formMessage = {};
+				if(msg.messages) formMessage['messages'] = msg.messages;
+					return exit.call('bulkDeleteMessages', {channelId: msg.channel, data: JSON.stringify(formMessage), type: `application/json`});
+	}
+	
+	channelPermOverwrite(msg) {
+			let formMessage = {};
+				if(msg.permission_overwrites) {
+					let waitFor = this.readyPermissions(msg.permission_overwrites);
+						if(waitFor[0].allow) formMessage['allow'] = waitFor[0].allow;
+							if(waitFor[0].deny) formMessage['deny'] = waitFor[0].deny;
+								if(waitFor[0].type)formMessage['type'] = waitFor[0].type;
+				}
+					return exit.call('editChannelPermissions', {channelId: msg.channel, overwriteId: msg.target, data: JSON.stringify(formMessage), type: `application/json`});
 	}
 }
 
