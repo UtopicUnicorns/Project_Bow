@@ -281,6 +281,89 @@ class channelConstruct {
 	unpinMessage(msg) {
 		return exit.call('unpinMessage', {channelId: msg.channel, messageId: msg.message, data: '', type: `application/json`});
 	}
+	
+	groupDmAddUser(msg) {
+		let formMessage = {};
+			if(msg.access_token) formMessage['access_token'] = msg.access_token;
+				if(msg.userNickname) formMessage['nick'] = msg.userNickname;
+					return exit.call('groupDMAddRecipient', {channelId: msg.channel, userId: msg.user, data: JSON.stringify(formMessage), type: `application/json`});
+	}
+	
+	groupDmRemoveUser(msg) {
+		return exit.call('groupDMRemoveRecipient', {channelId: msg.channel, userId: msg.user, data: '', type: `application/json`});
+	}
+	
+	createThreadAtMsg(msg) {
+		let formMessage = {};
+			if(msg.name) formMessage['name'] = msg.name;
+				if(msg.auto_archive_duration) formMessage['auto_archive_duration'] = msg.auto_archive_duration;
+					if(msg.rate_limit_per_user) formMessage['rate_limit_per_user'] = msg.rate_limit_per_user;
+						return exit.call('startThreadfromMessage', {channelId: msg.channel, messageId: msg.message, data: JSON.stringify(formMessage), type: `application/json`});
+	}
+	
+	createThread(msg) {
+		let formMessage = {};
+			if(msg.name) formMessage['name'] = msg.name;
+				if(msg.auto_archive_duration) formMessage['auto_archive_duration'] = msg.auto_archive_duration;
+					if(msg.rate_limit_per_user) formMessage['rate_limit_per_user'] = msg.rate_limit_per_user;
+						if(msg.type) formMessage['type'] = msg.type;
+							if(msg.invitable) formMessage['invitable'] = msg.invitable;
+								return exit.call('startThreadwithoutMessage', {channelId: msg.channel, data: JSON.stringify(formMessage), type: `application/json`});
+	}
+	
+	createForumThread(msg) {
+		let formMessage = {};
+			if(msg.name) formMessage['name'] = msg.name;
+				if(msg.auto_archive_duration) formMessage['auto_archive_duration'] = msg.auto_archive_duration;
+					if(msg.rate_limit_per_user) formMessage['rate_limit_per_user'] = msg.rate_limit_per_user;
+						if(msg.message) formMessage['message'] = msg.message;
+							return exit.call('startThreadinForumChannel', {channelId: msg.channel, data: JSON.stringify(formMessage), type: `application/json`});
+	}
+	
+	joinThread(msg) {
+		return exit.call('joinThread', {channelId: msg.channel, data: '', type: `application/json`});
+	}
+	
+	userJoinThread(msg) {
+		return exit.call('addThreadMember', {channelId: msg.channel, userId: msg.user, data: '', type: `application/json`});
+	}
+	
+	leaveThread(msg) {
+		return exit.call('leaveThread', {channelId: msg.channel, data: '', type: `application/json`});
+	}
+	
+	userLeaveThread(msg) {
+		return exit.call('removeThreadMember', {channelId: msg.channel, userId: msg.user, data: '', type: `application/json`});
+	}
+	
+	getThreadMember(msg) {
+		return exit.call('getThreadMember', {channelId: msg.channel, userId: msg.user, data: '', type: `application/json`});
+	}
+	
+	listThreadMembers(msg) {
+		return exit.call('listThreadMembers', {channelId: msg.channel, data: '', type: `application/json`});
+	}
+	
+	listPublicArchivedThreads(msg) {
+		let formMessage = {};
+			if(msg.before) formMessage['before'] = msg.before;
+				if(msg.limit) formMessage['limit'] = msg.limit;
+					return exit.call('listPublicArchivedThreads', {channelId: msg.channel, data: JSON.stringify(formMessage), type: `application/json`});
+	}
+	
+	listPrivateArchivedThreads(msg) {
+		let formMessage = {};
+			if(msg.before) formMessage['before'] = msg.before;
+				if(msg.limit) formMessage['limit'] = msg.limit;
+					return exit.call('listPrivateArchivedThreads', {channelId: msg.channel, data: JSON.stringify(formMessage), type: `application/json`});
+	}
+	
+	listJoinedPrivateArchivedThreads(msg) {
+		let formMessage = {};
+			if(msg.before) formMessage['before'] = msg.before;
+				if(msg.limit) formMessage['limit'] = msg.limit;
+					return exit.call('listJoinedPrivateArchivedThreads', {channelId: msg.channel, data: JSON.stringify(formMessage), type: `application/json`});
+	}
 }
 
 module.exports = channelConstruct;

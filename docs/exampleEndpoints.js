@@ -266,6 +266,130 @@ channel.
 		})
 			.then((val) => console.log(val))
 				.catch((err) => console.error(err));
+				
+channel.
+	groupDmAddUser({
+		channel: 'channelId',
+			user: 'userId',
+				nick: 'userNickname',
+					access_token: 'tokenId',
+		})
+			.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+channel.
+	groupDmRemoveUser({
+		channel: 'channelId',
+			user: 'userId',
+		})
+			.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+channel.
+	createThreadAtMsg({
+		channel: 'channelId',
+			message: 'messageId',
+				name: 'threadName',
+					auto_archive_duration: INTEGER,
+						rate_limit_per_user: INTEGER,
+		})
+			.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+channel.
+	createThread({
+		channel: 'channelId',
+			name: 'threadName',
+				auto_archive_duration: INTEGER,
+					rate_limit_per_user: INTEGER,
+						type: INTEGER,
+							invitable: BOOLEAN,
+		})
+			.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+				
+channel.
+	createForumThread({
+		channel: 'channelId',
+			name: 'threadName',
+				auto_archive_duration: INTEGER,
+					rate_limit_per_user: INTEGER,
+						message: messageObject,
+		})
+			.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+channel.
+	joinThread({
+		channel: 'channelId',
+		})
+			.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+channel.
+	userJoinThread({
+		channel: 'channelId',
+		user: 'userId',
+		})
+			.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+				
+channel.
+	leaveThread({
+		channel: 'channelId',
+		})
+			.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+channel.
+	userLeaveThread({
+		channel: 'channelId',
+		user: 'userId',
+		})
+			.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+channel.
+	getThreadMember({
+		channel: 'channelId',
+		user: 'userId',
+		})
+			.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+channel.
+	listThreadMembers({
+		channel: 'channelId',
+		})
+			.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+channel.
+	listPublicArchivedThreads({
+		channel: 'channelId',
+			before: ISO8601Timestamp,
+				limit: INTEGER,
+		})
+			.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+channel.
+	listPrivateArchivedThreads({
+		channel: 'channelId',
+			before: ISO8601Timestamp,
+				limit: INTEGER,
+		})
+			.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+channel.
+	listJoinedPrivateArchivedThreads({
+		channel: 'channelId',
+			before: ISO8601Timestamp,
+				limit: INTEGER,
+		})
+			.then((val) => console.log(val))
+				.catch((err) => console.error(err));
 			
 /*	CHEATSHEET	*/
 channelUserPermissionFlags = {

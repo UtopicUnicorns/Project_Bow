@@ -59,9 +59,8 @@ class endPointConstruct {
 					getPinnedMessages: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/pins`, method: 'GET', type: info.type }, data: info.data }),
 						pinMessage: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/pins/${info.messageId}`, method: 'PUT', type: info.type }, data: info.data }),
 							unpinMessage: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/pins/${info.messageId}`, method: 'DELETE', type: info.type }, data: info.data }),
-			// ====> YOU ARE HERE
 			groupDMAddRecipient: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/recipients/${info.userId}`, method: 'PUT', type: info.type }, data: info.data }),
-				groupDMRemoveRecipient: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/recipients/${info.userId}`, method: 'DELETE', type: info.type }, data: info.data }),
+				groupDMRemoveRecipient: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/recipients/${info.userId}`, method: 'DELETE', type: info.type }, data: info.data }),	
 					startThreadfromMessage: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/messages/${info.messageId}/threads`, method: 'POST', type: info.type }, data: info.data }),
 						startThreadwithoutMessage: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/threads`, method: 'POST', type: info.type }, data: info.data }),
 							startThreadinForumChannel: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/threads`, method: 'POST', type: info.type }, data: info.data }),
@@ -74,6 +73,7 @@ class endPointConstruct {
 				listPublicArchivedThreads: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/threads/archived/public`, method: 'GET', type: info.type }, data: info.data }),
 					listPrivateArchivedThreads: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/threads/archived/private`, method: 'GET', type: info.type }, data: info.data }),
 						listJoinedPrivateArchivedThreads: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/users/@me/threads/archived/private`, method: 'GET', type: info.type }, data: info.data }),
+							
 							listGuildEmojis: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/emojis`, method: 'GET', type: info.type }, data: info.data }),
 			getGuildEmoji: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/emojis/${info.emojiId}`, method: 'GET', type: info.type }, data: info.data }),
 				createGuildEmoji: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/emojis`, method: 'POST', type: info.type }, data: info.data }),

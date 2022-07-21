@@ -23,29 +23,19 @@ exports.lib = async function (config) {
 	endPointConstruct = await require('./classes/endPointClass');
 		exit = new endPointConstruct();
 	
-	messageConstruct = await require('./classes/messageClass');
-		message = new messageConstruct();
-	
 	channelConstruct = await require('./classes/channelClass');
 		channel = new channelConstruct();
 	
-	app = await require('./classes/appClass');
-	
-	embed = await require('./classes/embedClass');
-	
-	component = await require('./classes/componentClass');
-	
-	threadConstruct = await require('./classes/threadClass.js');
-		thread = new threadConstruct();
-
-	botConstruct = await require('./classes/botClass');
-		bot = new botConstruct();
-	
-	timeConstruct = await require('./classes/timeClass');
-		time = new timeConstruct();
-	
-	mimeConstruct = await require('./classes/mimeClass');
-		mime = new mimeConstruct();
+	buildConstruct = await require('./classes/buildClass.js');
+		app = buildConstruct.appConstruct;
+			embed = buildConstruct.embedConstruct;
+				component = buildConstruct.componentConstruct;
+					botConstruct = buildConstruct.botConstruct;
+		timeConstruct = buildConstruct.timeConstruct;
+			mimeConstruct = buildConstruct.mimeConstruct;
+				bot = new botConstruct();	
+					time = new timeConstruct();	
+						mime = new mimeConstruct();
 
 	relConstruct = await require('./classes/releaseClass');
 		rel = new relConstruct();
@@ -61,9 +51,6 @@ exports.lib = async function (config) {
 	
 	cacheConstruct = await require('./classes/cacheClass');
 		cache = new cacheConstruct();
-	
-	watchConstruct = await require('./classes/watchClass');
-		watch = new watchConstruct();
 	
 	const { spawn } = require('node:child_process');
 		const lavaSpawn = await spawn('java', ['-jar', './library/lavaLink/Lavalink.jar', '--help']);
