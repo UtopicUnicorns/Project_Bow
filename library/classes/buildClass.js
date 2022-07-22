@@ -1,3 +1,72 @@
+class httpsConstruct {
+	send(data, path, method, host, port, headers) {
+		let promise = new Promise((resolve, reject) => {
+			const options = {
+				hostname: host,
+					port: port,
+						path: path,
+							method: method,
+								headers: headers,
+			};
+				const req = https.request(options, (res) => {
+					let collect = [];
+						res.on('data', async (data) => { collect.push(data); });
+							res.on('end', async (data) => {
+								try {
+									if (!collect[0]) resolve('Empty response type.');
+										const parsed_data = await JSON.parse(collect.join(''));
+											if (parsed_data.channel_id && isNaN(parsed_data.channel_id)) reject(parsed_data);
+												if (parsed_data.code) reject(parsed_data);
+													if (parsed_data.message == 'The resource is being rate limited.') reject(parsed_data);
+														resolve(parsed_data);
+								} catch (err) { reject({ error: err, stack: 1 }); }
+							});
+				});
+					req.on('error', (err) => { reject(err); });
+						if (data) { req.write(data); }
+							req.end();
+		});
+		return promise;
+	}
+}
+
+class relConstruct {
+	rel() {
+		fly.send('', `/repos/UtopicUnicorns/Project_Bow/releases`, 'GET', 'api.github.com', 443, { 'User-Agent': 'Mozilla/5.0', 'Content-Type': 'application/json' })
+			.then((callBack) => {
+				let releaseLocal = require('../REL.json').rel;
+					let releaseInfo = {};
+						if (callBack[0].tag_name == releaseLocal) {
+							releaseInfo['discordLibraryName'] = 'Project Bow';
+								releaseInfo['libraryVersion'] = releaseLocal;
+									releaseInfo['Message'] = 'Your local version is up-to-date!';
+							return console.log(releaseInfo);
+						}		
+							if (callBack[0].tag_name <= releaseLocal) {
+								releaseInfo['discordLibraryName'] = 'Project Bow';
+									releaseInfo['libraryVersion'] = releaseLocal;
+										releaseInfo['Message'] = 'Your local version is NEWER than the current release!';
+											return console.log(releaseInfo);
+							}	
+				releaseInfo['discordLibraryName'] = 'Project Bow';
+					releaseInfo['Name'] = callBack[0].name;
+						releaseInfo['Version'] = callBack[0].tag_name;
+							releaseInfo['Date'] = {
+								time: time.clock(callBack[0].published_at).eu,
+									date: time.date(callBack[0].published_at).nice,
+							};
+								releaseInfo['Zip'] = callBack[0].zipball_url;
+									releaseInfo['Tar'] = callBack[0].tarball_url;
+										releaseInfo['Release'] = callBack[0].html_url;
+											releaseInfo[''] = '';
+												releaseInfo['localVersion'] = releaseLocal;
+								releaseInfo['Message'] = 'Your local version is NOT up-to-date!';				
+									return console.log(releaseInfo);
+			})
+				.catch((err) => console.log(err));
+	}
+}
+
 class appConstruct {
 	constructor() {
 		this.target = 'commands';
@@ -258,16 +327,16 @@ class componentConstruct {
 								style: buttondata.style,
 									disabled: buttondata.disabled,
 										url: buttondata.url,
-											emoji: { 
-												name: buttondata.emoji.name, 
-													id: buttondata.emoji.id, 
-														animated: buttondata.emoji.boolean 
-											},
-												type: 2,
+						emoji: { 
+							name: buttondata.emoji.name, 
+								id: buttondata.emoji.id, 
+									animated: buttondata.emoji.boolean 
+						},
+							type: 2,
 					};
-					if (!buttondata.emoji.id) delete buttonInfo.emoji['id'];
-					if (!buttondata.emoji.name) delete buttonInfo.emoji['name'];
-					if (!buttondata.emoji.animated) delete buttonInfo.emoji['animated'];
+						if (!buttondata.emoji.id) delete buttonInfo.emoji['id'];
+							if (!buttondata.emoji.name) delete buttonInfo.emoji['name'];
+								if (!buttondata.emoji.animated) delete buttonInfo.emoji['animated'];
 				} else {
 					var buttonInfo = {
 						label: buttondata.label,
@@ -275,7 +344,7 @@ class componentConstruct {
 								style: buttondata.style,
 									disabled: buttondata.disabled,
 										url: buttondata.url,
-											type: 2,
+						type: 2,
 					};
 				}
 					if (!buttondata.label) delete buttonInfo['label'];
@@ -283,8 +352,8 @@ class componentConstruct {
 							if (!buttondata.style) delete buttonInfo['style'];
 								if (!buttondata.disabled) delete buttonInfo['disabled'];
 									if (!buttondata.url) delete buttonInfo['url'];
-										this.data.components.push(buttonInfo);
-		return this;
+					this.data.components.push(buttonInfo);
+						return this;
 	}
 }
 
@@ -296,30 +365,30 @@ class embedConstruct {
 					color: 0xff0000,
 						fields: [],
 							timestamp: '',
-								image: {
-									url: '',
-										proxy_url: '',
-											height: 40,
-												width: 40,
-								},
-									thumbnail: {
-										url: '',
-											proxy_url: '',
-												height: 50,
-													width: 50,
-									},
-										author: {
-											name: '',
-												url: '',
-													icon_url: '',
-														proxy_icon_url: '',
-										},
-											footer: {
-												text: '',
-													icon_url: '',
-														proxy_icon_url: '',
-											},
-												url: '',
+			image: {
+				url: '',
+					proxy_url: '',
+						height: 40,
+							width: 40,
+			},
+				thumbnail: {
+					url: '',
+						proxy_url: '',
+							height: 50,
+								width: 50,
+				},
+					author: {
+						name: '',
+							url: '',
+								icon_url: '',
+									proxy_icon_url: '',
+					},
+						footer: {
+							text: '',
+								icon_url: '',
+									proxy_icon_url: '',
+						},
+							url: '',
 		};
 	}
 
@@ -329,11 +398,11 @@ class embedConstruct {
 				if (!this.data.author.name) delete this.data['author'];
 					if (!this.data.footer.text) delete this.data['footer'];
 						if (!this.data.url) delete this.data['url'];
-							if (!this.data.title) delete this.data['title'];
-								if (!this.data.description) delete this.data['description'];
-									if (!this.data.timestamp) delete this.data['timestamp'];
-										if (!this.data.fields) delete this.data['fields'];
-		return this.data;
+		if (!this.data.title) delete this.data['title'];
+			if (!this.data.description) delete this.data['description'];
+				if (!this.data.timestamp) delete this.data['timestamp'];
+					if (!this.data.fields) delete this.data['fields'];
+						return this.data;
 	}
 
 	field(name, value, inline) {
@@ -405,10 +474,7 @@ class embedConstruct {
 class timeConstruct {
 	hms(seconds) {
 		const returnCount = [3600, 60]
-			.reduceRight(
-				(p, b) => r => [Math.floor(r / b)].concat(p(r % b)),
-				r => [r]
-			)(seconds)
+			.reduceRight((p, b) => r => [Math.floor(r / b)].concat(p(r % b)),	r => [r])(seconds)
 				.map(a => a.toString().padStart(2, '0'))
 					.join(':').split('.')[0].split(':');
 			if (returnCount[2].length === 1) returnCount[2] = `0${returnCount[2]}`;		
@@ -428,8 +494,8 @@ class timeConstruct {
 							shortTime: `<t:${time}:t>`,
 								longTime: `<t:${time}:T>`,
 									longDateShortTime: `<t:${time}:f>`,
-										completeDateShortTime: `<t:${time}:F>`,
-											relativeTime: `<t:${time}:R>`,
+					completeDateShortTime: `<t:${time}:F>`,
+						relativeTime: `<t:${time}:R>`,
 				};
 	}
 
@@ -589,4 +655,13 @@ class mimeConstruct {
 	}
 }
 
-module.exports = {appConstruct, componentConstruct, embedConstruct, timeConstruct, botConstruct, mimeConstruct};
+module.exports = {
+	httpsConstruct, 
+		relConstruct, 
+			appConstruct, 
+				componentConstruct, 
+					embedConstruct, 
+	timeConstruct, 
+		botConstruct, 
+			mimeConstruct
+};
