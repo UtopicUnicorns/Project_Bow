@@ -58,12 +58,12 @@ class auditConstruct {
 	}
 	
 	log(msg) {
-		let formMessage = {};
-			if(msg.user) formMessage['user_id'] = msg.user;
-				if(msg.actionType) formMessage['action_type'] = this.convert(msg.actionType);
-					if(msg.before) formMessage['before'] = msg.before;
-						if(msg.limit) formMessage['limit'] = msg.limit;
-		return exit.call('getGuildAuditLog', {guildId: msg.guild ,data: JSON.stringify(formMessage), type: `application/json`});
+		let formMessage = [];
+			if(msg.user) formMessage.push(`user_id=${msg.user}`);
+				if(msg.actionType) formMessage.push(`action_type=${this.convert(msg.actionType)}`);
+					if(msg.before) formMessage.push(`before=${msg.before}`);
+						if(msg.limit) formMessage.push(`limit=${msg.limit}`);
+		return exit.call('getGuildAuditLog', { guildId: msg.guild ,data: formMessage.join('&'), type: `application/json` });
 	}
 }
 

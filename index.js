@@ -66,4 +66,4 @@ mailMan.on('resumed', async (msg) => { /**/ } );
     mailMan.on('guildDelete', async (msg) => { /**/ } );
       mailMan.on('guildUpdate', async (msg) => { /**/ } );
         mailMan.on('guildCreate', async (msg) => { /**/ } );
-
+        

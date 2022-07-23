@@ -26,7 +26,7 @@ class endPointConstruct {
 					editApplicationCommandPermissions: (info) => this.awaitError({ endpoint: { url: `/applications/${info.applicationId}/guilds/${info.guildId}/commands/${info.commandId}/permissions`, method: 'PUT', type: info.type }, data: info.data }),
 						batchEditApplicationCommandPermissions: (info) => this.awaitError({ endpoint: { url: `/applications/${info.applicationId}/guilds/${info.guildId}/commands/permissions`, method: 'PUT', type: info.type }, data: info.data }), //DEPRECATED
 							
-							getGuildAuditLog: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/audit-logs`, method: 'GET', type: info.type }, data: info.data }),
+							getGuildAuditLog: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/audit-logs?${info.data}`, method: 'GET', type: info.type }, data: '' }),
 			
 			listAutoModerationRulesforGuild: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/auto-moderation/rules`, method: 'GET', type: info.type }, data: info.data }),
 				getAutoModerationRule: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/auto-moderation/rules/${info.autoModerationRuleId}`, method: 'GET', type: info.type }, data: info.data }),
@@ -79,6 +79,7 @@ class endPointConstruct {
 				createGuildEmoji: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/emojis`, method: 'POST', type: info.type }, data: info.data }),
 					modifyGuildEmoji: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/emojis/${info.emojiId}`, method: 'PATCH', type: info.type }, data: info.data }),
 						deleteGuildEmoji: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/emojis/${info.emojiId}`, method: 'DELETE', type: info.type }, data: info.data }),
+							
 							createGuild: (info) => this.awaitError({ endpoint: { url: `/guilds`, method: 'POST', type: info.type }, data: info.data }),
 			getGuild: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}`, method: 'GET', type: info.type }, data: info.data }),
 				getGuildPreview: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/preview`, method: 'GET', type: info.type }, data: info.data }),

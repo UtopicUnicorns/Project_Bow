@@ -402,7 +402,51 @@ channel.
 		})
 			.then((val) => console.log(val))
 				.catch((err) => console.error(err));
-			
+
+/* emojiEndpoint */
+emoji
+	.list({
+		guild: 'guildId',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+emoji
+	.get({
+		guild: 'guildId',
+			emoji: 'emojiId',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+emoji
+	.create({
+		guild: 'guildId',
+			name: 'emojiName',
+				image: 'filename.ext',
+					roles: [], //array of role ID's that can use emoji
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+emoji
+	.edit({
+		guild: 'guildId',
+			emoji: 'emojiId',
+				name: 'emojiName', 
+					roles: [], //array of role ID's that can use emoji
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+emoji
+	.delete({
+		guild: 'guildId',
+			emoji: 'emojiId',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
 /*	CHEATSHEET	*/
 channelUserPermissionFlags = {
 	createInstantInvite: 1 << 0,

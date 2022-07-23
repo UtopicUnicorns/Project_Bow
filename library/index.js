@@ -9,6 +9,8 @@ exports.lib = async function (config) {
 			token = await configData.botToken;
 				appId = await configData.appId;
 					intent = await configData.intent;
+	lavaLinkHost = await configData.lavaLinkHost;
+		lavaLinkPwd = await configData.lavaLinkPwd;
 	botId = await configData.botId;
 		botCaching = await configData.caching;
 			camelCase = function (str) { return str.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase()); }
@@ -31,11 +33,14 @@ exports.lib = async function (config) {
 						rel.rel();
 						
 	endPointConstruct = await require('./classes/endPointClass');
-		auditConstruct = await require('./classes/auditClass');
-			channelConstruct = await require('./classes/channelClass');
-				exit = new endPointConstruct();
-					audit = new auditConstruct();
+	auditConstruct = await require('./classes/auditClass');
+	channelConstruct = await require('./classes/channelClass');
+	emojiConstruct = await require('./classes/emojiClass');
+	
+	exit = new endPointConstruct();
+	audit = new auditConstruct();
 	channel = new channelConstruct();
+	emoji = new emojiConstruct();
 
 	postMan = await require('events');
 		class Emitter extends postMan {}
@@ -56,12 +61,11 @@ exports.lib = async function (config) {
 						voiceConstruct = await require('./classes/voiceClass');
 							voice = new voiceConstruct();
 								lamp = new linkLava.Node({
-									password: 'youshallnotpass',
-										userID: '654361253413781537',
-											host: 'localhost:2333',
+									password: lavaLinkPwd,
+										userID: botId,
+											host: lavaLinkHost,
 												send(guildID, packet) { return heart.getSocket().send(JSON.stringify(packet)); },
-								});
-									lamp.on('error', (e) => {/**/});
+								}).on('error', (e) => {/**/});
 	voiceStatePass = function(pass) {  
 		if (pass.t === 'VOICE_STATE_UPDATE') lamp.voiceStateUpdate(pass.d);
 			if (pass.t === 'VOICE_SERVER_UPDATE') lamp.voiceServerUpdate(pass.d);
