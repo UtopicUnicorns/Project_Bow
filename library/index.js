@@ -36,11 +36,13 @@ exports.lib = async function (config) {
 	auditConstruct = await require('./classes/auditClass');
 	channelConstruct = await require('./classes/channelClass');
 	emojiConstruct = await require('./classes/emojiClass');
+	guildConstruct = await require('./classes/guildClass');
 	
 	exit = new endPointConstruct();
 	audit = new auditConstruct();
 	channel = new channelConstruct();
 	emoji = new emojiConstruct();
+	guild = new guildConstruct();
 
 	postMan = await require('events');
 		class Emitter extends postMan {}
@@ -54,7 +56,7 @@ exports.lib = async function (config) {
 		cache = new cacheConstruct();
 	
 	const { spawn } = require('node:child_process');
-		const lavaSpawn = await spawn('java', ['-jar', './library/lavaLink/Lavalink.jar', '--help']);
+		const lavaSpawn = await spawn('java', ['-jar', './library/lavaLink/Lavalink.jar']);
 			lavaSpawn.stderr.on('data', (data) => { console.error(data.toString()); });
 				lavaSpawn.on('exit', (code) => { console.log(`Child exited with code ${code}`); });
 					linkLava = await require('./lavaLink');

@@ -81,7 +81,7 @@ class endPointConstruct {
 						deleteGuildEmoji: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/emojis/${info.emojiId}`, method: 'DELETE', type: info.type }, data: info.data }),
 							
 							createGuild: (info) => this.awaitError({ endpoint: { url: `/guilds`, method: 'POST', type: info.type }, data: info.data }),
-			getGuild: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}`, method: 'GET', type: info.type }, data: info.data }),
+			getGuild: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}?${info.data}`, method: 'GET', type: info.type }, data: info.data }),
 				getGuildPreview: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/preview`, method: 'GET', type: info.type }, data: info.data }),
 					modifyGuild: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}`, method: 'PATCH', type: info.type }, data: info.data }),
 						deleteGuild: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}`, method: 'DELETE', type: info.type }, data: info.data }),
@@ -90,8 +90,8 @@ class endPointConstruct {
 				modifyGuildChannelPositions: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/channels`, method: 'PATCH', type: info.type }, data: info.data }),
 					listActiveGuildThreads: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/threads/active`, method: 'GET', type: info.type }, data: info.data }),
 						getGuildMember: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/members/${info.userId}`, method: 'GET', type: info.type }, data: info.data }),
-							listGuildMembers: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/members`, method: 'GET', type: info.type }, data: info.data }),
-			searchGuildMembers: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/members/search`, method: 'GET', type: info.type }, data: info.data }),
+							listGuildMembers: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/members?${info.data}`, method: 'GET', type: info.type }, data: info.data }),
+			searchGuildMembers: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/members/search?${info.data}`, method: 'GET', type: info.type }, data: info.data }),
 				addGuildMember: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/members/${info.userId}`, method: 'PUT', type: info.type }, data: info.data }),
 					modifyGuildMember: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/members/${info.userId}`, method: 'PATCH', type: info.type }, data: info.data }),
 						modifyCurrentMember: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/members/@me`, method: 'PATCH', type: info.type }, data: info.data }),
@@ -124,12 +124,14 @@ class endPointConstruct {
 			modifyGuildWelcomeScreen: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/welcome-screen`, method: 'PATCH', type: info.type }, data: info.data }),
 				modifyCurrentUserVoiceState: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/voice-states/@me`, method: 'PATCH', type: info.type }, data: info.data }),
 					modifyUserVoiceState: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/voice-states/${info.userId}`, method: 'PATCH', type: info.type }, data: info.data }),
+						
 						listScheduledEventsforGuild: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/scheduled-events`, method: 'GET', type: info.type }, data: info.data }),
 							createGuildScheduledEvent: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/scheduled-events`, method: 'POST', type: info.type }, data: info.data }),
 			getGuildScheduledEvent: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/scheduled-events/${info.guildScheduledEventId}`, method: 'GET', type: info.type }, data: info.data }),
 				modifyGuildScheduledEvent: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/scheduled-events/${info.guildScheduledEventId}`, method: 'PATCH', type: info.type }, data: info.data }),
 					deleteGuildScheduledEvent: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/scheduled-events/${info.guildScheduledEventId}`, method: 'DELETE', type: info.type }, data: info.data }),
 						getGuildScheduledEventUsers: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/scheduled-events/${info.guildScheduledEventId}/users`, method: 'GET', type: info.type }, data: info.data }),
+							
 							getGuildTemplate: (info) => this.awaitError({ endpoint: { url: `/guilds/templates/${info.templateCode}`, method: 'GET', type: info.type }, data: info.data }),
 			createGuildfromGuildTemplate: (info) => this.awaitError({ endpoint: { url: `/guilds/templates/${info.templateCode}`, method: 'POST', type: info.type }, data: info.data }),
 				getGuildTemplates: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/templates`, method: 'GET', type: info.type }, data: info.data }),
@@ -137,12 +139,15 @@ class endPointConstruct {
 						syncGuildTemplate: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/templates/${info.templateCode}`, method: 'PUT', type: info.type }, data: info.data }),
 							modifyGuildTemplate: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/templates/${info.templateCode}`, method: 'PATCH', type: info.type }, data: info.data }),
 			deleteGuildTemplate: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/templates/${info.templateCode}`, method: 'DELETE', type: info.type }, data: info.data }),
+				
 				getInvite: (info) => this.awaitError({ endpoint: { url: `/invites/${info.inviteCode}`, method: 'GET', type: info.type }, data: info.data }),
 					deleteInvite: (info) => this.awaitError({ endpoint: { url: `/invites/${info.inviteCode}`, method: 'DELETE', type: info.type }, data: info.data }),
+						
 						createStageInstance: (info) => this.awaitError({ endpoint: { url: `/stage-instances`, method: 'POST', type: info.type }, data: info.data }),
 							getStageInstance: (info) => this.awaitError({ endpoint: { url: `/stage-instances/${info.channelId}`, method: 'GET', type: info.type }, data: info.data }),
 			modifyStageInstance: (info) => this.awaitError({ endpoint: { url: `/stage-instances/${info.channelId}`, method: 'PATCH', type: info.type }, data: info.data }),
 				deleteStageInstance: (info) => this.awaitError({ endpoint: { url: `/stage-instances/${info.channelId}`, method: 'DELETE', type: info.type }, data: info.data }),
+					
 					getSticker: (info) => this.awaitError({ endpoint: { url: `/stickers/${info.stickerId}`, method: 'GET', type: info.type }, data: info.data }),
 						listNitroStickerPacks: (info) => this.awaitError({ endpoint: { url: `/sticker-packs`, method: 'GET', type: info.type }, data: info.data }),
 							listGuildStickers: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/stickers`, method: 'GET', type: info.type }, data: info.data }),
@@ -150,6 +155,7 @@ class endPointConstruct {
 				createGuildSticker: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/stickers`, method: 'POST', type: info.type }, data: info.data }),
 					modifyGuildSticker: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/stickers/${info.stickerId}`, method: 'PATCH', type: info.type }, data: info.data }),
 						deleteGuildSticker: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/stickers/${info.stickerId}`, method: 'DELETE', type: info.type }, data: info.data }),
+							
 							getCurrentUser: (info) => this.awaitError({ endpoint: { url: `/users/@me`, method: 'GET', type: info.type }, data: info.data }),
 			getUser: (info) => this.awaitError({ endpoint: { url: `/users/${info.userId}`, method: 'GET', type: info.type }, data: info.data }),
 				modifyCurrentUser: (info) => this.awaitError({ endpoint: { url: `/users/@me`, method: 'PATCH', type: info.type }, data: info.data }),
@@ -159,7 +165,9 @@ class endPointConstruct {
 			createDM: (info) => this.awaitError({ endpoint: { url: `/users/@me/channels`, method: 'POST', type: info.type }, data: info.data }),
 				createGroupDM: (info) => this.awaitError({ endpoint: { url: `/users/@me/channels`, method: 'POST', type: info.type }, data: info.data }),
 					getUserConnection: (info) => this.awaitError({ endpoint: { url: `/users/@me/connections`, method: 'GET', type: info.type }, data: info.data }),
+						
 						listVoiceRegions: (info) => this.awaitError({ endpoint: { url: `/voice/regions`, method: 'GET', type: info.type }, data: info.data }),
+							
 							createWebhook: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/webhooks`, method: 'POST', type: info.type }, data: info.data }),
 			getChannelWebhooks: (info) => this.awaitError({ endpoint: { url: `/channels/${info.channelId}/webhooks`, method: 'GET', type: info.type }, data: info.data }),
 				getGuildWebhooks: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/webhooks`, method: 'GET', type: info.type }, data: info.data }),

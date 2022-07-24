@@ -14,26 +14,26 @@ class voiceConstruct {
     this.player = {};
       this.pReady = {};
         this.playerDeploy = {};
-    mailMan.on('playerEvent', (event) => { 
-			if (event.type === 'TrackStartEvent') mailMan.emit('playerPlay', { guild: event.guildId, playing: this.playerDeploy[event.guildId].playing });
-        if (event.type === 'TrackEndEvent') {
-          if(!this.playerDeploy[event.guildId]) return;
-            this.playerDeploy[event.guildId].playing = null;
-              if(this.playerDeploy[event.guildId].songs.length === 0) {
-                this.player[event.guildId].stop();
-                  this.player[event.guildId].leave();
-                    this.player[event.guildId].destroy();
-                      delete this.playerDeploy[event.guildId];
-                        delete this.player[event.guildId];
-                          mailMan.emit('playerEnd', { guild: event.guildId });
-              } else {
-                let songNow = this.playerDeploy[event.guildId].songs.shift();
-                    this.playerDeploy[event.guildId].playing = songNow;
-                      this.player[event.guildId].setFilters(this.playerDeploy[event.guildId].settings);
-                        this.player[event.guildId].play(songNow.song);
+          mailMan.on('playerEvent', (event) => { 
+            if (event.type === 'TrackStartEvent') mailMan.emit('playerPlay', { guild: event.guildId, playing: this.playerDeploy[event.guildId].playing });
+              if (event.type === 'TrackEndEvent') {
+                if(!this.playerDeploy[event.guildId]) return;
+                  this.playerDeploy[event.guildId].playing = null;
+                    if(this.playerDeploy[event.guildId].songs.length === 0) {
+                      this.player[event.guildId].stop();
+                        this.player[event.guildId].leave();
+                          this.player[event.guildId].destroy();
+                            delete this.playerDeploy[event.guildId];
+                              delete this.player[event.guildId];
+                      mailMan.emit('playerEnd', { guild: event.guildId });
+                    } else {
+                      let songNow = this.playerDeploy[event.guildId].songs.shift();
+                          this.playerDeploy[event.guildId].playing = songNow;
+                            this.player[event.guildId].setFilters(this.playerDeploy[event.guildId].settings);
+                              this.player[event.guildId].play(songNow.song);
+                    }
               }
-        }
-		});
+          });
   }
   
   async queue(info) {
@@ -47,14 +47,14 @@ class voiceConstruct {
         await this.pReady[info.guild].promise;
           let searchNeed = 'ytsearch:';
             if(info.command.query.toLowerCase().startsWith('http')) searchNeed = '';
-              const res = await lamp.load(`${searchNeed}${info.command.query}`);
-                if(!await res.tracks[0]) return;
-                  this.playerDeploy[info.guild].songs.push({ song: res.tracks[0], requested: info.user.user });
-                    if(this.playerDeploy[info.guild].songs.length === 1 && this.playerDeploy[info.guild].playing === null) {
-                      let songNow = this.playerDeploy[info.guild].songs.shift();
-                        this.playerDeploy[info.guild].playing = songNow;
-                          await this.player[info.guild].play(songNow.song);
-                    }
+    const res = await lamp.load(`${searchNeed}${info.command.query}`);
+      if(!await res.tracks[0]) return;
+        this.playerDeploy[info.guild].songs.push({ song: res.tracks[0], requested: info.user.user });
+          if(this.playerDeploy[info.guild].songs.length === 1 && this.playerDeploy[info.guild].playing === null) {
+            let songNow = this.playerDeploy[info.guild].songs.shift();
+              this.playerDeploy[info.guild].playing = songNow;
+                await this.player[info.guild].play(songNow.song);
+          }
   }
   
   async volume(info) {
@@ -63,7 +63,7 @@ class voiceConstruct {
         if (info.command <= 1) info.command = 5;
           let volumeParse = parseFloat(info.command / 100).toFixed(1);
             this.playerDeploy[info.guild].settings.volume = volumeParse;
-              await this.player[info.guild].setFilters(this.playerDeploy[info.guild].settings);
+    await this.player[info.guild].setFilters(this.playerDeploy[info.guild].settings);
   }
   
   async pitch(info) {
@@ -85,7 +85,7 @@ class voiceConstruct {
            this.player[info.guild].leave();
              this.player[info.guild].destroy();
                delete this.playerDeploy[info.guild];
-                delete this.player[info.guild];
+    delete this.player[info.guild];
   }
   
   async pause(info) {
@@ -104,7 +104,7 @@ class voiceConstruct {
         this.pReady[info.guild] = {status: 'waiting', promise: defer()};
           await this.player[info.guild].join(info.command);
             this.player[info.guild].once('playerUpdate', (d) => this.pReady[info.guild].promise.resolve());
-              this.player[info.guild].setFilters(this.playerDeploy[info.guild].settings);
+    this.player[info.guild].setFilters(this.playerDeploy[info.guild].settings);
     }
 }
 

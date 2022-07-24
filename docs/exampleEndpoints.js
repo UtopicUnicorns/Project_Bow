@@ -447,7 +447,167 @@ emoji
 		.then((val) => console.log(val))
 				.catch((err) => console.error(err));
 
+/* guildEndpoint */
+guild
+	.create({
+		name: 'guildName',
+			icon: 'fileName.ext',
+				verificationLevel: verificationLevelChoice,
+					defaultMessageNotifications: defaultMessageNotificationsOption,
+						explicitContentFilter: explicitContentFilterChoice,
+		roles: [], //array of roles
+			channels: [], //array of channels
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.get({
+		guild: 'guildId',
+			count: BOOLEAN,
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.preview({
+		guild: 'guildId',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.edit({
+		guild: 'guildId',
+			name: 'guildName',
+				verificationLevel: verificationLevelChoice,
+					defaultMessageNotifications: defaultMessageNotificationsOption,
+						explicitContentFilter: explicitContentFilterChoice,
+		afkChannelId: 'channelId',
+			afkTimeout: INTEGER,
+				icon: 'fileName.ext',
+					ownerId: 'newOwnerId',
+						splash: 'fileName.ext',
+		discoverySplash: 'fileName.ext',
+			banner: 'fileName.ext',
+				systemChannelId: 'channelId',
+					systemChannelFlags: systemChannelFlagsArray,
+						rulesChannelId: 'channelId',
+		publicUpdatesChannelId: 'channelId',
+			preferredLocale: 'localeString',
+				features: featuresArray,
+					description: 'guildDescription',
+						premiumProgressBar: BOOLEAN,
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.delete({
+		guild: 'guildId',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.getChannels({
+		guild: 'guildId',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+				
+guild
+	.createChannel({
+		guild: 'guildId',
+			name: 'channelName',
+				type: channelTypes,
+					topic: 'topicDescription',
+						bitrate: INTEGER,
+		userLimit: INTEGER,
+			rateLimitPerUser: INTEGER,
+				position: INTEGER,
+					permissionOverwrite: permHere,
+						parentId: 'parentCategoryId',
+		nsfw: BOOLEAN,
+			rtcRegion: 'rtcRegion',
+				videoQualityMode: videoQualityMode,
+					defaultAutoArchiveDuration: INTEGER, 
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.editChanPosition({
+		guild: 'guildId',
+			id: 'channelId',
+				position: INTEGER,
+					lockPermissions: BOOLEAN,
+						parentId: 'parentCategoryId',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.activeThreads({
+		guild: 'guildId',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.getMember({
+		guild: 'guildId',
+			member: 'userId',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.listMembers({
+		guild: 'guildId',
+			limit: INTEGER,
+				after: 'userId',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.searchMembers({
+		guild: 'guildId',
+			limit: INTEGER,
+				query: 'stringToMatchUsernameOrNick',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+							
 /*	CHEATSHEET	*/
+defaultMessageNotificationsOption = {
+	allMessages: 0,
+	onlyMentions: 1,
+};
+
+verificationLevelChoice = {
+	none: 0,
+	low: 1,
+	mid: 2,
+	high: 3,
+	veryHigh: 4,
+};
+
+explicitContentFilterChoice = {
+	off: 0,
+	onForNoRoles: 1,
+	onForAllMembers: 2,
+};
+
+systemChannelFlagsArray = ['suppressJoinNotifications', 'suppressPremiumSubscribers', 
+														'suppressGuildReminderNotifications', 'suppressJoinNotificationReplies'];
+
+featuresArray = ['animatedBanner', 'animatedIcon', 'autoModeration', 'banner', 'community', 'discoverable', 
+									'featurable', 'inviteSplash', 'memberVerificationGateEnabled', 'monetizationEnabled', 
+									'moreStickers', 'news', 'partnered', 'previewEnabled', 'privateThreads', 'roleIcons', 
+									'ticketedEventsEnabled', 'vanityUrl', 'verified', 'vipRegions', 'welcomeScreenEnabled'];
+
 channelUserPermissionFlags = {
 	createInstantInvite: 1 << 0,
 	kickMembers: 1 << 1,
