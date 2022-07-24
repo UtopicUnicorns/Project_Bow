@@ -579,7 +579,165 @@ guild
 	})
 		.then((val) => console.log(val))
 				.catch((err) => console.error(err));
-							
+
+guild
+	.addMember({
+		guild: 'guildId',
+			user: 'userId',
+				accessToken: 'accessToken',
+					nick: 'nickName',
+						roles: [], //array of role ID's'
+		mute: BOOLEAN,
+			deaf: BOOLEAN,
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.editMember({
+		guild: 'guildId',
+			user: 'userId',
+				channel: 'channelId',
+					nick: 'nickName',
+						roles: [], //array of role ID's'
+		mute: BOOLEAN,
+			deaf: BOOLEAN,
+				timeOut: 'ISO8601timeStamp',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.editMe({
+		guild: 'guildId',
+			nick: 'nickName',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.addMemberRole({
+		guild: 'guildId',
+			user: 'userId',
+				role: 'roleId',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.removeMemberRole({
+		guild: 'guildId',
+			user: 'userId',
+				role: 'roleId',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.removeMember({
+		guild: 'guildId',
+			user: 'userId',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.getBans({
+		guild: 'guildId',
+			limit: INTEGER,
+				before: 'userId',
+					after: 'userId',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.getBan({
+		guild: 'guildId',
+			user: 'userId',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.ban({
+		guild: 'guildId',
+			user: 'userId',
+				reason: 'reasonToBan',
+					deleteMessages: INTEGER,
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.unBan({
+		guild: 'guildId',
+			user: 'userId',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.getRoles({
+		guild: 'guildId',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.createRole({
+		guild: 'guildId',
+			name: 'roleName',
+				permissions: rolePermissionArray,
+					color: INTEGER, //rgb color
+						hoist: BOOLEAN,
+		icon: 'fileName.ext',
+			unicodeEmoji: 'unicodeEmoji',
+				mentionable: BOOLEAN,
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.rolePosition({
+		guild: 'guildId',
+			role: 'roleId',
+				position: INTEGER,
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.editRole({
+		guild: 'guildId',
+			role: 'roleId',
+				name: 'roleName',
+					permissions: rolePermissionArray,
+						color: INTEGER, //rgb color
+		hoist: BOOLEAN,
+			icon: 'fileName.ext',
+				unicodeEmoji: 'unicodeEmoji',
+					mentionable: BOOLEAN,
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.mfaLevel({
+		guild: 'guildId',
+			level: INTEGER, //0 off, 1 on
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.deleteRole({
+		guild: 'guildId',
+			role: 'roleId',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+					
 /*	CHEATSHEET	*/
 defaultMessageNotificationsOption = {
 	allMessages: 0,
@@ -607,6 +765,15 @@ featuresArray = ['animatedBanner', 'animatedIcon', 'autoModeration', 'banner', '
 									'featurable', 'inviteSplash', 'memberVerificationGateEnabled', 'monetizationEnabled', 
 									'moreStickers', 'news', 'partnered', 'previewEnabled', 'privateThreads', 'roleIcons', 
 									'ticketedEventsEnabled', 'vanityUrl', 'verified', 'vipRegions', 'welcomeScreenEnabled'];
+
+rolePermissionArray = ['createInstantInvite', 'kickMembers', 'banMembers', 'administrator', 'manageChannels', 
+											'manageGuild', 'addReactions', 'viewAuditLog', 'prioritySpeaker', 'stream', 'viewChannel', 
+											'sendMessages', 'sendTtsMessages', 'manageMessages', 'embedLinks', 'attachFiles', 'readMessageHistory', 
+											'mentionEveryone', 'useExternalEmojis', 'viewGuildInsights', 'connect', 'speak', 'muteMembers', 
+											'deafenMembers', 'moveMembers', 'useVad', 'changeNickname', 'manageNicknames', 'manageRoles', 
+											'manageWebhooks', 'manageEmojisAndStickers', 'useApplicationCommands', 'requestToSpeak', 
+											'manageEvents', 'manageThreads', 'createPublicThreads', 'createPrivateThreads', 'useExternalStickers', 
+											'sendMessagesInThreads', 'useEmbeddedActivities', 'moderateMembers']
 
 channelUserPermissionFlags = {
 	createInstantInvite: 1 << 0,

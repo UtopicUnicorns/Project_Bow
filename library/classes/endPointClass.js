@@ -99,7 +99,7 @@ class endPointConstruct {
 			addGuildMemberRole: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/members/${info.userId}/roles/${info.roleId}`, method: 'PUT', type: info.type }, data: info.data }),
 				removeGuildMemberRole: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/members/${info.userId}/roles/${info.roleId}`, method: 'DELETE', type: info.type }, data: info.data }),
 					removeGuildMember: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/members/${info.userId}`, method: 'DELETE', type: info.type }, data: info.data }),
-						getGuildBans: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/bans`, method: 'GET', type: info.type }, data: info.data }),
+						getGuildBans: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/bans?${info.data}`, method: 'GET', type: info.type }, data: info.data }),
 							getGuildBan: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/bans/${info.userId}`, method: 'GET', type: info.type }, data: info.data }),
 			createGuildBan: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/bans/${info.userId}`, method: 'PUT', type: info.type }, data: info.data }),
 				removeGuildBan: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/bans/${info.userId}`, method: 'DELETE', type: info.type }, data: info.data }),

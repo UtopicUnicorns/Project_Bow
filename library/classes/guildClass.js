@@ -168,6 +168,57 @@ class guildConstruct {
 		};
 			return videoQualityModes[mode];
 	}
+	
+	processRolePerm(array) {
+		let permissionField = {
+			createInstantInvite: 1 << 0,
+				kickMembers: 1 << 1,
+					banMembers: 1 << 2,
+						administrator: 1 << 3,
+							manageChannels: 1 << 4,
+			manageGuild: 1 << 5,
+				addReactions: 1 << 6,
+					viewAuditLog: 1 << 7,
+						prioritySpeaker: 1 << 8,
+							stream: 1 << 9,
+			viewChannel: 1 << 10,
+				sendMessages: 1 << 11,
+					sendTtsMessages: 1 << 12,
+						manageMessages: 1 << 13,
+							embedLinks: 1 << 14,
+			attachFiles: 1 << 15,
+				readMessageHistory: 1 << 16,
+					mentionEveryone: 1 << 17,
+						useExternalEmojis: 1 << 18,
+							viewGuildInsights: 1 << 19,
+			connect: 1 << 20,
+				speak: 1 << 21,
+					muteMembers: 1 << 22,
+						deafenMembers: 1 << 23,
+							moveMembers: 1 << 24,
+			useVad: 1 << 25,
+				changeNickname: 1 << 26,
+					manageNicknames: 1 << 27,
+						manageRoles: 1 << 28,
+							manageWebhooks: 1 << 29,
+			manageEmojisAndStickers: 1 << 30,
+				useApplicationCommands: 1 << 31,
+					requestToSpeak: 1 << 32,
+						manageEvents: 1 << 33,
+							manageThreads: 1 << 34,
+			createPublicThreads: 1 << 35,
+				createPrivateThreads: 1 << 36,
+					useExternalStickers: 1 << 37,
+						sendMessagesInThreads: 1 << 38,
+							useEmbeddedActivities: 1 << 39,
+			moderateMembers: 1 << 40
+		};
+			let newPerm = 0;
+				for(let i of array) {
+					newPerm += permissionField[i];
+				}
+					return newPerm;
+	}
 
 
 	create(msg) {
@@ -271,6 +322,119 @@ class guildConstruct {
 			if(msg.query) formMessage.push(`before=${msg.query}`);
 				if(msg.limit) formMessage.push(`limit=${msg.limit}`);
 					return exit.call('searchGuildMembers', {guildId: msg.guild, data: formMessage.join('&'), type: `application/json`});
+	}
+	
+	addMember(msg) {
+		let formMessage = {};
+			if(msg.accessToken) formMessage['access_token'] = msg.accessToken;
+				if(msg.nick) formMessage['nick'] = msg.nick;
+					if(msg.roles) formMessage['roles'] = msg.roles;
+						if(msg.mute) formMessage['mute'] = msg.mute;
+			if(msg.deaf) formMessage['deaf'] = msg.deaf;
+				return exit.call('addGuildMember', {guildId: msg.guild, userId: msg.user, data: JSON.stringify(formMessage), type: `application/json`});
+	}
+	
+	editMember(msg) {
+		let formMessage = {};
+			if(msg.nick) formMessage['nick'] = msg.nick;
+				if(msg.roles) formMessage['roles'] = msg.roles;
+					if(msg.mute) formMessage['mute'] = msg.mute;
+						if(msg.deaf) formMessage['deaf'] = msg.deaf;
+		if(msg.channel) formMessage['channel_id'] = msg.channel;
+			if(msg.timeOut) formMessage['communication_disabled_until'] = msg.timeOut;
+				return exit.call('modifyGuildMember', {guildId: msg.guild, userId: msg.user, data: JSON.stringify(formMessage), type: `application/json`});
+	}
+	
+	editMe(msg){
+		let formMessage = {};
+			if(msg.nick) formMessage['nick'] = msg.nick;
+				return exit.call('modifyCurrentMember', {guildId: msg.guild, data: JSON.stringify(formMessage), type: `application/json`});
+	}
+	
+	editMyNick(msg){
+		let formMessage = {};
+			if(msg.nick) formMessage['nick'] = msg.nick;
+				return exit.call('modifyCurrentUserNick', {guildId: msg.guild, data: JSON.stringify(formMessage), type: `application/json`});
+	}
+	
+	addMemberRole(msg) {
+		return exit.call('addGuildMemberRole', {guildId: msg.guild, userId: msg.user, roleId: msg.role, data: '', type: `application/json`});
+	}
+	
+	removeMemberRole(msg) {
+		return exit.call('removeGuildMemberRole', {guildId: msg.guild, userId: msg.user, roleId: msg.role, data: '', type: `application/json`});
+	}
+	
+	removeMember(msg) {
+		return exit.call('removeGuildMember', {guildId: msg.guild, userId: msg.user, data: '', type: `application/json`});
+	}
+	
+	getBans(msg) {
+		let formMessage = [];
+			if(msg.limit) formMessage.push(`before=${msg.limit}`);
+				if(msg.after) formMessage.push(`limit=${msg.after}`);
+					if(msg.before) formMessage.push(`limit=${msg.before}`);
+						return exit.call('getGuildBans', {guildId: msg.guild, data: formMessage.join('&'), type: `application/json`});
+	}
+	
+	getBan(msg) {
+		return exit.call('getGuildBan', {guildId: msg.guild, userId: msg.user, data: '', type: `application/json`});
+	}
+	
+	ban(msg) {
+		let formMessage = {};
+			if(msg.deleteMessages) formMessage['delete_message_days'] = msg.deleteMessages;
+				if(msg.reason) formMessage['reason'] = msg.reason;
+					return exit.call('createGuildBan', {guildId: msg.guild, userId: msg.user, data: JSON.stringify(formMessage), type: `application/json`});
+	}
+	
+	unBan(msg) {
+		return exit.call('removeGuildBan', {guildId: msg.guild, userId: msg.user, data: '', type: `application/json`});
+	}
+	
+	getRoles(msg) {
+		return exit.call('getGuildRoles', {guildId: msg.guild, data: '', type: `application/json`});
+	}
+	
+	createRole(msg) {
+		let formMessage = {};
+			if(msg.name) formMessage['name'] = msg.name;
+				if(msg.permissions) formMessage['permissions'] = this.processRolePerm(msg.permissions);
+					if(msg.color) formMessage['color'] = msg.color;
+						if(msg.hoist) formMessage['hoist'] = msg.hoist;
+			if(msg.icon) formMessage['icon'] = this.processGuildImage(msg.icon);
+				if(msg.unicodeEmoji) formMessage['unicode_emoji'] = msg.unicodeEmoji;
+					if(msg.mentionable) formMessage['mentionable'] = msg.mentionable;
+						return exit.call('createGuildRole', {guildId: msg.guild, data: JSON.stringify(formMessage), type: `application/json`});
+	}
+	
+	rolePosition(msg) {
+		let formMessage = {};
+			if(msg.id) formMessage['id'] = msg.id;
+				if(msg.position) formMessage['position'] = msg.position;
+					return exit.call('modifyGuildRolePositions', {guildId: msg.guild, data: JSON.stringify(formMessage), type: `application/json`});
+	}
+	
+	editRole(msg) {
+		let formMessage = {};
+			if(msg.name) formMessage['name'] = msg.name;
+				if(msg.permissions) formMessage['permissions'] = this.processRolePerm(msg.permissions);
+					if(msg.color) formMessage['color'] = msg.color;
+						if(msg.hoist) formMessage['hoist'] = msg.hoist;
+			if(msg.icon) formMessage['icon'] = this.processGuildImage(msg.icon);
+				if(msg.unicodeEmoji) formMessage['unicode_emoji'] = msg.unicodeEmoji;
+					if(msg.mentionable) formMessage['mentionable'] = msg.mentionable;
+						return exit.call('modifyGuildRole', {guildId: msg.guild, roleId: msg.role, data: JSON.stringify(formMessage), type: `application/json`});
+	}
+	
+	mfaLevel(msg) {
+		let formMessage = {};
+			if(msg.level) formMessage['level'] = msg.level;
+				return exit.call('modifyGuildMFALevel', {guildId: msg.guild, data: JSON.stringify(formMessage), type: `application/json`});
+	}
+	
+	deleteRole(msg) {
+		return exit.call('deleteGuildRole', {guildId: msg.guild, roleId: msg.role, data: '', type: `application/json`});
 	}
 }
 
