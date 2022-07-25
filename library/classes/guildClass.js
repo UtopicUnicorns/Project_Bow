@@ -498,7 +498,28 @@ class guildConstruct {
 		return exit.call('getGuildWelcomeScreen', {guildId: msg.guild, data: '', type: `application/json`});
 	}
 	
-	// https://discord.com/developers/docs/resources/guild#modify-guild-welcome-screen
+	editWelcomeScreen(msg) {
+		let formMessage = {};
+			if(msg.enabled) formMessage['enabled'] = msg.enabled;
+				if(msg.welcomeChannels) formMessage['welcome_channels'] = msg.welcomeChannels;
+					if(msg.description) formMessage['description'] = msg.description;
+						return exit.call('modifyGuildWelcomeScreen', {guildId: msg.guild, data: JSON.stringify(formMessage), type: `application/json`});
+	}
+	
+	editVoiceState(msg) {
+		let formMessage = {};
+			if(msg.channel) formMessage['channel_id'] = msg.channel;
+				if(msg.suppress) formMessage['suppress'] = msg.suppress;
+					if(msg.requestToSpeakTimestamp) formMessage['request_to_speak_timestamp'] = msg.requestToSpeakTimestamp;
+						return exit.call('modifyCurrentUserVoiceState', {guildId: msg.guild, data: JSON.stringify(formMessage), type: `application/json`});
+	}
+
+	editUserVoiceState(msg) {
+		let formMessage = {};
+			if(msg.channel) formMessage['channel_id'] = msg.channel;
+				if(msg.suppress) formMessage['suppress'] = msg.suppress;
+					return exit.call('modifyUserVoiceState', {guildId: msg.guild, userId: msg.user, data: JSON.stringify(formMessage), type: `application/json`});
+	}
 }
 
 module.exports = guildConstruct;

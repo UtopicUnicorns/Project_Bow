@@ -831,8 +831,51 @@ guild
 	})
 		.then((val) => console.log(val))
 				.catch((err) => console.error(err));
+
+guild
+	.editWelcomeScreen({
+		guild: 'guildId',
+			enabled: BOOLEAN,
+				welcomeChannels: welcomeChannelsArray,
+					description: 'serverDescription',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.editVoiceState({
+		guild: 'guildId',
+			channel: 'channelId',
+				suppress: BOOLEAN,
+					requestToSpeakTimestamp: 'ISO8601timestamp',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.editUserVoiceState({
+		guild: 'guildId',
+			user: 'userId',
+				channel: 'channelId',
+					suppress: BOOLEAN,
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
 					
 /*	CHEATSHEET	*/
+welcomeChannelsArray = [{
+													channel_id: 'channelId', 
+													description: 'channelDescription', 
+													emoji_id: 'emojiId', 
+													emoji_name: 'emojiName',
+												},
+												{
+													channel_id: 'channelId', 
+													description: 'channelDescription', 
+													emoji_id: 'emojiId', 
+													emoji_name: 'emojiName',
+												}];
+
 widgetImageStyleOption = ['shield', 'banner1', 'banner2', 'banner3', 'banner4'];
 
 defaultMessageNotificationsOption = {
