@@ -861,8 +861,143 @@ guild
 	})
 		.then((val) => console.log(val))
 				.catch((err) => console.error(err));
-					
+
+guildEvent
+	.listEvents({
+		guild: 'guildId',
+			count: BOOLEAN,
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guildEvent
+	.createEvent({
+		guild: 'guildId',
+			channel: 'channelId',
+				entityMetadata: { location: 'locationString' },
+					name: 'eventName',
+						privacyLevel: privacyLevelOption,
+		startTime: 'ISO8601timestamp',
+			endTime: 'ISO8601timestamp',
+				description: 'eventDescription',
+					entityType: entityTypeOption,
+						image: 'fileName.ext',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guildEvent
+	.getEvent({
+		guild: 'guildId',
+			event: 'eventId',
+				count: BOOLEAN,
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guildEvent
+	.editEvent({
+		guild: 'guildId',
+			event: 'eventId',
+				channel: 'channelId',
+					entityMetadata: { location: 'locationString' },
+						name: 'eventName',
+		privacyLevel: privacyLevelOption,
+			startTime: 'ISO8601timestamp',
+				endTime: 'ISO8601timestamp',
+					description: 'eventDescription',
+						entityType: entityTypeOption,
+		image: 'fileName.ext',
+			status: statusOption,
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guildEvent
+	.deleteEvent({
+		guild: 'guildId',
+			event: 'eventId',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guildEvent
+	.getEventUsers({
+		guild: 'guildId',
+			event: 'eventId',
+				limit: INTEGER,
+					withMember: BOOLEAN,
+						before: 'userId',
+		after: 'userId',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guildTemplate
+	.getTemplate({
+		template: 'templadeCode',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guildTemplate
+	.guildFromTemplate({
+		template: 'templadeCode',
+			name: 'guildName',
+				icon: 'fileName.ext',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guildTemplate
+	.getGuildTemplates({
+		guild: 'guildId',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guildTemplate
+	.createTemplate({
+		guild: 'guildId',
+			name: 'templateName',
+				description: 'templateDescription',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guildTemplate
+	.syncTemplate({
+		guild: 'guildId',
+			template: 'templateCode',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guildTemplate
+	.editTemplate({
+		guild: 'guildId',
+			template: 'templateCode',
+				name: 'templateName',
+					description: 'templateDescription',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guildTemplate
+	.deleteTemplate({
+		guild: 'guildId',
+			template: 'templateCode',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+		
 /*	CHEATSHEET	*/
+statusOption = ['scheduled', 'active', 'completed', 'canceled'];
+
+entityTypeOption = ['stageInstance', 'voice', 'external'];
+
+privacyLevelOption = ['guildOnly'];
+
 welcomeChannelsArray = [{
 													channel_id: 'channelId', 
 													description: 'channelDescription', 

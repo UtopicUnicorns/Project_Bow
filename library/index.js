@@ -37,12 +37,16 @@ exports.lib = async function (config) {
 	channelConstruct = await require('./classes/channelClass');
 	emojiConstruct = await require('./classes/emojiClass');
 	guildConstruct = await require('./classes/guildClass');
+	guildEventConstruct = await require('./classes/guildEventClass');
+	guildTemplateConstruct = await require('./classes/guildTemplateClass');
 	
 	exit = new endPointConstruct();
 	audit = new auditConstruct();
 	channel = new channelConstruct();
 	emoji = new emojiConstruct();
 	guild = new guildConstruct();
+	guildEvent = new guildEventConstruct();
+	guildTemplate = new guildTemplateConstruct();
 
 	postMan = await require('events');
 		class Emitter extends postMan {}
