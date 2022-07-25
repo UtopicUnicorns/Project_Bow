@@ -31,9 +31,9 @@ class heartConstruct {
 						token: token,
 							intents: intentsNum,
 								properties: {
-									$os: process.platform,
-										$browser: 'ProjectArtemis',
-											$device: 'ProjectArtemis',
+									os: process.platform,
+										browser: 'ProjectArtemis',
+											device: 'ProjectArtemis',
 								},
 					},
 			};
