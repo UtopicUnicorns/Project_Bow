@@ -39,6 +39,7 @@ exports.lib = async function (config) {
 	guildConstruct = await require('./classes/guildClass');
 	guildEventConstruct = await require('./classes/guildEventClass');
 	guildTemplateConstruct = await require('./classes/guildTemplateClass');
+	inviteConstruct = await require('./classes/inviteClass');
 	
 	exit = new endPointConstruct();
 	audit = new auditConstruct();
@@ -47,6 +48,7 @@ exports.lib = async function (config) {
 	guild = new guildConstruct();
 	guildEvent = new guildEventConstruct();
 	guildTemplate = new guildTemplateConstruct();
+	invite = new inviteConstruct();
 
 	postMan = await require('events');
 		class Emitter extends postMan {}

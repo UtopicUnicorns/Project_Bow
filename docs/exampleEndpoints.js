@@ -862,6 +862,7 @@ guild
 		.then((val) => console.log(val))
 				.catch((err) => console.error(err));
 
+/* guildScheduledEventEndpoint */
 guildEvent
 	.listEvents({
 		guild: 'guildId',
@@ -933,6 +934,7 @@ guildEvent
 		.then((val) => console.log(val))
 				.catch((err) => console.error(err));
 
+/* guildTemplateEndpoint */
 guildTemplate
 	.getTemplate({
 		template: 'templadeCode',
@@ -990,7 +992,25 @@ guildTemplate
 	})
 		.then((val) => console.log(val))
 				.catch((err) => console.error(err));
-		
+
+/* inviteEndpoint */
+invite
+	.get({
+		invite: 'inviteCode',
+			withCount: BOOLEAN,
+				withExpire: BOOLEAN,
+					guildEventId: 'guildEventId',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+invite
+	.delete({
+		invite: 'inviteCode',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
 /*	CHEATSHEET	*/
 statusOption = ['scheduled', 'active', 'completed', 'canceled'];
 

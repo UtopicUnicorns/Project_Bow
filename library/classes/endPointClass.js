@@ -140,7 +140,7 @@ class endPointConstruct {
 							modifyGuildTemplate: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/templates/${info.templateCode}`, method: 'PATCH', type: info.type }, data: info.data }),
 			deleteGuildTemplate: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/templates/${info.templateCode}`, method: 'DELETE', type: info.type }, data: info.data }),
 				
-				getInvite: (info) => this.awaitError({ endpoint: { url: `/invites/${info.inviteCode}`, method: 'GET', type: info.type }, data: info.data }),
+				getInvite: (info) => this.awaitError({ endpoint: { url: `/invites/${info.inviteCode}${info.data}`, method: 'GET', type: info.type }, data: info.data }),
 					deleteInvite: (info) => this.awaitError({ endpoint: { url: `/invites/${info.inviteCode}`, method: 'DELETE', type: info.type }, data: info.data }),
 						
 						createStageInstance: (info) => this.awaitError({ endpoint: { url: `/stage-instances`, method: 'POST', type: info.type }, data: info.data }),
