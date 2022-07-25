@@ -114,7 +114,7 @@ class endPointConstruct {
 			getGuildVoiceRegions: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/regions`, method: 'GET', type: info.type }, data: info.data }),
 				getGuildInvites: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/invites`, method: 'GET', type: info.type }, data: info.data }),
 					getGuildIntegrations: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/integrations`, method: 'GET', type: info.type }, data: info.data }),
-						deleteGuildIntegration: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/integrations/{integration.id}`, method: 'DELETE', type: info.type }, data: info.data }),
+						deleteGuildIntegration: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/integrations/${info.integrationId}`, method: 'DELETE', type: info.type }, data: info.data }),
 							getGuildWidgetSettings: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/widget`, method: 'GET', type: info.type }, data: info.data }),
 			modifyGuildWidget: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/widget`, method: 'PATCH', type: info.type }, data: info.data }),
 				getGuildWidget: (info) => this.awaitError({ endpoint: { url: `/guilds/${info.guildId}/widget.json`, method: 'GET', type: info.type }, data: info.data }),

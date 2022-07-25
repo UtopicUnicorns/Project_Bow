@@ -737,8 +737,104 @@ guild
 	})
 		.then((val) => console.log(val))
 				.catch((err) => console.error(err));
+
+guild
+	.getPruneCount({
+		guild: 'guildId',
+			days: INTEGER,
+				includeRoles: 'commaSeperatedRoleIDs',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.beginPrune({
+		guild: 'guildId',
+			computePruneCount: BOOLEAN,
+				days: INTEGER,
+					includeRoles: [], //Array of role ID's'
+						reason: 'reasonToPrune',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+				
+guild
+	.getVoiceRegions({
+		guild: 'guildId',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.getInvites({
+		guild: 'guildId',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.getIntegrations({
+		guild: 'guildId',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.deleteIntegration({
+		guild: 'guildId',
+			integration: 'integrationId',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.getWidgetSettings({
+		guild: 'guildId',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.editWidget({
+		guild: 'guildId',
+			enabled: BOOLEAN,
+				channel: 'channelId',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.getWidget({
+		guild: 'guildId',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.getVanityUrl({
+		guild: 'guildId',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.getWidgetImage({
+		guild: 'guildId',
+			style: 'widgetImageStyleOption',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
+
+guild
+	.getWelcomeScreen({
+		guild: 'guildId',
+	})
+		.then((val) => console.log(val))
+				.catch((err) => console.error(err));
 					
 /*	CHEATSHEET	*/
+widgetImageStyleOption = ['shield', 'banner1', 'banner2', 'banner3', 'banner4'];
+
 defaultMessageNotificationsOption = {
 	allMessages: 0,
 	onlyMentions: 1,

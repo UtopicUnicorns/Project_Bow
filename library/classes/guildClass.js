@@ -436,6 +436,69 @@ class guildConstruct {
 	deleteRole(msg) {
 		return exit.call('deleteGuildRole', {guildId: msg.guild, roleId: msg.role, data: '', type: `application/json`});
 	}
+	
+	getPruneCount(msg) {
+		let formMessage = [];
+			if(msg.days) formMessage.push(`days=${msg.days}`);
+				if(msg.includeRoles) formMessage.push(`include_roles=${msg.includeRoles}`);
+						return exit.call('getGuildPruneCount', {guildId: msg.guild, data: formMessage.join('&'), type: `application/json`});
+	}
+	
+	beginPrune(msg) {
+		let formMessage = {};
+			if(msg.days) formMessage['days'] = msg.days;
+				if(msg.computePruneCount) formMessage['compute_prune_count'] = msg.computePruneCount;
+					if(msg.includeRoles) formMessage['include_roles'] = msg.includeRoles;
+						if(msg.reason) formMessage['reason'] = msg.reason;
+		return exit.call('beginGuildPrune', {guildId: msg.guild, data: JSON.stringify(formMessage), type: `application/json`});
+	}
+	
+	getVoiceRegions(msg) {
+		return exit.call('getGuildVoiceRegions', {guildId: msg.guild, data: '', type: `application/json`});
+	}
+	
+	getInvites(msg) {
+		return exit.call('getGuildInvites', {guildId: msg.guild, data: '', type: `application/json`});
+	}
+	
+	getIntegrations(msg) {
+		return exit.call('getGuildIntegrations', {guildId: msg.guild, data: '', type: `application/json`});
+	}
+	
+	deleteIntegration(msg) {
+		return exit.call('deleteGuildIntegration', {guildId: msg.guild, integrationId: msg.integration, data: '', type: `application/json`});
+	}
+	
+	getWidgetSettings(msg) {
+		return exit.call('getGuildWidgetSettings', {guildId: msg.guild, data: '', type: `application/json`});
+	}
+	
+	editWidget(msg) {
+		let formMessage = {};
+			if(msg.enabled) formMessage['enabled'] = msg.enabled;
+				if(msg.channel) formMessage['channelId'] = msg.channel;
+					return exit.call('modifyGuildWidget', {guildId: msg.guild, data: JSON.stringify(formMessage), type: `application/json`});
+	}
+	
+	getWidget(msg) {
+		return exit.call('getGuildWidget', {guildId: msg.guild, data: '', type: `application/json`});
+	}
+	
+	getVanityUrl(msg) {
+		return exit.call('getGuildVanityURL', {guildId: msg.guild, data: '', type: `application/json`});
+	}
+	
+	getWidgetImage(msg) {
+		let formMessage = [];
+			if(msg.style) formMessage.push(`style=${msg.style}`);
+				return exit.call('getGuildWidgetImage', {guildId: msg.guild, data: formMessage.join('&'), type: `application/json`});
+	}
+	
+	getWelcomeScreen(msg) {
+		return exit.call('getGuildWelcomeScreen', {guildId: msg.guild, data: '', type: `application/json`});
+	}
+	
+	// https://discord.com/developers/docs/resources/guild#modify-guild-welcome-screen
 }
 
 module.exports = guildConstruct;
