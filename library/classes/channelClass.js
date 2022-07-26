@@ -95,6 +95,14 @@ class channelConstruct {
 			
 			return perms;
 	}
+	
+	processImage(image) {
+		let ext = path.extname(image.toLowerCase());
+			let mime_type = mime.type(ext);
+				let imageObject = fs.readFileSync(image, {encoding: 'base64'});
+					let sendObject = `data:${mime_type};base64,${imageObject}`;
+		return sendObject;
+	}
 
 	chanGet(msg) {
 		return exit.call('getChannel', {channelId: msg.channel ,data: '', type: `application/json`});
@@ -121,7 +129,7 @@ class channelConstruct {
 					if(msg.nsfw) formMessage['nsfw'] = msg.nsfw;
 						if(msg.bitrate) formMessage['bitrate'] = msg.bitrate;
 		if(msg.user_limit) formMessage['user_limit'] = msg.user_limit;
-			if(msg.permission_overwrites) formMessage['permission_overwrites'] = msg.permission_overwrites;
+			if(msg.permission_overwrites) formMessage['permission_overwrites'] = this.readyPermissions(msg.permission_overwrites);
 				if(msg.parent_id) formMessage['parent_id'] = msg.parent_id;
 					if(msg.rtc_region) formMessage['rtc_region'] = msg.rtc_region;
 						if(msg.video_quality_mode) formMessage['video_quality_mode'] = msg.video_quality_mode;
@@ -131,7 +139,7 @@ class channelConstruct {
 	groupDMEdit(msg) {
 		let formMessage = {};
 			if(msg.name) formMessage['name'] = msg.name;
-				if(msg.icon) formMessage['icon'] = msg.icon;
+				if(msg.icon) formMessage['icon'] = this.processImage(msg.icon);
 					return exit.call('modifyChannel', {channelId: msg.channel ,data: JSON.stringify(formMessage), type: `application/json`});
 	}
 	
