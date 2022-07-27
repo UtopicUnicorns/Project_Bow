@@ -380,7 +380,6 @@ let attachmentObject = [
 													filename: 'fileName.ext'	}
 											 ];
 
-/*	!!!!!!!!! https://discord.com/developers/docs/interactions/message-components#component-object-component-types !!!!!!!	*/
 let componentObject = new component()
 													.menu({ custom_id: 'UniqueID', 
 																	place_holder: 'Unique', 
