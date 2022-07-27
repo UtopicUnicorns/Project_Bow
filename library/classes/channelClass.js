@@ -2,7 +2,7 @@ class channelConstruct {
 	readyMessageUpload(upload, message) {
 		let uploads = [];
 			let fields = {};	
-				if(upload.attachments) {
+				if(upload && upload.attachments) {
 					for (let i of upload.attachments) {
 						let ext = path.extname(i.file.toLowerCase());
 						let mime_type = mime.type(ext);
@@ -324,8 +324,15 @@ class channelConstruct {
 			if(msg.name) formMessage['name'] = msg.name;
 				if(msg.auto_archive_duration) formMessage['auto_archive_duration'] = msg.auto_archive_duration;
 					if(msg.rate_limit_per_user) formMessage['rate_limit_per_user'] = msg.rate_limit_per_user;
-						if(msg.message) formMessage['message'] = msg.message;
-							return exit.call('startThreadinForumChannel', {channelId: msg.channel, data: JSON.stringify(formMessage), type: `application/json`});
+						if(msg.message) {		
+							formMessage['message'] = {};
+								if (msg.message.content) formMessage['message']['content'] = msg.message.content;
+									if (msg.message.components) formMessage['message']['components'] = [msg.message.components];
+										if (msg.message.embeds) formMessage['message']['embeds'] = [msg.message.embeds];
+											if (msg.message.sticker) formMessage['message']['sticker_ids'] = msg.message.sticker;	
+						}
+		let uploadData = this.readyMessageUpload(msg.message, formMessage);
+			return exit.call('startThreadinForumChannel', {channelId: msg.channel ,data: uploadData[0], type: `multipart/form-data; boundary=${uploadData[1]}`});	
 	}
 	
 	joinThread(msg) {

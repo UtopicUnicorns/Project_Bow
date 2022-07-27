@@ -107,46 +107,54 @@ channel
 							sticker: ['stickerId'],
 							attachments: attachmentObject	});			
 
+/*	Crosspost a message in a newschannel to servers that follow the channel.	*/
 channel
 	.crossPostMsg({ channel: 'channelId',
 									message: 'messageId' });			
 
-/*	emoji is monkas:629319635950370829 OR unicode emoji	*/
+/*	Emoji can be unicode or name:emojiId.	*/
 channel
 	.createReaction({ channel: 'channelId',
 										message: 'messageId',
 										emoji: 'emoji' });			
 										
-/*	emoji is monkas:629319635950370829 OR unicode emoji	*/
+/*	Emoji can be unicode or name:emojiId.	*/
 channel
 	.deleteSelfReaction({ channel: 'channelId',
 												message: 'messageId',
 												emoji: 'emoji' });			
 
-/*	emoji is monkas:629319635950370829 OR unicode emoji	*/
+/*	Emoji can be unicode or name:emojiId.	*/
 channel
 	.deleteReaction({ channel: 'channelId',
 										message: 'messageId',
 										emoji: 'emoji', 
 										user: 'userId' });			
 
-/*	emoji is monkas:629319635950370829 OR unicode emoji	*/
+/*	Emoji can be unicode or name:emojiId.
+		limit is a number between 1 and 100.	*/
 channel
 	.getReactions({ channel: 'channelId',
 									message: 'messageId',
 									emoji: 'emoji', 
 									limit: INTEGER });			
 
+/*	Delete all reactions on specified messageId.	*/
 channel
 	.deleteAllReactions({ channel: 'channelId',
 												message: 'messageId' });			
 
-/*	emoji is monkas:629319635950370829 OR unicode emoji	*/
+/*	Emoji can be unicode or name:emojiId.	*/
 channel
 	.deleteAllReactionsEmoji({	channel: 'channelId',
 															message: 'messageId',
 															emoji: 'emoji'	});			
 
+/*	Content may be up to 2000 characters.
+		id is the messageId of the message you want to edit, may only be the bot message.
+		components refer to componentObject.
+		embeds refer to embedObject.
+		attachments refer to attachmentObject.	*/
 channel
 	.msgEdit({	content: 'Message Content',
 							id: 'messageId',
@@ -155,25 +163,36 @@ channel
 							embeds: embedObject,
 							attachments: attachments	});			
 
+/*	Delete a message by its messageId.	*/
 channel
 	.msgDelete({	channel: 'channelId',
 								message: 'messageId'	});			
 
-/*	messages expects an array of message ID's	*/
+/*	Messages expects an array of message ID's	*/
 channel
 	.msgBulkDelete({	channel: 'channelId',
 										messages: []	});			
 
-/*	type expects either 0 for role or 1 for member	*/
+/*	Target is either a userId or a roleId,
+		type expects either 0 for role or 1 for member.
+		permission_overwrites refer to permissionObject.	*/
 channel.
 	channelPermOverwrite({	channel: 'channelId',
 													target: 'userId or roleId',
 													permission_overwrites: permissionObject,
 													type: INTEGER	});				
 
+/*	Get all channel invites with metadata.	*/
 channel.
 	getChanInvites({	channel: 'channelId'	});				
 
+/*	MaxAge may be 0 for never and up to 86400(24 hours).
+		maxUses may be between 0 for unlimited and up to 100.
+		temp if true will give the invitee a temporary membership.
+		unique if true will try to create an invite that's unique and easy to monitor.
+		targetType if invite is a voice channel set to 1 for a user stream or 2 for an embedded application.
+		targetUserId if targetType is 1 must be the user streaming channel.
+		targetAppId if targetType is 2 must be an application with the embedded flag.	*/
 channel.
 	createChanInvite({	channel: 'channelId',
 											maxAge: INTEGER,
@@ -184,38 +203,53 @@ channel.
 											targetUserId: 'userId',
 											targetAppId: 'applicationId'	});				
 
+/*	Delete all active channel permissions for specified iserId.	*/
 channel.
 	deleteChannelPerm({ channel: 'channelId',
 											user: 'userId' });				
 
+/*	Follow a news channel.	*/
 channel.
 	followNewsChannel({ channel: 'channelId',
 											followId: 'idOfChannelToFollow' });				
 
+/*	Simulate bot typing event.	*/
 channel.
 	triggerTyping({	channel: 'channelId'	});				
 
+/*	Get all pinned messages in a channel.	*/
 channel.
 	getPinnedMessages({	channel: 'channelId'	});				
 
+/*	Pin a message.	*/
 channel.
 	pinMessage({	channel: 'channelId',
 								message: 'messageId'	});				
 
+/*	Unpin a message.	*/
 channel.
 	unpinMessage({	channel: 'channelId',
 									message: 'messageId'	});				
 
+/*	Add an user to a groupDM.
+		nick may be set for target nickname.
+		access_token is the token the user information gives back when user has given application access to gdm.join.	*/
 channel.
 	groupDmAddUser({	channel: 'channelId',
 										user: 'userId',
 										nick: 'userNickname',
 										access_token: 'tokenId'	});				
 
+/*	Kick/remove user from groupDM.	*/
 channel.
 	groupDmRemoveUser({ channel: 'channelId',
 											user: 'userId' });		
 
+/*	Create a thread from specified message.
+		message must be the messageId of where you want to create the thread.
+		name is the name of the thread, may be up to 100 characters.
+		auto_archive_duration can be 60, 1440, 4320 or 10080.
+		rate_limit_per_user is the interval at which members can send messages can be from 0 up to 21600.	*/
 channel.
 	createThreadAtMsg({ channel: 'channelId',
 											message: 'messageId',
@@ -223,6 +257,12 @@ channel.
 											auto_archive_duration: INTEGER,
 											rate_limit_per_user: INTEGER });				
 
+/*	Create a thread without a specified message.
+		name is the name of the thread, may be up to 100 characters.
+		auto_archive_duration can be 60, 1440, 4320 or 10080.
+		rate_limit_per_user is the interval at which members can send messages can be from 0 up to 21600.
+		invitable if true can let non moderators invite users to thread.
+		type is the type of thread to create: 10 for news thread, 11 for public thread and 12 for private thread.	*/
 channel.
 	createThread({	channel: 'channelId',
 									name: 'threadName',
@@ -231,6 +271,11 @@ channel.
 									type: INTEGER,
 									invitable: BOOLEAN	});				
 
+/*	Create a thread in a forum channel.
+		name is the name of the thread, may be up to 100 characters.
+		auto_archive_duration can be 60, 1440, 4320 or 10080.
+		channel must be the channelId to a forum channel.
+		message refer to messageObject.	*/
 channel.
 	createForumThread({ channel: 'channelId',
 											name: 'threadName',
@@ -238,43 +283,64 @@ channel.
 											rate_limit_per_user: INTEGER,
 											message: messageObject });				
 
+/*	Add self to thread.	*/
 channel.
 	joinThread({	channel: 'channelId'	});				
 
+/*	Add a specified user to a thread.	*/
 channel.
 	userJoinThread({	channel: 'channelId',
 										user: 'userId'	});				
 
+/*	Leave a thread.	*/
 channel.
 	leaveThread({	channel: 'channelId'	});				
 
+/*	Remove/kick a specified user from a thread.	*/
 channel.
 	userLeaveThread({ channel: 'channelId',
 										user: 'userId' });				
 
+/*	Get user information within a thread.	*/
 channel.
 	getThreadMember({ channel: 'channelId',
 										user: 'userId' });				
 
+/*	List all members within a thread.	*/
 channel.
 	listThreadMembers({	channel: 'channelId'	});				
 
+/*	Returns a list of archived public threads.
+		before expects a timestamp.
+		limit is an optional number of threads to return.	*/
 channel.
 	listPublicArchivedThreads({ channel: 'channelId',
 															before: ISO8601Timestamp,
 															limit: INTEGER });				
 
+/*	Returns a list of archived private threads.
+		before expects a timestamp.
+		limit is an optional number of threads to return.	*/
 channel.
 	listPrivateArchivedThreads({	channel: 'channelId',
 																before: ISO8601Timestamp,
 																limit: INTEGER	});			
 
+/*	Returns a list of archived joined private threads.
+		before expects a timestamp.
+		limit is an optional number of threads to return.	*/
 channel.
 	listJoinedPrivateArchivedThreads({	channel: 'channelId',
 																			before: ISO8601Timestamp,
 																			limit: INTEGER	});		
 
 /*	Additional information	*/
+
+let messageObject = { content: 'Message Content',
+											components: componentObject,
+											embeds: embedObject,
+											sticker: ['stickerId'],
+											attachments: attachmentObject };
 
 /*	The object itself is an array, in the array you place json structures.
 		the ID entry is either a roleId or userId, then the type must correspond 0 for role and 1 for member.
