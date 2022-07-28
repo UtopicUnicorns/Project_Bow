@@ -1,328 +1,376 @@
+/*		*/
 guild
-	.create({
-		name: 'guildName',
-			icon: 'fileName.ext',
-				verificationLevel: verificationLevelChoice,
-					defaultMessageNotifications: defaultMessageNotificationsOption,
+	.create({ name: 'guildName',
+						icon: 'fileName.ext',
+						verificationLevel: verificationLevelChoice,
+						defaultMessageNotifications: defaultMessageNotificationsOption,
 						explicitContentFilter: explicitContentFilterChoice,
-		roles: [], //array of roles
-			channels: [], //array of channels
-	});				
+						roles: [],
+						channels: []} );				
 
+/*		*/
 guild
-	.get({
-		guild: 'guildId',
-			count: BOOLEAN,
-	});				
+	.get({	guild: 'guildId',
+					count: BOOLEAN	});				
 
+/*		*/
 guild
-	.preview({
-		guild: 'guildId',
-	});				
+	.preview({	guild: 'guildId'	});				
 
+/*		*/
 guild
-	.edit({
-		guild: 'guildId',
-			name: 'guildName',
-				verificationLevel: verificationLevelChoice,
+	.edit({ guild: 'guildId',
+					name: 'guildName',
+					verificationLevel: verificationLevelChoice,
 					defaultMessageNotifications: defaultMessageNotificationsOption,
-						explicitContentFilter: explicitContentFilterChoice,
-		afkChannelId: 'channelId',
-			afkTimeout: INTEGER,
-				icon: 'fileName.ext',
+					explicitContentFilter: explicitContentFilterChoice,
+					afkChannelId: 'channelId',
+					afkTimeout: INTEGER,
+					icon: 'fileName.ext',
 					ownerId: 'newOwnerId',
-						splash: 'fileName.ext',
-		discoverySplash: 'fileName.ext',
-			banner: 'fileName.ext',
-				systemChannelId: 'channelId',
+					splash: 'fileName.ext',
+					discoverySplash: 'fileName.ext',
+					banner: 'fileName.ext',
+					systemChannelId: 'channelId',
 					systemChannelFlags: systemChannelFlagsArray,
-						rulesChannelId: 'channelId',
-		publicUpdatesChannelId: 'channelId',
-			preferredLocale: 'localeString',
-				features: featuresArray,
+					rulesChannelId: 'channelId',
+					publicUpdatesChannelId: 'channelId',
+					preferredLocale: 'localeString',
+					features: featuresArray,
 					description: 'guildDescription',
-						premiumProgressBar: BOOLEAN,
-	});				
+					premiumProgressBar: BOOLEAN });				
 
+/*	Delete specified guildId's guild.	*/
 guild
-	.delete({
-		guild: 'guildId',
-	});				
+	.delete({	guild: 'guildId'	});				
 
+/*	Get a list of specified guildId channels (not threads).	*/
 guild
-	.getChannels({
-		guild: 'guildId',
-	});				
-				
-guild
-	.createChannel({
-		guild: 'guildId',
-			name: 'channelName',
-				type: channelTypes,
-					topic: 'topicDescription',
-						bitrate: INTEGER,
-		userLimit: INTEGER,
-			rateLimitPerUser: INTEGER,
-				position: INTEGER,
-					permissionOverwrite: permHere,
-						parentId: 'parentCategoryId',
-		nsfw: BOOLEAN,
-			rtcRegion: 'rtcRegion',
-				videoQualityMode: videoQualityMode,
-					defaultAutoArchiveDuration: INTEGER, 
-	});				
+	.getChannels({	guild: 'guildId'	});				
 
+/*	Create a new channel in specified guildId.
+		channelName may be between 1 and 100 characters long.
+		type is the type of channel you create, refer to channelTypes and pick one from the array.
+		topic may be between 0 and 1024 characters long.
+		rateLimitPerUser may be a number between 0 and 21600.
+		position is the position number of where to place the channel.
+		permissionOverwrite refer to permissionObject.
+		parentId means that the channel will be nested under specified parentId.
+		nsfw is self explanatory.
+		defaultAutoArchiveDuration is either 60, 1440, 4320 or 10080.
+		if channelTypes is a voice channel, omit rateLimitPerUser, defaultAutoArchiveDurationand nsfw.
+		if channelTypes is NOT a voice channel, omit bitrate, userLimit, rtcRegion and videoQualityMode. 
+		if channelTypes is a voice channel, then you can set the bitrate between 8000 up to 384000 or up to 64000 if stage channel.
+		if channelTypes is a voice channel, then userLimit may be set.
+		if channelTypes is a voice channel, rtcRegion refers to voice region.
+		if channelTypes is a voice channel, videoQualityMode refers to videoQualityMode in additional info.
+		*/				
 guild
-	.editChanPosition({
-		guild: 'guildId',
-			id: 'channelId',
-				position: INTEGER,
-					lockPermissions: BOOLEAN,
-						parentId: 'parentCategoryId',
-	});				
+	.createChannel({	guild: 'guildId',
+										name: 'channelName',
+										type: channelTypes,
+										topic: 'topicDescription',
+										bitrate: INTEGER,
+										userLimit: INTEGER,
+										rateLimitPerUser: INTEGER,
+										position: INTEGER,
+										permissionOverwrite: permHere,
+										parentId: 'parentCategoryId',
+										nsfw: BOOLEAN,
+										rtcRegion: 'rtcRegion',
+										videoQualityMode: videoQualityMode,
+										defaultAutoArchiveDuration: INTEGER});				
 
+/*	Change a channel.
+		position refers to the position under a category on the left hand side channel menu.
+		lockPermissions if true syncs the permissions to the parent category default permissions.
+		parentId if specified allows you to give your channel a new home under another parent category.	*/
 guild
-	.activeThreads({
-		guild: 'guildId',
-	});				
+	.editChanPosition({ guild: 'guildId',
+											id: 'channelId',
+											position: INTEGER,
+											lockPermissions: BOOLEAN,
+											parentId: 'parentCategoryId' });				
 
+/*	Shows all active threads in specified guildId.	*/
 guild
-	.getMember({
-		guild: 'guildId',
-			member: 'userId',
-	});				
+	.activeThreads({	guild: 'guildId'	});				
 
+/*	Get information about the specified userId.	*/
 guild
-	.listMembers({
-		guild: 'guildId',
-			limit: INTEGER,
-				after: 'userId',
-	});				
+	.getMember({	guild: 'guildId',
+								member: 'userId'	});				
 
+/*	Return a list of guildMembers.
+		limit may be a number between 1 and 1000.
+		after refers to from what userId the list should return members.	*/
 guild
-	.searchMembers({
-		guild: 'guildId',
-			limit: INTEGER,
-				query: 'stringToMatchUsernameOrNick',
-	});				
+	.listMembers({	guild: 'guildId',
+									limit: INTEGER,
+									after: 'userId'	});				
 
+/*	Searches a guild member by using the start of their nickname or username.
+		limit refers to the amount of returning users may be between 1 and 1000.	*/
 guild
-	.addMember({
-		guild: 'guildId',
-			user: 'userId',
-				accessToken: 'accessToken',
-					nick: 'nickName',
-						roles: [], //array of role ID's'
-		mute: BOOLEAN,
-			deaf: BOOLEAN,
-	});				
+	.searchMembers({	guild: 'guildId',
+										limit: INTEGER,
+										query: 'stringToMatchUsernameOrNick'	});				
 
+/*	Add a member to the guild.
+		accessToken is absolutely required, without oauth2 access for guilds.join you can't do shit.	
+		roles expects an array of roleId's to give the user when they join.	*/
 guild
-	.editMember({
-		guild: 'guildId',
-			user: 'userId',
-				channel: 'channelId',
-					nick: 'nickName',
-						roles: [], //array of role ID's'
-		mute: BOOLEAN,
-			deaf: BOOLEAN,
-				timeOut: 'ISO8601timeStamp',
-	});				
+	.addMember({	guild: 'guildId',
+								user: 'userId',
+								accessToken: 'accessToken',
+								nick: 'nickName',
+								roles: [], 
+								mute: BOOLEAN,
+								deaf: BOOLEAN	});				
 
+/*	Edit a guild member.
+		roles is an array of roleId's that the specified userId has/will have.
+		timeout means that the user cannot do anything in specified guildId until the timestamp.	*/
 guild
-	.editMe({
-		guild: 'guildId',
-			nick: 'nickName',
-	});				
+	.editMember({ guild: 'guildId',
+								user: 'userId',
+								channel: 'channelId',
+								nick: 'nickName',
+								roles: [],
+								mute: BOOLEAN,
+								deaf: BOOLEAN,
+								timeOut: 'ISO8601timeStamp' });				
 
+/*	Change bots nickname.	*/
 guild
-	.addMemberRole({
-		guild: 'guildId',
-			user: 'userId',
-				role: 'roleId',
-	});				
+	.editMe({ guild: 'guildId',
+						nick: 'nickName' });				
 
+/*	Add a role to a member.	*/
 guild
-	.removeMemberRole({
-		guild: 'guildId',
-			user: 'userId',
-				role: 'roleId',
-	});				
+	.addMemberRole({	guild: 'guildId',
+										user: 'userId',
+											role: 'roleId'	});				
 
+/*	Remove a role from a member.	*/
 guild
-	.removeMember({
-		guild: 'guildId',
-			user: 'userId',
-	});				
+	.removeMemberRole({ guild: 'guildId',
+											user: 'userId',
+											role: 'roleId' });				
 
+/*	Kindly remove a user from the specified guildId.	*/
 guild
-	.getBans({
-		guild: 'guildId',
-			limit: INTEGER,
-				before: 'userId',
-					after: 'userId',
-	});				
+	.removeMember({ guild: 'guildId',
+									user: 'userId' });				
 
+/*	Returns a list of banned members.
+		limit is a number between 1 and 1000.
+		before and after decides from where you get the bans.	*/
 guild
-	.getBan({
-		guild: 'guildId',
-			user: 'userId',
-	});				
+	.getBans({	guild: 'guildId',
+							limit: INTEGER,
+							before: 'userId',
+							after: 'userId'	});				
 
+/*	Returns information about a specified userId ban.	*/
 guild
-	.ban({
-		guild: 'guildId',
-			user: 'userId',
-				reason: 'reasonToBan',
-					deleteMessages: INTEGER,
-	});				
+	.getBan({ guild: 'guildId',
+						user: 'userId' });				
 
+/*	Kindly yeet specified userId from the specified guildId.
+		deleteMessages may be a number between 0 and 7.	*/
 guild
-	.unBan({
-		guild: 'guildId',
-			user: 'userId',
-	});				
+	.ban({	guild: 'guildId',
+					user: 'userId',
+					reason: 'reasonToBan',
+					deleteMessages: INTEGER	});				
 
+/*	Guess what this does.	*/
 guild
-	.getRoles({
-		guild: 'guildId',
-	});				
+	.unBan({	guild: 'guildId',
+						user: 'userId'	});				
 
+/*	Return a list of roles for specified guildId.	*/
 guild
-	.createRole({
-		guild: 'guildId',
-			name: 'roleName',
-				permissions: rolePermissionArray,
-					color: INTEGER, //rgb color
-						hoist: BOOLEAN,
-		icon: 'fileName.ext',
-			unicodeEmoji: 'unicodeEmoji',
-				mentionable: BOOLEAN,
-	});				
+	.getRoles({	guild: 'guildId'	});				
 
+/*	Edit the specified roleId.
+		permissions pick one or more permissions from the specified rolePermissionArray.
+		color is an rgb color value.
+		hoist means if it will show up as a seperate role on the right hand side.
+		with icon make sure to use a proper full or partial path to your image.
+		mentionable is self explanatory, right?	*/
 guild
-	.rolePosition({
-		guild: 'guildId',
-			role: 'roleId',
-				position: INTEGER,
-	});				
+	.createRole({ guild: 'guildId',
+								name: 'roleName',
+								permissions: rolePermissionArray,
+								color: INTEGER, 
+								hoist: BOOLEAN,
+								icon: 'fileName.ext',
+								unicodeEmoji: 'unicodeEmoji',
+								mentionable: BOOLEAN });				
 
+/*	Change the roleId's position in the role list.	*/
 guild
-	.editRole({
-		guild: 'guildId',
-			role: 'roleId',
-				name: 'roleName',
-					permissions: rolePermissionArray,
-						color: INTEGER, //rgb color
-		hoist: BOOLEAN,
-			icon: 'fileName.ext',
-				unicodeEmoji: 'unicodeEmoji',
-					mentionable: BOOLEAN,
-	});				
+	.rolePosition({ guild: 'guildId',
+									role: 'roleId',
+									position: INTEGER });				
 
+/*	Edit the specified roleId.
+		permissions pick one or more permissions from the specified rolePermissionArray.
+		color is an rgb color value.
+		hoist means if it will show up as a seperate role on the right hand side.
+		with icon make sure to use a proper full or partial path to your image.
+		mentionable is self explanatory, right?	*/
 guild
-	.mfaLevel({
-		guild: 'guildId',
-			level: INTEGER, //0 off, 1 on
-	});				
+	.editRole({ guild: 'guildId',
+							role: 'roleId',
+							name: 'roleName',
+							permissions: rolePermissionArray,
+							color: INTEGER, 
+							hoist: BOOLEAN,
+							icon: 'fileName.ext',
+							unicodeEmoji: 'unicodeEmoji',
+							mentionable: BOOLEAN });				
 
+/*	Changes the 2FA level.
+		level can be 0 for none and 1 for 2FA on moderation actions.	*/
 guild
-	.deleteRole({
-		guild: 'guildId',
-			role: 'roleId',
-	});				
+	.mfaLevel({ guild: 'guildId',
+							level: INTEGER });				
 
+/*	Deletes the specified roleId.	*/
 guild
-	.getPruneCount({
-		guild: 'guildId',
-			days: INTEGER,
-				includeRoles: 'commaSeperatedRoleIDs',
-	});				
+	.deleteRole({ guild: 'guildId',
+								role: 'roleId' });				
 
+/*	Calculate the amount of users that can get pruned.
+		days may be between 1 and 30.
+		includeRoles is a string with roleId's seperated with a comma.	*/
 guild
-	.beginPrune({
-		guild: 'guildId',
-			computePruneCount: BOOLEAN,
-				days: INTEGER,
-					includeRoles: [], //Array of role ID's'
-						reason: 'reasonToPrune',
-	});				
-				
-guild
-	.getVoiceRegions({
-		guild: 'guildId',
-	});				
+	.getPruneCount({	guild: 'guildId',
+										days: INTEGER,
+										includeRoles: 'commaSeperatedRoleIDs'	});				
 
+/*	Kicks members that are qualified to be pruned.
+		with includeRoles you can supply an array of roleId's to include in the prune.
+		computePruneCount is a boolean that returns information about the pruned members.
+		days may be between 1 and 30.	*/
 guild
-	.getInvites({
-		guild: 'guildId',
-	});				
+	.beginPrune({ guild: 'guildId',
+								computePruneCount: BOOLEAN,
+								days: INTEGER,
+								includeRoles: [],
+								reason: 'reasonToPrune' });				
 
+/*	Return a list of voice regions for specified guildId.	*/			
 guild
-	.getIntegrations({
-		guild: 'guildId',
-	});				
+	.getVoiceRegions({	guild: 'guildId'	});				
 
+/*	Return all available invites from specified guildId.	*/
 guild
-	.deleteIntegration({
-		guild: 'guildId',
-			integration: 'integrationId',
-	});				
+	.getInvites({	guild: 'guildId'	});				
 
+/*	Get all integrations from specified guildId.	*/
 guild
-	.getWidgetSettings({
-		guild: 'guildId',
-	});				
+	.getIntegrations({	guild: 'guildId'	});				
 
+/*	Deletes an integration, kicks bots that may be connected to it.	*/
 guild
-	.editWidget({
-		guild: 'guildId',
-			enabled: BOOLEAN,
-				channel: 'channelId',
-	});				
+	.deleteIntegration({	guild: 'guildId',
+												integration: 'integrationId'	});				
 
+/*	Return some information about the guildId's widget settings.'	*/
 guild
-	.getWidget({
-		guild: 'guildId',
-	});				
+	.getWidgetSettings({	guild: 'guildId'	});				
 
+/*	Modifies the guildId's widget.
+		enabled means that if true that it's enabled.
+		channel points to the channelId the widget should target.	*/
 guild
-	.getVanityUrl({
-		guild: 'guildId',
-	});				
+	.editWidget({ guild: 'guildId',
+								enabled: BOOLEAN,
+								channel: 'channelId' });				
 
+/*	Returns information about the specified guildId's widget.	*/
 guild
-	.getWidgetImage({
-		guild: 'guildId',
-			style: 'widgetImageStyleOption',
-	});				
+	.getWidget({	guild: 'guildId'	});				
 
+/*	If available get usage count and code about the vanity url.	*/
 guild
-	.getWelcomeScreen({
-		guild: 'guildId',
-	});				
+	.getVanityUrl({	guild: 'guildId'	});				
 
+/*	Return information about the guild widget image.
+		for style refer to widgetImageStyleOption.	*/
 guild
-	.editWelcomeScreen({
-		guild: 'guildId',
-			enabled: BOOLEAN,
-				welcomeChannels: welcomeChannelsArray,
-					description: 'serverDescription',
-	});				
+	.getWidgetImage({ guild: 'guildId',
+										style: 'widgetImageStyleOption' });				
 
+/*	Return information about the welcome screen of specified guildId.	*/
 guild
-	.editVoiceState({
-		guild: 'guildId',
-			channel: 'channelId',
-				suppress: BOOLEAN,
-					requestToSpeakTimestamp: 'ISO8601timestamp',
-	});				
+	.getWelcomeScreen({	guild: 'guildId'	});				
 
+/*	Modifies the welcome screen.
+		enabled enables or disable the screen.
+		welcome channels expects an array of channels as specified in welcomeChannelsArray.	*/
 guild
-	.editUserVoiceState({
-		guild: 'guildId',
-			user: 'userId',
-				channel: 'channelId',
-					suppress: BOOLEAN,
-	});				
+	.editWelcomeScreen({	guild: 'guildId',
+												enabled: BOOLEAN,
+												welcomeChannels: welcomeChannelsArray,
+												description: 'serverDescription'	});				
 
+/*	If user is in specified channelId(Must be stage channel) change their status.
+		requestToSpeakTimestamp means that at that timestamp the user can/may speak.	*/
+guild
+	.editVoiceState({ guild: 'guildId',
+										channel: 'channelId',
+										suppress: BOOLEAN,
+										requestToSpeakTimestamp: 'ISO8601timestamp' });				
+
+/*	If user is in specified channelId change their status.*/
+guild
+	.editUserVoiceState({ guild: 'guildId',
+												user: 'userId',
+												channel: 'channelId',
+												suppress: BOOLEAN });				
+
+/*	Adittional info.	*/
+/*	The object itself is an array, in the array you place json structures.
+		the ID entry is either a roleId or userId, then the type must correspond 0 for role and 1 for member.
+		the allow and deny entries both are arrays, within them you put the permissions you want to allow or deny.	
+		refer to permissionArray for permission allow/deny possibilities.	*/
+let permissionObject = [
+												{ id: 'roleId',
+													type: 0,
+													allow: [],
+													deny: [] },
+												{ id: 'userId',
+													type: 1,
+													allow: [],
+													deny: [] }
+											 ];
+
+let channelTypes = [	'guildText', 'dm', 'guildVoice', 'groupDM', 'guildCategory', 'guildNews', 'guildNewsThread', 
+											'guildPublicThread', 'guildPrivateThread', 'guildStageVoice', 'guildDirectory', 'guildForum'	];
+											
+let rolePermissionArray = [ 'createInstantInvite', 'kickMembers', 'banMembers', 'administrator', 'manageChannels', 
+														'manageGuild', 'addReactions', 'viewAuditLog', 'prioritySpeaker', 'stream', 'viewChannel', 
+														'sendMessages', 'sendTtsMessages', 'manageMessages', 'embedLinks', 'attachFiles', 'readMessageHistory', 
+														'mentionEveryone', 'useExternalEmojis', 'viewGuildInsights', 'connect', 'speak', 'muteMembers', 
+														'deafenMembers', 'moveMembers', 'useVad', 'changeNickname', 'manageNicknames', 'manageRoles', 
+														'manageWebhooks', 'manageEmojisAndStickers', 'useApplicationCommands', 'requestToSpeak', 
+														'manageEvents', 'manageThreads', 'createPublicThreads', 'createPrivateThreads', 'useExternalStickers', 
+														'sendMessagesInThreads', 'useEmbeddedActivities', 'moderateMembers' ];
+														
+let widgetImageStyleOption = ['shield', 'banner1', 'banner2', 'banner3', 'banner4'];
+
+let welcomeChannelsArray = [
+														{ channel_id: 'channelId', 
+															description: 'channelDescription', 
+															emoji_id: 'emojiId', 
+															emoji_name: 'emojiName' },
+														{ channel_id: 'channelId', 
+															description: 'channelDescription', 
+															emoji_id: 'emojiId', 
+															emoji_name: 'emojiName' }
+													 ];

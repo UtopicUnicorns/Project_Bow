@@ -1,24 +1,7 @@
 /*	CHEATSHEET	*/
-statusOption = ['scheduled', 'active', 'completed', 'canceled'];
 
-entityTypeOption = ['stageInstance', 'voice', 'external'];
 
-privacyLevelOption = ['guildOnly'];
 
-welcomeChannelsArray = [{
-													channel_id: 'channelId', 
-													description: 'channelDescription', 
-													emoji_id: 'emojiId', 
-													emoji_name: 'emojiName',
-												},
-												{
-													channel_id: 'channelId', 
-													description: 'channelDescription', 
-													emoji_id: 'emojiId', 
-													emoji_name: 'emojiName',
-												}];
-
-widgetImageStyleOption = ['shield', 'banner1', 'banner2', 'banner3', 'banner4'];
 
 defaultMessageNotificationsOption = {
 	allMessages: 0,
