@@ -1,44 +1,5 @@
 /*	CHEATSHEET	*/
 
-
-
-
-defaultMessageNotificationsOption = {
-	allMessages: 0,
-	onlyMentions: 1,
-};
-
-verificationLevelChoice = {
-	none: 0,
-	low: 1,
-	mid: 2,
-	high: 3,
-	veryHigh: 4,
-};
-
-explicitContentFilterChoice = {
-	off: 0,
-	onForNoRoles: 1,
-	onForAllMembers: 2,
-};
-
-systemChannelFlagsArray = ['suppressJoinNotifications', 'suppressPremiumSubscribers', 
-														'suppressGuildReminderNotifications', 'suppressJoinNotificationReplies'];
-
-featuresArray = ['animatedBanner', 'animatedIcon', 'autoModeration', 'banner', 'community', 'discoverable', 
-									'featurable', 'inviteSplash', 'memberVerificationGateEnabled', 'monetizationEnabled', 
-									'moreStickers', 'news', 'partnered', 'previewEnabled', 'privateThreads', 'roleIcons', 
-									'ticketedEventsEnabled', 'vanityUrl', 'verified', 'vipRegions', 'welcomeScreenEnabled'];
-
-rolePermissionArray = [ 'createInstantInvite', 'kickMembers', 'banMembers', 'administrator', 'manageChannels', 
-												'manageGuild', 'addReactions', 'viewAuditLog', 'prioritySpeaker', 'stream', 'viewChannel', 
-												'sendMessages', 'sendTtsMessages', 'manageMessages', 'embedLinks', 'attachFiles', 'readMessageHistory', 
-												'mentionEveryone', 'useExternalEmojis', 'viewGuildInsights', 'connect', 'speak', 'muteMembers', 
-												'deafenMembers', 'moveMembers', 'useVad', 'changeNickname', 'manageNicknames', 'manageRoles', 
-												'manageWebhooks', 'manageEmojisAndStickers', 'useApplicationCommands', 'requestToSpeak', 
-												'manageEvents', 'manageThreads', 'createPublicThreads', 'createPrivateThreads', 'useExternalStickers', 
-												'sendMessagesInThreads', 'useEmbeddedActivities', 'moderateMembers' ]
-
 channelUserPermissionFlags = {
 	createInstantInvite: 1 << 0,
 	kickMembers: 1 << 1,

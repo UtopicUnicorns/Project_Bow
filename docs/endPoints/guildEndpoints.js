@@ -1,23 +1,37 @@
-/*		*/
+/*	Create a new guild.
+		make sure to provide a proper full or partial path for the image.
+		verificationLevel refer to verificationLevelChoice.
+		defaultMessageNotifications refer to defaultMessageNotificationsOption.
+		explicitContentFilter refer to explicitContentFilterChoice.	*/
 guild
 	.create({ name: 'guildName',
 						icon: 'fileName.ext',
 						verificationLevel: verificationLevelChoice,
 						defaultMessageNotifications: defaultMessageNotificationsOption,
-						explicitContentFilter: explicitContentFilterChoice,
-						roles: [],
-						channels: []} );				
+						explicitContentFilter: explicitContentFilterChoice	});				
 
-/*		*/
+/*	Get guild information of the provided guildId.
+		set count boolean to true to get inaccurate member count.	*/
 guild
 	.get({	guild: 'guildId',
 					count: BOOLEAN	});				
 
-/*		*/
+/*	Return the guild preview of provided guildId.	*/
 guild
 	.preview({	guild: 'guildId'	});				
 
-/*		*/
+/*	Edit provided guildId.
+		verificationLevel refer to verificationLevelChoice.
+		defaultMessageNotifications refer to defaultMessageNotificationsOption.
+		explicitContentFilter refer to explicitContentFilterChoice.
+		systemChannelFlags refer to systemChannelFlagsArray.
+		features refer to featuresArray.
+		afkChannelId must be a voice channel.
+		afkTimeout is the amount of seconds that have to pass to mark an user AFK and drop to afk channel.
+		make sure that for icon, spash, discoverySplash and banner have proper full or partial paths to the images.
+		if ownerId is supplied, transfer guild ownership to that new userId.
+		preferredLocale is for languages etc: e.g en-US.
+		premiumProgressBar if true show boost status near banner spot.	*/
 guild
 	.edit({ guild: 'guildId',
 					name: 'guildName',
@@ -335,10 +349,25 @@ guild
 												suppress: BOOLEAN });				
 
 /*	Adittional info.	*/
+let defaultMessageNotificationsOption = [	'allMessages', 'onlyMentions'	];
+
+let verificationLevelChoice = [	'none', 'low', 'mid', 'high', 'veryHigh'	];
+
+let explicitContentFilterChoice = [	'off', 'onForNoRoles', 'onForAllMembers'	];
+
+let systemChannelFlagsArray = [ 'suppressJoinNotifications', 'suppressPremiumSubscribers', 
+																'suppressGuildReminderNotifications', 'suppressJoinNotificationReplies' ];
+
+let featuresArray = [ 'animatedBanner', 'animatedIcon', 'autoModeration', 'banner', 'community', 'discoverable', 
+											'featurable', 'inviteSplash', 'memberVerificationGateEnabled', 'monetizationEnabled', 
+											'moreStickers', 'news', 'partnered', 'previewEnabled', 'privateThreads', 'roleIcons', 
+											'ticketedEventsEnabled', 'vanityUrl', 'verified', 'vipRegions', 'welcomeScreenEnabled' ];
+
+
 /*	The object itself is an array, in the array you place json structures.
 		the ID entry is either a roleId or userId, then the type must correspond 0 for role and 1 for member.
 		the allow and deny entries both are arrays, within them you put the permissions you want to allow or deny.	
-		refer to permissionArray for permission allow/deny possibilities.	*/
+		refer to rolePermissionArray for permission allow/deny possibilities.	*/
 let permissionObject = [
 												{ id: 'roleId',
 													type: 0,
