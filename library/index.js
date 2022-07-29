@@ -21,6 +21,7 @@ exports.lib = async function (config) {
 			guildTemplateConstruct = await require('./classes/guildTemplateClass');
 				inviteConstruct = await require('./classes/inviteClass');
 				stageConstruct = await require('./classes/stageClass');
+				stickerConstruct = await require('./classes/stickerClass');
 				
 					cacheConstruct = await require('./classes/cacheClass');
 	heartConstruct = await require('./classes/heartClass');
@@ -63,6 +64,7 @@ exports.lib = async function (config) {
 	guildTemplate = new guildTemplateConstruct();
 		invite = new inviteConstruct();
 		stage = new stageConstruct();
+		sticker = new stickerConstruct();
 		
 		
 			rel.rel();
