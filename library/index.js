@@ -5,81 +5,85 @@ exports.lib = async function (config) {
 				fd = await require('./classes/formData');
 					path = await require('path');
 	os = await require('os');
-		configData = await require(config);
-			token = await configData.botToken;
-				appId = await configData.appId;
-					intent = await configData.intent;
-	lavaLinkHost = await configData.lavaLinkHost;
-		lavaLinkPwd = await configData.lavaLinkPwd;
-	botId = await configData.botId;
-		botCaching = await configData.caching;
-			camelCase = function (str) { return str.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase()); }
-				errorConstruct = await require('./classes/errorClass');
-					newError = new errorConstruct();	
+		postMan = await require('events');
+			const { spawn } = require('node:child_process');
+				configData = await require(config);
+					errorConstruct = await require('./classes/errorClass');
 	buildConstruct = await require('./classes/buildClass.js');
+	
+	
+		endPointConstruct = await require('./classes/endPointClass');
+			auditConstruct = await require('./classes/auditClass');
+				channelConstruct = await require('./classes/channelClass');
+					emojiConstruct = await require('./classes/emojiClass');
+	guildConstruct = await require('./classes/guildClass');
+		guildEventConstruct = await require('./classes/guildEventClass');
+			guildTemplateConstruct = await require('./classes/guildTemplateClass');
+				inviteConstruct = await require('./classes/inviteClass');
+				stageConstruct = await require('./classes/stageClass');
+				
+					cacheConstruct = await require('./classes/cacheClass');
+	heartConstruct = await require('./classes/heartClass');
+		voiceConstruct = await require('./classes/voiceClass');
+			linkLava = await require('./lavaLink');
+				camelCase = function (str) { return str.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase()); }
+					token = configData.botToken;
+	appId = configData.appId;
+		intent = configData.intent;
+			lavaLinkHost = configData.lavaLinkHost;
+				lavaLinkPwd = configData.lavaLinkPwd;
+					botId = configData.botId;
+	botCaching = configData.caching;
 		httpsConstruct = buildConstruct.httpsConstruct;
 			app = buildConstruct.appConstruct;
 				embed = buildConstruct.embedConstruct;
 					component = buildConstruct.componentConstruct;
-		botConstruct = buildConstruct.botConstruct;
-			timeConstruct = buildConstruct.timeConstruct;
-				mimeConstruct = buildConstruct.mimeConstruct;
-					relConstruct = buildConstruct.relConstruct;
-						fly = new httpsConstruct();
+	botConstruct = buildConstruct.botConstruct;
+		timeConstruct = buildConstruct.timeConstruct;
+			mimeConstruct = buildConstruct.mimeConstruct;
+				relConstruct = buildConstruct.relConstruct;
+					newError = new errorConstruct();
+	fly = new httpsConstruct();
 		bot = new botConstruct();	
 			time = new timeConstruct();	
 				mime = new mimeConstruct();
 					rel = new relConstruct();
-						rel.rel();
-						
-	endPointConstruct = await require('./classes/endPointClass');
-	auditConstruct = await require('./classes/auditClass');
-	channelConstruct = await require('./classes/channelClass');
-	emojiConstruct = await require('./classes/emojiClass');
-	guildConstruct = await require('./classes/guildClass');
-	guildEventConstruct = await require('./classes/guildEventClass');
-	guildTemplateConstruct = await require('./classes/guildTemplateClass');
-	inviteConstruct = await require('./classes/inviteClass');
-	
-	exit = new endPointConstruct();
+	class Emitter extends postMan {}
+		mailMan = new Emitter();
+			cache = new cacheConstruct();
+				heart = new heartConstruct();
+				
+				
+					exit = new endPointConstruct();
 	audit = new auditConstruct();
-	channel = new channelConstruct();
-	emoji = new emojiConstruct();
-	guild = new guildConstruct();
-	guildEvent = new guildEventConstruct();
+		channel = new channelConstruct();
+			emoji = new emojiConstruct();
+				guild = new guildConstruct();
+					guildEvent = new guildEventConstruct();
 	guildTemplate = new guildTemplateConstruct();
-	invite = new inviteConstruct();
-
-	postMan = await require('events');
-		class Emitter extends postMan {}
-			mailMan = new Emitter();
-
-	heartConstruct = await require('./classes/heartClass');
-		heart = new heartConstruct();
-			heart.run(this);
-	
-	cacheConstruct = await require('./classes/cacheClass');
-		cache = new cacheConstruct();
-	
-	const { spawn } = require('node:child_process');
-		const lavaSpawn = await spawn('java', ['-jar', './library/lavaLink/Lavalink.jar']);
-			lavaSpawn.stderr.on('data', (data) => { console.error(data.toString()); });
-				lavaSpawn.on('exit', (code) => { console.log(`Child exited with code ${code}`); });
-					linkLava = await require('./lavaLink');
-						voiceConstruct = await require('./classes/voiceClass');
-							voice = new voiceConstruct();
-								lamp = new linkLava.Node({
-									password: lavaLinkPwd,
-										userID: botId,
-											host: lavaLinkHost,
-												send(guildID, packet) { return heart.getSocket().send(JSON.stringify(packet)); },
-								}).on('error', (e) => {/**/});
-	voiceStatePass = function(pass) {  
-		if (pass.t === 'VOICE_STATE_UPDATE') lamp.voiceStateUpdate(pass.d);
-			if (pass.t === 'VOICE_SERVER_UPDATE') lamp.voiceServerUpdate(pass.d);
-	};
-		lamp.on('event', (event) => mailMan.emit('playerEvent', event));
-			mailMan.on('voiceStateUpdateSend', voiceStatePass);
-				mailMan.on('voiceServerUpdateSend', voiceStatePass);
+		invite = new inviteConstruct();
+		stage = new stageConstruct();
+		
+		
+			rel.rel();
+				heart.run(this);
+					const lavaSpawn = await spawn('java', ['-jar', './library/lavaLink/Lavalink.jar']);
+	lavaSpawn.stderr.on('data', (data) => { console.error(data.toString()); });
+		process.on('exit', code => process.kill(lavaSpawn.pid));
+		lavaSpawn.on('exit', (code) => { console.log(`Child exited with code ${code}`); });
+			voice = new voiceConstruct();
+				lamp = new linkLava.Node({
+					password: lavaLinkPwd,
+						userID: botId,
+							host: lavaLinkHost,
+								send(guildID, packet) { return heart.getSocket().send(JSON.stringify(packet)); },
+				}).on('error', (e) => {/**/});
+					voiceStatePass = function(pass) {  
+						if (pass.t === 'VOICE_STATE_UPDATE') lamp.voiceStateUpdate(pass.d);
+							if (pass.t === 'VOICE_SERVER_UPDATE') lamp.voiceServerUpdate(pass.d);
+					};
+	lamp.on('event', (event) => mailMan.emit('playerEvent', event));
+		mailMan.on('voiceStateUpdateSend', voiceStatePass);
+			mailMan.on('voiceServerUpdateSend', voiceStatePass);
 };
 
