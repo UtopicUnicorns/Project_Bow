@@ -159,7 +159,7 @@ class endPointConstruct {
 							getCurrentUser: (info) => this.awaitError({ endpoint: { url: `/users/@me`, method: 'GET', type: info.type }, data: info.data }),
 			getUser: (info) => this.awaitError({ endpoint: { url: `/users/${info.userId}`, method: 'GET', type: info.type }, data: info.data }),
 				modifyCurrentUser: (info) => this.awaitError({ endpoint: { url: `/users/@me`, method: 'PATCH', type: info.type }, data: info.data }),
-					getCurrentUserGuilds: (info) => this.awaitError({ endpoint: { url: `/users/@me/guilds`, method: 'GET', type: info.type }, data: info.data }),
+					getCurrentUserGuilds: (info) => this.awaitError({ endpoint: { url: `/users/@me/guilds?${info.data}`, method: 'GET', type: info.type }, data: info.data }),
 						getCurrentUserGuildMember: (info) => this.awaitError({ endpoint: { url: `/users/@me/guilds/${info.guildId}/member`, method: 'GET', type: info.type }, data: info.data }),
 							leaveGuild: (info) => this.awaitError({ endpoint: { url: `/users/@me/guilds/${info.guildId}`, method: 'DELETE', type: info.type }, data: info.data }),
 			createDM: (info) => this.awaitError({ endpoint: { url: `/users/@me/channels`, method: 'POST', type: info.type }, data: info.data }),

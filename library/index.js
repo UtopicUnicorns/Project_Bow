@@ -22,6 +22,9 @@ exports.lib = async function (config) {
 				inviteConstruct = await require('./classes/inviteClass');
 				stageConstruct = await require('./classes/stageClass');
 				stickerConstruct = await require('./classes/stickerClass');
+				userConstruct = await require('./classes/userClass');
+				regionConstruct = await require('./classes/regionClass');
+				webhookConstruct = await require('./classes/webhookClass.js');
 				
 					cacheConstruct = await require('./classes/cacheClass');
 	heartConstruct = await require('./classes/heartClass');
@@ -65,6 +68,9 @@ exports.lib = async function (config) {
 		invite = new inviteConstruct();
 		stage = new stageConstruct();
 		sticker = new stickerConstruct();
+		user = new userConstruct();
+		region = new regionConstruct();
+		webhook = new webhookConstruct();
 		
 		
 			rel.rel();
