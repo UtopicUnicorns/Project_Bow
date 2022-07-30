@@ -14,6 +14,7 @@ exports.lib = async function (config) {
 	
 		endPointConstruct = await require('./classes/endPointClass');
 			auditConstruct = await require('./classes/auditClass');
+			autoModerationConstruct = await require('./classes/autoModerationClass');
 				channelConstruct = await require('./classes/channelClass');
 					emojiConstruct = await require('./classes/emojiClass');
 	guildConstruct = await require('./classes/guildClass');
@@ -60,6 +61,7 @@ exports.lib = async function (config) {
 				
 					exit = new endPointConstruct();
 	audit = new auditConstruct();
+	autoMod = new autoModerationConstruct();
 		channel = new channelConstruct();
 			emoji = new emojiConstruct();
 				guild = new guildConstruct();
