@@ -177,12 +177,12 @@ class endPointConstruct {
 			modifyWebhookwithToken: (info) => this.awaitError({ endpoint: { url: `/webhooks/${info.webhookId}/${info.webhookToken}`, method: 'PATCH', type: info.type }, data: info.data }),
 				deleteWebhook: (info) => this.awaitError({ endpoint: { url: `/webhooks/${info.webhookId}`, method: 'DELETE', type: info.type }, data: info.data }),
 					deleteWebhookwithToken: (info) => this.awaitError({ endpoint: { url: `/webhooks/${info.webhookId}/${info.webhookToken}`, method: 'DELETE', type: info.type }, data: info.data }),
-						executeWebhook: (info) => this.awaitError({ endpoint: { url: `/webhooks/${info.webhookId}/${info.webhookToken}`, method: 'POST', type: info.type }, data: info.data }),
-							executeSlackCompatibleWebhook: (info) => this.awaitError({ endpoint: { url: `/webhooks/${info.webhookId}/${info.webhookToken}/slack`, method: 'POST', type: info.type }, data: info.data }),
-			executeGitHubCompatibleWebhook: (info) => this.awaitError({ endpoint: { url: `/webhooks/${info.webhookId}/${info.webhookToken}/github`, method: 'POST', type: info.type }, data: info.data }),
-				getWebhookMessage: (info) => this.awaitError({ endpoint: { url: `/webhooks/${info.webhookId}/${info.webhookToken}/messages/${info.messageId}`, method: 'GET', type: info.type }, data: info.data }),
-					editWebhookMessage: (info) => this.awaitError({ endpoint: { url: `/webhooks/${info.webhookId}/${info.webhookToken}/messages/${info.messageId}`, method: 'PATCH', type: info.type }, data: info.data }),
-						deleteWebhookMessage: (info) => this.awaitError({ endpoint: { url: `/webhooks/${info.webhookId}/${info.webhookToken}/messages/${info.messageId}`, method: 'DELETE', type: info.type }, data: info.data }),
+						executeWebhook: (info) => this.awaitError({ endpoint: { url: `/webhooks/${info.webhookId}/${info.webhookToken}?${info.query}`, method: 'POST', type: info.type }, data: info.data }),
+							executeSlackCompatibleWebhook: (info) => this.awaitError({ endpoint: { url: `/webhooks/${info.webhookId}/${info.webhookToken}/slack?${info.query}`, method: 'POST', type: info.type }, data: info.data }),
+			executeGitHubCompatibleWebhook: (info) => this.awaitError({ endpoint: { url: `/webhooks/${info.webhookId}/${info.webhookToken}/github?${info.query}`, method: 'POST', type: info.type }, data: info.data }),
+				getWebhookMessage: (info) => this.awaitError({ endpoint: { url: `/webhooks/${info.webhookId}/${info.webhookToken}/messages/${info.messageId}?${info.query}`, method: 'GET', type: info.type }, data: info.data }),
+					editWebhookMessage: (info) => this.awaitError({ endpoint: { url: `/webhooks/${info.webhookId}/${info.webhookToken}/messages/${info.messageId}?${info.query}`, method: 'PATCH', type: info.type }, data: info.data }),
+						deleteWebhookMessage: (info) => this.awaitError({ endpoint: { url: `/webhooks/${info.webhookId}/${info.webhookToken}/messages/${info.messageId}?${info.query}`, method: 'DELETE', type: info.type }, data: info.data }),
 		};
 	}
 		async awaitError(info) { try { return fly.send(info.data, `/api/v10/${info.endpoint.url}`, info.endpoint.method, 'discord.com', 443, { 'Content-Type': info.endpoint.type, Authorization: `Bot ${token}` }); } catch (error) { throw new Error(error); } }
