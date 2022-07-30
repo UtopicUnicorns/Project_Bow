@@ -9,7 +9,8 @@ class endPointConstruct {
 			getFollowupMessage: (info) => this.awaitError({ endpoint: { url: `/webhooks/${info.applicationId}/${info.interactionToken}/messages/${info.messageId}`, method: 'GET', type: info.type }, data: info.data }),
 				editFollowupMessage: (info) => this.awaitError({ endpoint: { url: `/webhooks/${info.applicationId}/${info.interactionToken}/messages/${info.messageId}`, method: 'PATCH', type: info.type }, data: info.data }),
 					deleteFollowupMessage: (info) => this.awaitError({ endpoint: { url: `/webhooks/${info.applicationId}/${info.interactionToken}/messages/${info.messageId}`, method: 'DELETE', type: info.type }, data: info.data }),
-						getGlobalApplicationCommands: (info) => this.awaitError({ endpoint: { url: `/applications/${info.applicationId}/commands`, method: 'GET', type: info.type }, data: info.data }),
+						
+						getGlobalApplicationCommands: (info) => this.awaitError({ endpoint: { url: `/applications/${info.applicationId}/commands?${info.data}`, method: 'GET', type: info.type }, data: info.data }),
 							createGlobalApplicationCommand: (info) => this.awaitError({ endpoint: { url: `/applications/${info.applicationId}/commands`, method: 'POST', type: info.type }, data: info.data }),
 			getGlobalApplicationCommand: (info) => this.awaitError({ endpoint: { url: `/applications/${info.applicationId}/commands/${info.commandId}`, method: 'GET', type: info.type }, data: info.data }),
 				editGlobalApplicationCommand: (info) => this.awaitError({ endpoint: { url: `/applications/${info.applicationId}/commands/${info.commandId}`, method: 'PATCH', type: info.type }, data: info.data }),

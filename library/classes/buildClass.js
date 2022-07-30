@@ -72,41 +72,16 @@ class appConstruct {
 		this.target = 'commands';
 			this.command = [];
 				this.data = {
-					default_member_permissions: 0,
 						options: []
 				};
 	}
 	
-	get appCreate() {
+	build() {
 		if(this.command[0]) this.data['options'].push(this.command[0]);
 			this.command.length = 0;
-				return fly.send(JSON.stringify(this.data), `/api/applications/${appId}/${this.target}`, 'POST', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
+			return this.data['options'];
 	}
-	
-	appGuild(string) {
-		if(!string) return this;
-			this.target = `guilds/${string}/commands`;
-				return this;
-	}
-	
-	appName(string) {
-		if(!string) return this;
-			this.data['name'] = string;
-				return this;
-	}
-	
-	appDescription(string) {
-		if(!string) return this;
-			this.data['description'] = string;
-				return this;
-	}
-	
-	appType(integer) {
-		if(!integer) return this;
-			this.data['type'] = integer;
-				return this;
-	}
-	
+		
 	commandName(string) {
 		if(!string) return this;
 			if (this.command[0]) {

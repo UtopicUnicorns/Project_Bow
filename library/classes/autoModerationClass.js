@@ -55,15 +55,32 @@ class autoModerationConstruct {
 	
 	createRule(msg) {
 		let formMessage = {};
-		if(msg.name) formMessage['name'] = msg.name;
-		if(msg.eventType) formMessage['event_type'] = this.procEventType(msg.eventType);
-		if(msg.triggerType) formMessage['trigger_type'] = this.procEventTrigger(msg.triggerType);
-		if(msg.triggerMetadata) formMessage['trigger_metadata'] = this.procMetaData(msg.triggerMetadata);
+			if(msg.name) formMessage['name'] = msg.name;
+				if(msg.eventType) formMessage['event_type'] = this.procEventType(msg.eventType);
+					if(msg.triggerType) formMessage['trigger_type'] = this.procEventTrigger(msg.triggerType);
+						if(msg.triggerMetadata) formMessage['trigger_metadata'] = this.procMetaData(msg.triggerMetadata);
 		if(msg.actions) formMessage['actions'] = this.procActionData(msg.actions);
-		if(msg.enabled) formMessage['enabled'] = msg.enabled;
-		if(msg.excludeRoles) formMessage['exempt_roles'] = msg.excludeRoles;
-		if(msg.excludeChannels) formMessage['exempt_channels'] = msg.excludeChannels;
-		return exit.call('createAutoModerationRule', {guildId: msg.guild ,data: JSON.stringify(formMessage), type: `application/json`});
+			if(msg.enabled) formMessage['enabled'] = msg.enabled;
+				if(msg.excludeRoles) formMessage['exempt_roles'] = msg.excludeRoles;
+					if(msg.excludeChannels) formMessage['exempt_channels'] = msg.excludeChannels;
+						return exit.call('createAutoModerationRule', {guildId: msg.guild ,data: JSON.stringify(formMessage), type: `application/json`});
+	}
+	
+	editRule(msg) {
+		let formMessage = {};
+			if(msg.name) formMessage['name'] = msg.name;
+				if(msg.eventType) formMessage['event_type'] = this.procEventType(msg.eventType);
+					if(msg.triggerType) formMessage['trigger_type'] = this.procEventTrigger(msg.triggerType);
+						if(msg.triggerMetadata) formMessage['trigger_metadata'] = this.procMetaData(msg.triggerMetadata);
+		if(msg.actions) formMessage['actions'] = this.procActionData(msg.actions);
+			if(msg.enabled) formMessage['enabled'] = msg.enabled;
+				if(msg.excludeRoles) formMessage['exempt_roles'] = msg.excludeRoles;
+					if(msg.excludeChannels) formMessage['exempt_channels'] = msg.excludeChannels;
+						return exit.call('modifyAutoModerationRule', {guildId: msg.guild, autoModerationRuleId: msg.rule ,data: JSON.stringify(formMessage), type: `application/json`});
+	}
+	
+	removeRule(msg) {
+		return exit.call('deleteAutoModerationRule', {guildId: msg.guild, autoModerationRuleId: msg.rule, data: '', type: `application/json`});
 	}
 }
 

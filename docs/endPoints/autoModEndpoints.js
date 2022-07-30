@@ -25,6 +25,30 @@ autoMod
                 excludeRoles: [],
                 excludeChannels: [] });
 
+/*  Edit an automoderation rule.
+    if triggerType is spam or harmfulLink then omit triggerMetadata.
+    triggerMetadata refer to triggerMetadataObject.
+    actions refer to actionsObject.
+    enabled is a boolean if set to true will enable the rule.
+    excludeRoles is an array of roleIds that should not be affected by the rule.
+    excludeChannels is an array of channelIds that should not be affected by the rule.  */
+autoMod
+  .editRule({   guild: 'guildId',
+                rule: 'ruleId',
+                name: 'ruleName',
+                eventType: eventTypeOption,
+                triggerType: triggerTypeOption,
+                triggerMetadata: triggerMetadataObject,
+                actions: actionsObject,
+                enabled: BOOLEAN,
+                excludeRoles: [],
+                excludeChannels: [] });
+
+/*  Delete an automoderation rule.  */
+automod
+  .removeRule({ guild: 'guildId',
+                rule: 'ruleId' });
+
 /*  Additional info  */
 /*  pick one  */
 let eventTypeOption = ['messageSend'];

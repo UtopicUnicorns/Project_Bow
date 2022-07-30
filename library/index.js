@@ -13,6 +13,7 @@ exports.lib = async function (config) {
 	
 	
 		endPointConstruct = await require('./classes/endPointClass');
+		applicationConstruct = await require('./classes/applicationClass');
 			auditConstruct = await require('./classes/auditClass');
 			autoModerationConstruct = await require('./classes/autoModerationClass');
 				channelConstruct = await require('./classes/channelClass');
@@ -40,7 +41,7 @@ exports.lib = async function (config) {
 					botId = configData.botId;
 	botCaching = configData.caching;
 		httpsConstruct = buildConstruct.httpsConstruct;
-			app = buildConstruct.appConstruct;
+			appBuild = buildConstruct.appConstruct;
 				embed = buildConstruct.embedConstruct;
 					component = buildConstruct.componentConstruct;
 	botConstruct = buildConstruct.botConstruct;
@@ -60,6 +61,7 @@ exports.lib = async function (config) {
 				
 				
 					exit = new endPointConstruct();
+					application = new applicationConstruct();
 	audit = new auditConstruct();
 	autoMod = new autoModerationConstruct();
 		channel = new channelConstruct();
